@@ -34,3 +34,17 @@ description: Drive the built portfolio site end-to-end in headless Edge via CDP 
   component must follow that pattern.
 - Kill only our Edge instance afterward: filter `Win32_Process` on `CommandLine -like
   '*<scratch profile dir>*'` — never a bare `Stop-Process -Name msedge`.
+- **`vite preview` (port 4173) can get silently 404'd on this machine specifically for
+  requests carrying `Sec-Fetch-Dest: script`** — the exact header every real browser sends
+  for `<script type="module">` loads. Symptom: `curl` on the JS bundle returns 200, but the
+  browser's own Network domain logs a 404 for the identical URL and `#root` never mounts
+  (empty `innerHTML`, zero console errors — nothing to catch because the module never
+  loaded). Bisect with `curl -H "Sec-Fetch-Dest: script" <url>` if you see a blank
+  screenshot with no JS errors. Something in this environment (likely local endpoint
+  protection) targets that header on the preview server's port. **Workaround: use `npm run
+  dev` (vite dev, port 5173) for CDP verification instead of `npm run preview`** — same
+  app, different dev-server response headers, not affected. Don't waste time re-diagnosing
+  this — go straight to `vite dev` if a preview-server capture comes back blank.
+- Background-launching a long-lived server: don't pass `&` inside a command that the tool
+  itself also runs with `run_in_background: true` — the double-backgrounding can orphan the
+  process. Use `nohup <cmd> > logfile 2>&1 & disown` as one foregrounded tool call instead.

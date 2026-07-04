@@ -57,7 +57,7 @@ export default function Contact() {
                 <a
                   href={social.url}
                   target={social.id === "email" ? undefined : "_blank"}
-                  rel="noreferrer"
+                  rel={social.id === "email" ? undefined : "noopener noreferrer"}
                   data-cursor
                   className="panel group flex h-full items-center gap-4 p-5 transition-all duration-500 hover:border-cyan-300/40 hover:bg-white/[0.05]"
                 >

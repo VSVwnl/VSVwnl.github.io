@@ -170,7 +170,7 @@ export default function Navbar() {
                     key={s.id}
                     href={s.url}
                     target={s.id === "email" ? undefined : "_blank"}
-                    rel="noreferrer"
+                    rel={s.id === "email" ? undefined : "noopener noreferrer"}
                     className="mono-label text-zinc-500 transition-colors hover:text-white"
                   >
                     {s.label}

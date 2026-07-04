@@ -59,6 +59,7 @@ export const projects = [
       "Logitech MX Ink SDK",
     ],
     achievement: "1st Place — Grand Winner, DesignXR Hackathon 2026 · Top 50 Semifinalist, DevStudio 2026 by Logitech",
+    statusLabel: "1st Place — DesignXR 2026",
     description:
       "A Unity-based mixed reality physics sandbox for Meta Quest that lets users spawn, edit, draw, and simulate interactive 3D physics scenes in an XR workspace.",
     highlights: [
@@ -67,7 +68,10 @@ export const projects = [
       "Contributed to Logitech MX Ink stylus-based Draw Mode.",
       "Helped implement PhysicsLens, graphing, simulation reset, and snapshot/restore workflows.",
     ],
-    links: [{ label: "View on Devpost", url: "https://devpost.com/software/mr-blueprint" }],
+    links: [
+      { label: "Watch Demo", url: "https://www.youtube.com/watch?v=ggg8-Duyzn4&t=2s", icon: "play" },
+      { label: "View on Devpost", url: "https://devpost.com/software/mr-blueprint", icon: "external" },
+    ],
   },
   {
     id: "draft-usa",
@@ -82,6 +86,7 @@ export const projects = [
     year: "2026",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Gemini", "Google Cloud Run"],
     achievement: "Winner — Honorable Mentions, Team USA × Google Cloud Hackathon",
+    statusLabel: "Winner — Team USA × GCloud",
     description:
       "An AI-assisted Team USA sports drafting platform that helps users analyze rosters, draft momentum, hometown hubs, and receive Gemini-powered next-pick suggestions.",
     highlights: [
@@ -89,7 +94,11 @@ export const projects = [
       "Designed dashboard concepts for roster score, bonuses, hometown hubs, and athlete comparison.",
       "Created an interactive experience that makes draft strategy easier to understand.",
     ],
-    links: [{ label: "View on Devpost", url: "https://devpost.com/software/draft-usa" }],
+    links: [
+      { label: "Watch Demo", url: "https://www.youtube.com/watch?v=i2v8jaAg-Lc", icon: "play" },
+      { label: "Live App", url: "https://draft-usa-861789748163.us-central1.run.app/", icon: "external" },
+      { label: "View on Devpost", url: "https://devpost.com/software/draft-usa", icon: "external" },
+    ],
   },
   {
     id: "lumi",
@@ -104,6 +113,7 @@ export const projects = [
     year: "2025 — Present",
     tech: ["Unity", "C#", "Meta Quest 3", "XR Interaction Toolkit", "URP"],
     achievement: null,
+    statusLabel: "In Research — Duke I³T",
     description:
       "A VR-based rehabilitation game for ICU patients, designed to support mobility recovery through guided, seated, head-rotation-friendly interaction.",
     highlights: [

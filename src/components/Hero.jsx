@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
 import { profile } from "../data/profile.js";
 import ParticleField from "./ParticleField.jsx";
+import HeroPortrait from "./HeroPortrait.jsx";
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -107,95 +108,101 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        <h1 className="font-display text-[clamp(3.1rem,11.5vw,9.5rem)] leading-[0.92] font-bold tracking-tight text-white uppercase">
-          <HeroLine delay={0.95}>Building</HeroLine>
-          <HeroLine delay={1.07}>
-            <span className="text-gradient">Playable</span>
-          </HeroLine>
-          <HeroLine delay={1.19}>
-            <span className="text-outline">Worlds.</span>
-          </HeroLine>
-        </h1>
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr] lg:items-center lg:gap-10 xl:gap-16">
+          <div>
+            <h1 className="font-display text-[clamp(3.1rem,11.5vw,9.5rem)] leading-[0.92] font-bold tracking-tight text-white uppercase">
+              <HeroLine delay={0.95}>Building</HeroLine>
+              <HeroLine delay={1.07}>
+                <span className="text-gradient">Playable</span>
+              </HeroLine>
+              <HeroLine delay={1.19}>
+                <span className="text-outline">Worlds.</span>
+              </HeroLine>
+            </h1>
 
-        <motion.div
-          className="mt-8 flex h-6 items-center gap-3 overflow-hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-        >
-          <span aria-hidden="true" className="h-px w-8 bg-cyan-300/70" />
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={roleIdx}
-              className="font-mono text-xs tracking-[0.24em] text-cyan-200 uppercase md:text-sm"
-              initial={{ y: 18, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -18, opacity: 0 }}
-              transition={{ duration: 0.4, ease: EASE }}
+            <motion.div
+              className="mt-8 flex h-6 items-center gap-3 overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.5 }}
             >
-              {profile.roles[roleIdx]}
-            </motion.span>
-          </AnimatePresence>
-        </motion.div>
+              <span aria-hidden="true" className="h-px w-8 bg-cyan-300/70" />
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={roleIdx}
+                  className="font-mono text-xs tracking-[0.24em] text-cyan-200 uppercase md:text-sm"
+                  initial={{ y: 18, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -18, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: EASE }}
+                >
+                  {profile.roles[roleIdx]}
+                </motion.span>
+              </AnimatePresence>
+            </motion.div>
 
-        <motion.p
-          className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 md:text-lg"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.62, ease: EASE }}
-        >
-          {profile.positioning}
-        </motion.p>
-
-        <motion.div
-          className="mt-9 flex flex-wrap gap-2.5"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.74, ease: EASE }}
-        >
-          {profile.statusChips.map((chip, i) => (
-            <span
-              key={chip.label}
-              className="chip animate-float"
-              style={{
-                "--float-duration": `${6 + i * 1.3}s`,
-                animationDelay: `${i * 0.65}s`,
-              }}
+            <motion.p
+              className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 md:text-lg"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.62, ease: EASE }}
             >
-              <span
-                aria-hidden="true"
-                className={`animate-pulse-soft size-1.5 rounded-full ${CHIP_DOTS[chip.tone]}`}
-              />
-              {chip.label}
-            </span>
-          ))}
-        </motion.div>
+              {profile.positioning}
+            </motion.p>
 
-        <motion.div
-          className="mt-11 flex flex-wrap items-center gap-4"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.86, ease: EASE }}
-        >
-          <a href="#work" className="btn-primary" data-cursor>
-            Explore Work
-            <ArrowDown className="size-4" aria-hidden="true" />
-          </a>
-          <a href={profile.cv} download className="btn-ghost" data-cursor>
-            <Download className="size-4" aria-hidden="true" />
-            Download CV
-          </a>
-          <a
-            href="#contact"
-            className="hover-link group inline-flex items-center gap-1.5 px-2 py-2 font-display text-sm font-semibold tracking-wide text-zinc-200"
-          >
-            Contact
-            <ArrowUpRight
-              className="size-4 text-cyan-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              aria-hidden="true"
-            />
-          </a>
-        </motion.div>
+            <motion.div
+              className="mt-9 flex flex-wrap gap-2.5"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.74, ease: EASE }}
+            >
+              {profile.statusChips.map((chip, i) => (
+                <span
+                  key={chip.label}
+                  className="chip animate-float"
+                  style={{
+                    "--float-duration": `${6 + i * 1.3}s`,
+                    animationDelay: `${i * 0.65}s`,
+                  }}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`animate-pulse-soft size-1.5 rounded-full ${CHIP_DOTS[chip.tone]}`}
+                  />
+                  {chip.label}
+                </span>
+              ))}
+            </motion.div>
+
+            <motion.div
+              className="mt-11 flex flex-wrap items-center gap-4"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.86, ease: EASE }}
+            >
+              <a href="#work" className="btn-primary" data-cursor>
+                Explore Work
+                <ArrowDown className="size-4" aria-hidden="true" />
+              </a>
+              <a href={profile.cv} download className="btn-ghost" data-cursor>
+                <Download className="size-4" aria-hidden="true" />
+                Download CV
+              </a>
+              <a
+                href="#contact"
+                className="hover-link group inline-flex items-center gap-1.5 px-2 py-2 font-display text-sm font-semibold tracking-wide text-zinc-200"
+              >
+                Contact
+                <ArrowUpRight
+                  className="size-4 text-cyan-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </a>
+            </motion.div>
+          </div>
+
+          <HeroPortrait />
+        </div>
       </div>
 
       {/* Scroll cue */}

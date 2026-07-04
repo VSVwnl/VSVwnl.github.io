@@ -1,6 +1,8 @@
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, Trophy } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Play, Trophy } from "lucide-react";
 import { FadeIn } from "./Section.jsx";
+
+const LINK_ICONS = { play: Play, external: ExternalLink };
 
 /* ─── Procedural cover art motifs ────────────────────────────────────────── */
 
@@ -170,7 +172,7 @@ function CornerBrackets() {
 
 function Cover({ project }) {
   const Motif = MOTIFS[project.motif];
-  const status = project.achievement ? "Award Winner" : "In Research";
+  const status = project.statusLabel ?? (project.achievement ? "Award Winner" : "In Research");
 
   return (
     <div
@@ -196,12 +198,12 @@ function Cover({ project }) {
       )}
 
       {/* HUD chrome */}
-      <div className="absolute inset-x-5 top-4 flex items-center justify-between">
-        <span className="font-mono text-[10px] tracking-[0.3em] text-zinc-500 uppercase">
+      <div className="absolute inset-x-5 top-4 flex items-center justify-between gap-3">
+        <span className="shrink-0 font-mono text-[10px] tracking-[0.3em] text-zinc-500 uppercase">
           {project.code} // {project.id}
         </span>
-        <span className={`hidden items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[9px] tracking-[0.18em] uppercase sm:inline-flex ${project.accent.chip}`}>
-          <span className={`size-1 rounded-full ${project.accent.dot} animate-pulse-soft`} />
+        <span className={`hidden items-center gap-1.5 truncate rounded-full border px-2.5 py-1 font-mono text-[9px] tracking-[0.18em] whitespace-nowrap uppercase sm:inline-flex ${project.accent.chip}`}>
+          <span className={`size-1 shrink-0 rounded-full ${project.accent.dot} animate-pulse-soft`} />
           {status}
         </span>
       </div>
@@ -309,34 +311,43 @@ export default function ProjectCard({ project, index }) {
               </ul>
             )}
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-white/12 bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-zinc-400 uppercase"
-                >
-                  {t}
-                </span>
-              ))}
+            <div className="mt-7 border-t border-white/8 pt-6">
+              <p className="mono-label mb-3 text-zinc-600">Built With</p>
+              <div className="flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-white/12 bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-zinc-400 uppercase"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {project.links.length > 0 && (
-              <div className="mt-7 flex flex-wrap gap-6">
-                {project.links.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`hover-link group/link inline-flex items-center gap-1.5 font-mono text-xs tracking-[0.2em] uppercase ${project.accent.text}`}
-                  >
-                    {link.label}
-                    <ArrowUpRight
-                      className="size-3.5 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                      aria-hidden="true"
-                    />
-                  </a>
-                ))}
+              <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-white/8 pt-6">
+                {project.links.map((link, i) => {
+                  const Icon = LINK_ICONS[link.icon] ?? ArrowUpRight;
+                  const primary = i === 0;
+                  return (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-cursor
+                      className={
+                        primary
+                          ? "inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-300 px-5 py-2.5 font-display text-sm font-semibold text-[#050509] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-12px_rgba(103,232,249,0.6)]"
+                          : "inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-5 py-2.5 font-display text-sm font-semibold text-zinc-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/[0.07]"
+                      }
+                    >
+                      <Icon className="size-4" aria-hidden="true" />
+                      {link.label}
+                    </a>
+                  );
+                })}
               </div>
             )}
           </div>

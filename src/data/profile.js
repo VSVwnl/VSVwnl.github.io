@@ -4,11 +4,12 @@ export const profile = {
   name: "Vishnu Sai Vardhan Bodapati",
   shortName: "Vishnu Bodapati",
   handle: "VSVwnl",
-  roles: ["XR Developer", "Game Developer", "Spatial Computing Builder"],
+  roles: ["XR Developer", "Spatial Computing Builder", "Game Developer"],
   positioning:
-    "I build immersive games, XR systems, and spatial computing experiences that turn technical ideas into playable, interactive worlds.",
+    "I build immersive worlds and interactive experiences through XR systems, spatial computing, and games that turn technical ideas into playable realities.",
   email: "vishnu.bodapati@duke.edu",
   cv: "/Vishnu_Bodapati_CV.pdf",
+  portrait: "/Assets/profile/vishnu-headshot.jpg",
   location: "Durham, NC",
   coordinates: "35.99° N / 78.90° W",
   statusChips: [
@@ -50,15 +51,15 @@ export const socials = [
 
 export const about = {
   statement: [
-    "I'm Vishnu Sai Vardhan Bodapati — a builder working across games, XR, spatial computing, AI tools, and interactive systems. My work lives where technical implementation meets game feel: physics sandboxes in mixed reality, VR rehabilitation for ICU patients, AI-assisted drafting platforms, and complete little games shipped on tiny handheld hardware.",
-    "Currently at Duke pursuing an M.Eng in Game Design, Development & Innovation, and building VR gameplay and research systems at the Duke I³T Lab. Every project runs the same loop: prototype fast, obsess over interaction, optimize until it feels inevitable.",
+    "I'm Vishnu Sai Vardhan Bodapati — a builder working across XR, spatial computing, AI tools, interactive systems, and games. My work lives where technical implementation meets game feel: physics sandboxes in mixed reality, VR rehabilitation for ICU patients, AI-assisted drafting platforms, and complete little games shipped on tiny handheld hardware.",
+    "Currently at Duke pursuing an M.Eng in Game Design, Development & Innovation, and building VR gameplay and research systems at the Duke I³T Lab. Every project runs the same loop: prototype fast, obsess over interaction design and game feel, and let research drive the next iteration.",
   ],
   exploring: [
-    "Mixed reality interfaces & stylus input (Logitech MX Ink)",
-    "Gaussian splatting & AI-generated scenes for VR rehab",
+    "Gaussian splatting for VR scene reconstruction",
+    "AI-generated environments for VR rehabilitation",
+    "Mixed reality creation tools & stylus input (Logitech MX Ink)",
+    "Spatial computing interfaces & interaction design",
     "Patient comfort & performance budgets on Quest 3",
-    "Game feel, physics playgrounds & simulation UX",
-    "AI-assisted creative tooling (Gemini, Cloud Run)",
   ],
   principles: [
     {
@@ -151,13 +152,13 @@ export const research = {
 
 export const marqueeItems = [
   "Mixed Reality",
-  "Game Design",
   "Spatial Computing",
+  "VR Rehabilitation",
+  "AI Tools",
   "Unity",
   "Unreal Engine",
   "Physics Sandboxes",
-  "VR Rehabilitation",
-  "AI Tools",
+  "Game Design",
   "Playdate",
   "Interactive Systems",
 ];
