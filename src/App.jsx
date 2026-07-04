@@ -29,10 +29,13 @@ export default function App() {
       <Preloader />
       <CursorGlow />
 
-      {/* Film-grain overlay for the whole page */}
+      {/* Film-grain overlay for the whole page. No mix-blend-mode: a blended
+          full-screen fixed layer forces the compositor to re-blend everything
+          beneath it on every scroll frame. A low-opacity flat grain reads
+          nearly identical over the near-black background at a fraction of the cost. */}
       <div
         aria-hidden="true"
-        className="noise pointer-events-none fixed inset-0 z-[90] opacity-[0.05] mix-blend-overlay"
+        className="noise pointer-events-none fixed inset-0 z-[90] opacity-[0.035]"
       />
 
       <Navbar />

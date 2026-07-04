@@ -173,28 +173,63 @@ function CornerBrackets() {
 function Cover({ project }) {
   const Motif = MOTIFS[project.motif];
   const status = project.statusLabel ?? (project.achievement ? "Award Winner" : "In Research");
+  const hasThumb = Boolean(project.thumbnail);
 
   return (
     <div
       className="bg-ink relative aspect-[16/11] overflow-hidden rounded-2xl border border-white/10"
-      style={{
-        backgroundImage: `radial-gradient(ellipse at 18% 12%, ${project.accent.glow}, transparent 52%), radial-gradient(ellipse at 85% 90%, ${project.accent.glow}, transparent 55%)`,
-      }}
+      style={
+        hasThumb
+          ? undefined
+          : {
+              backgroundImage: `radial-gradient(ellipse at 18% 12%, ${project.accent.glow}, transparent 52%), radial-gradient(ellipse at 85% 90%, ${project.accent.glow}, transparent 55%)`,
+            }
+      }
     >
-      <div className="bg-grid-fine absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
+      {hasThumb ? (
+        <>
+          {/* real project thumbnail — GPU-friendly zoom on hover */}
+          <img
+            src={project.thumbnail}
+            alt={`${project.title} — project thumbnail`}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.04]"
+          />
+          {/* legibility scrims for the HUD chrome (top + bottom) */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(5,5,9,0.78) 0%, rgba(5,5,9,0.32) 30%, rgba(5,5,9,0.32) 60%, rgba(5,5,9,0.86) 100%)",
+            }}
+          />
+          {/* accent tint that intensifies on hover */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 opacity-40 mix-blend-soft-light transition-opacity duration-500 group-hover:opacity-70"
+            style={{ background: project.accent.glow }}
+          />
+        </>
+      ) : (
+        <>
+          <div className="bg-grid-fine absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
 
-      {/* watermark initial */}
-      <span
-        aria-hidden="true"
-        className="absolute -right-3 -bottom-10 font-display text-[10rem] leading-none font-bold text-white/[0.045] select-none md:text-[12rem]"
-      >
-        {project.title.charAt(0)}
-      </span>
+          {/* watermark initial */}
+          <span
+            aria-hidden="true"
+            className="absolute -right-3 -bottom-10 font-display text-[10rem] leading-none font-bold text-white/[0.045] select-none md:text-[12rem]"
+          >
+            {project.title.charAt(0)}
+          </span>
 
-      {Motif && (
-        <div className="absolute inset-0 p-6 md:p-8">
-          <Motif hex={project.accent.hex} />
-        </div>
+          {Motif && (
+            <div className="absolute inset-0 p-6 md:p-8">
+              <Motif hex={project.accent.hex} />
+            </div>
+          )}
+        </>
       )}
 
       {/* HUD chrome */}

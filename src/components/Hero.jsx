@@ -52,16 +52,11 @@ export default function Hero() {
       <div aria-hidden="true" className="absolute inset-0">
         <ParticleField />
 
-        <motion.div
-          className="absolute -top-[20%] -left-[12%] h-[60vh] w-[60vh] rounded-full bg-violet-600/22 blur-[130px]"
-          animate={reduce ? undefined : { scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-[8%] right-[-14%] h-[55vh] w-[55vh] rounded-full bg-cyan-500/16 blur-[130px]"
-          animate={reduce ? undefined : { scale: [1.1, 1, 1.1], opacity: [0.8, 1, 0.8] }}
-          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-        />
+        {/* Static ambient glows — a 130px blur re-rasterizes when scaled, so
+            these are intentionally not animated (negligible visual loss, real
+            frame-time win). */}
+        <div className="absolute -top-[20%] -left-[12%] h-[60vh] w-[60vh] rounded-full bg-violet-600/22 blur-[130px]" />
+        <div className="absolute top-[8%] right-[-14%] h-[55vh] w-[55vh] rounded-full bg-cyan-500/16 blur-[130px]" />
         <div className="absolute bottom-[10%] left-[30%] h-[40vh] w-[40vh] rounded-full bg-blue-600/14 blur-[120px]" />
 
         {/* Orbital rings */}

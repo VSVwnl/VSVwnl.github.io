@@ -53,7 +53,7 @@ export default function HeroPortrait() {
           <div className="absolute inset-0 bg-gradient-to-t from-void/85 via-void/10 to-transparent" />
           <div
             aria-hidden="true"
-            className="bg-grid-fine absolute inset-0 opacity-[0.08] mix-blend-overlay"
+            className="bg-grid-fine absolute inset-0 opacity-[0.06]"
           />
 
           {/* corner brackets */}
