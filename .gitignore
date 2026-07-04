@@ -10,3 +10,7 @@ Thumbs.db
 
 # Root CV copy — the site serves the tracked copy at public/Vishnu_Bodapati_CV.pdf
 /Vishnu_Bodapati_CV.pdf
+
+# Local Claude settings & temp files
+.claude/settings.local.json
+.claude/*.tmp.*
