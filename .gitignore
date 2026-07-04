@@ -1,0 +1,12 @@
+# Dependencies / build output
+node_modules/
+dist/
+verify-shots/
+
+# Local env & editor noise
+*.local
+.DS_Store
+Thumbs.db
+
+# Root CV copy — the site serves the tracked copy at public/Vishnu_Bodapati_CV.pdf
+/Vishnu_Bodapati_CV.pdf

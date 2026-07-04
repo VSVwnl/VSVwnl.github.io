@@ -1,0 +1,67 @@
+// ─── Skill constellation ─────────────────────────────────────────────────────
+// Rendered as an interactive star map on desktop and cluster panels on mobile.
+// `angle` positions each cluster hub around the core (degrees, 0 = right,
+// clockwise in SVG space). Colors are literal class strings for Tailwind.
+
+export const skillClusters = [
+  {
+    id: "xr",
+    label: "XR",
+    icon: "orbit",
+    angle: -90,
+    hex: "#67e8f9",
+    text: "text-cyan-300",
+    chip: "border-cyan-400/25 text-cyan-100/90",
+    skills: ["Meta Quest 3", "OpenXR", "XR Interaction Toolkit", "Meta XR SDK", "URP"],
+  },
+  {
+    id: "engines",
+    label: "Engines",
+    icon: "gamepad",
+    angle: -150,
+    hex: "#a78bfa",
+    text: "text-violet-300",
+    chip: "border-violet-400/25 text-violet-100/90",
+    skills: ["Unity", "Unreal Engine"],
+  },
+  {
+    id: "programming",
+    label: "Programming",
+    icon: "braces",
+    angle: 150,
+    hex: "#60a5fa",
+    text: "text-blue-300",
+    chip: "border-blue-400/25 text-blue-100/90",
+    skills: ["C#", "C++", "Python", "JavaScript", "TypeScript", "Java"],
+  },
+  {
+    id: "web",
+    label: "Web",
+    icon: "globe",
+    angle: 90,
+    hex: "#c084fc",
+    text: "text-purple-300",
+    chip: "border-purple-400/25 text-purple-100/90",
+    skills: ["React", "Next.js", "Vite", "Tailwind CSS"],
+  },
+  {
+    id: "tools",
+    label: "Tools",
+    icon: "wrench",
+    angle: 30,
+    hex: "#93c5fd",
+    text: "text-sky-300",
+    chip: "border-sky-400/25 text-sky-100/90",
+    skills: ["Git", "GitHub", "Android Studio", "MySQL", "UI/UX Prototyping"],
+  },
+  {
+    id: "ai-cloud",
+    label: "AI / Cloud",
+    icon: "sparkles",
+    angle: -30,
+    hex: "#22d3ee",
+    text: "text-cyan-200",
+    chip: "border-cyan-300/25 text-cyan-50/90",
+    skills: ["Gemini", "Google Cloud Run", "AI-assisted tools"],
+  },
+];
