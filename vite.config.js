@@ -6,4 +6,17 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   base: "/",
   plugins: [react(), tailwindcss()],
+  build: {
+    rollupOptions: {
+      output: {
+        // Split the big, rarely-changing libraries into their own chunks so
+        // they cache independently across deploys and download in parallel
+        // with the app code rather than inside one monolithic bundle.
+        manualChunks: {
+          react: ["react", "react-dom"],
+          motion: ["framer-motion"],
+        },
+      },
+    },
+  },
 });

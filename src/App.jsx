@@ -1,20 +1,28 @@
+import { lazy, Suspense } from "react";
 import { MotionConfig } from "framer-motion";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import Marquee from "./components/Marquee.jsx";
 import About from "./components/About.jsx";
-import FeaturedWork from "./components/FeaturedWork.jsx";
-import ProjectArchive from "./components/ProjectArchive.jsx";
-import Awards from "./components/Awards.jsx";
-import Research from "./components/Research.jsx";
-import Timeline from "./components/Timeline.jsx";
-import SkillConstellation from "./components/SkillConstellation.jsx";
-import Education from "./components/Education.jsx";
-import Contact from "./components/Contact.jsx";
-import Footer from "./components/Footer.jsx";
 import CursorGlow from "./components/CursorGlow.jsx";
 import Preloader from "./components/Preloader.jsx";
 import { marqueeItems, contactMarqueeItems } from "./data/profile.js";
+
+// Everything below the fold is code-split so it downloads and parses AFTER the
+// hero has painted, instead of blocking first render inside one big bundle.
+// Each section keeps its own Suspense boundary (null fallback) so it pops in
+// independently as its chunk arrives — no single blank gap, no layout jump.
+const FeaturedWork = lazy(() => import("./components/FeaturedWork.jsx"));
+const ProjectArchive = lazy(() => import("./components/ProjectArchive.jsx"));
+const Awards = lazy(() => import("./components/Awards.jsx"));
+const Research = lazy(() => import("./components/Research.jsx"));
+const Timeline = lazy(() => import("./components/Timeline.jsx"));
+const SkillConstellation = lazy(() => import("./components/SkillConstellation.jsx"));
+const Education = lazy(() => import("./components/Education.jsx"));
+const Contact = lazy(() => import("./components/Contact.jsx"));
+const Footer = lazy(() => import("./components/Footer.jsx"));
+
+const Deferred = ({ children }) => <Suspense fallback={null}>{children}</Suspense>;
 
 export default function App() {
   return (
@@ -44,18 +52,36 @@ export default function App() {
         <Hero />
         <Marquee items={marqueeItems} />
         <About />
-        <FeaturedWork />
-        <ProjectArchive />
-        <Awards />
-        <Research />
-        <Timeline />
-        <SkillConstellation />
-        <Education />
-        <Marquee items={contactMarqueeItems} tone="loud" />
-        <Contact />
+        <Deferred>
+          <FeaturedWork />
+        </Deferred>
+        <Deferred>
+          <ProjectArchive />
+        </Deferred>
+        <Deferred>
+          <Awards />
+        </Deferred>
+        <Deferred>
+          <Research />
+        </Deferred>
+        <Deferred>
+          <Timeline />
+        </Deferred>
+        <Deferred>
+          <SkillConstellation />
+        </Deferred>
+        <Deferred>
+          <Education />
+        </Deferred>
+        <Deferred>
+          <Marquee items={contactMarqueeItems} tone="loud" />
+          <Contact />
+        </Deferred>
       </main>
 
-      <Footer />
+      <Deferred>
+        <Footer />
+      </Deferred>
     </MotionConfig>
   );
 }

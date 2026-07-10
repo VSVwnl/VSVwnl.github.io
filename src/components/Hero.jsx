@@ -93,7 +93,7 @@ export default function Hero() {
           className="mb-8 flex items-center justify-between gap-4"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9, ease: EASE }}
+          transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
         >
           <p className="mono-label text-zinc-400">
             <span className="text-cyan-300">◇</span> {profile.name}
@@ -106,11 +106,11 @@ export default function Hero() {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr] lg:items-center lg:gap-10 xl:gap-16">
           <div>
             <h1 className="font-display text-[clamp(3.1rem,11.5vw,9.5rem)] leading-[0.92] font-bold tracking-tight text-white uppercase">
-              <HeroLine delay={0.95}>Building</HeroLine>
-              <HeroLine delay={1.07}>
+              <HeroLine delay={0.1}>Building</HeroLine>
+              <HeroLine delay={0.18}>
                 <span className="text-gradient">Playable</span>
               </HeroLine>
-              <HeroLine delay={1.19}>
+              <HeroLine delay={0.26}>
                 <span className="text-outline">Worlds.</span>
               </HeroLine>
             </h1>
@@ -119,7 +119,7 @@ export default function Hero() {
               className="mt-8 flex h-6 items-center gap-3 overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.5 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
             >
               <span aria-hidden="true" className="h-px w-8 bg-cyan-300/70" />
               <AnimatePresence mode="wait">
@@ -140,7 +140,7 @@ export default function Hero() {
               className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 md:text-lg"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.62, ease: EASE }}
+              transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
             >
               {profile.positioning}
             </motion.p>
@@ -149,7 +149,7 @@ export default function Hero() {
               className="mt-9 flex flex-wrap gap-2.5"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.74, ease: EASE }}
+              transition={{ duration: 0.8, delay: 0.48, ease: EASE }}
             >
               {profile.statusChips.map((chip, i) => (
                 <span
@@ -173,7 +173,7 @@ export default function Hero() {
               className="mt-11 flex flex-wrap items-center gap-4"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.86, ease: EASE }}
+              transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
             >
               <a href="#work" className="btn-primary" data-cursor>
                 Explore Work
@@ -206,7 +206,7 @@ export default function Hero() {
         className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 md:flex"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.4, duration: 1 }}
+        transition={{ delay: 0.9, duration: 1 }}
       >
         <span className="mono-label text-zinc-600">Scroll</span>
         <span className="relative h-12 w-px overflow-hidden bg-white/10">

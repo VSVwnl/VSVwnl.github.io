@@ -12,15 +12,17 @@ export default function Preloader() {
       return;
     }
     let alive = true;
-    const minimum = new Promise((r) => setTimeout(r, 1000));
+    // Dismiss the instant fonts are ready, but never hold longer than 500ms —
+    // no artificial minimum. On repeat visits fonts are cached and this
+    // resolves in tens of ms, so the boot screen reads as a quick flash
+    // rather than a wait. display=swap covers any brief fallback-font flash.
     const fonts = document.fonts?.ready ?? Promise.resolve();
-    Promise.all([minimum, fonts.catch(() => {})]).then(() => {
+    const cap = new Promise((r) => setTimeout(r, 500));
+    Promise.race([fonts.catch(() => {}), cap]).then(() => {
       if (alive) setDone(true);
     });
-    const failsafe = setTimeout(() => alive && setDone(true), 2600);
     return () => {
       alive = false;
-      clearTimeout(failsafe);
     };
   }, [reduce]);
 

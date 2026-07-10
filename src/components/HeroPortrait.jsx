@@ -14,7 +14,7 @@ export default function HeroPortrait() {
       className="relative mx-auto w-full max-w-[280px] lg:mx-0 lg:max-w-[380px]"
       initial={{ opacity: 0, y: 28, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 1.1, delay: 1.35, ease: EASE }}
+      transition={{ duration: 1.1, delay: 0.3, ease: EASE }}
     >
       {/* ambient glow */}
       <div
