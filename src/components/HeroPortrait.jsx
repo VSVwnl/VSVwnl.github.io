@@ -48,6 +48,7 @@ export default function HeroPortrait() {
             className="h-full w-full object-cover"
             style={{ objectPosition: "center 35%" }}
             loading="eager"
+            fetchPriority="high"
             decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-void/85 via-void/10 to-transparent" />

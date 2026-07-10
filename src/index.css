@@ -247,21 +247,32 @@
   animation: pulse-soft 2.6s ease-in-out infinite;
 }
 
-@keyframes floor-scroll {
+/* The scrolling grid lives on a ::before and animates `transform` (composited)
+   instead of `background-position` (repaints the whole floor every frame —
+   a measurable scroll-jank source, especially on mobile GPUs). The layer
+   starts one grid cell above the box and slides down exactly 64px, which
+   loops seamlessly; the parent's mask clips the overflow. */
+@keyframes floor-slide {
   to {
-    background-position-y: 64px;
+    transform: translateY(64px);
   }
 }
 .hero-floor {
+  transform: perspective(620px) rotateX(63deg);
+  transform-origin: top center;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%);
+}
+.hero-floor::before {
+  content: "";
+  position: absolute;
+  inset: -64px 0 0 0;
   background-image:
     linear-gradient(rgba(103, 232, 249, 0.14) 1px, transparent 1px),
     linear-gradient(90deg, rgba(139, 92, 246, 0.14) 1px, transparent 1px);
   background-size: 64px 64px;
-  transform: perspective(620px) rotateX(63deg);
-  transform-origin: top center;
-  animation: floor-scroll 3.2s linear infinite;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%);
+  animation: floor-slide 3.2s linear infinite;
+  will-change: transform;
 }
 
 @keyframes dash-rotate {
@@ -284,7 +295,7 @@
   .animate-spin-slow,
   .animate-pulse-soft,
   .animate-dash,
-  .hero-floor {
+  .hero-floor::before {
     animation: none !important;
   }
 }

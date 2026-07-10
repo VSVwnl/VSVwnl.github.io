@@ -4,6 +4,13 @@ import { FadeIn } from "./Section.jsx";
 
 const LINK_ICONS = { play: Play, external: ExternalLink };
 
+// Tilt is desktop-only: on touch devices pointermove fires while the user
+// drags to scroll, which would run the tilt springs mid-scroll for no visual
+// benefit. Static site — evaluated once at module load.
+const FINE_POINTER =
+  typeof window !== "undefined" &&
+  window.matchMedia("(pointer: fine)").matches;
+
 /* ─── Procedural cover art motifs ────────────────────────────────────────── */
 
 function BlueprintMotif({ hex }) {
@@ -274,7 +281,7 @@ export default function ProjectCard({ project, index }) {
   const sry = useSpring(ry, { stiffness: 160, damping: 20 });
 
   const onMove = (e) => {
-    if (reduce) return;
+    if (reduce || !FINE_POINTER) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
@@ -324,10 +331,18 @@ export default function ProjectCard({ project, index }) {
             </p>
 
             {project.achievement && (
-              <p className="mt-5 inline-flex items-start gap-2.5 rounded-2xl border border-white/12 bg-gradient-to-r from-violet-500/12 via-blue-500/10 to-cyan-400/12 px-4 py-2.5 text-xs leading-relaxed text-zinc-200 md:text-sm">
-                <Trophy className="mt-0.5 size-4 shrink-0 text-cyan-300" aria-hidden="true" />
-                {project.achievement}
-              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {/* one badge per honor — "A · B" strings split into separate pills */}
+                {project.achievement.split(" · ").map((honor) => (
+                  <p
+                    key={honor}
+                    className="inline-flex items-start gap-2.5 rounded-2xl border border-white/12 bg-gradient-to-r from-violet-500/12 via-blue-500/10 to-cyan-400/12 px-4 py-2.5 text-xs leading-relaxed text-zinc-200 md:text-sm"
+                  >
+                    <Trophy className="mt-0.5 size-4 shrink-0 text-cyan-300" aria-hidden="true" />
+                    {honor}
+                  </p>
+                ))}
+              </div>
             )}
 
             <p className="mt-5 leading-relaxed text-zinc-400">{project.description}</p>

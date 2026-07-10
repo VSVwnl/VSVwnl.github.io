@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
-import { profile } from "../data/profile.js";
+import { ArrowDown, ArrowUpRight, Download, Trophy } from "lucide-react";
+import { awards, profile } from "../data/profile.js";
 import ParticleField from "./ParticleField.jsx";
 import HeroPortrait from "./HeroPortrait.jsx";
 
@@ -194,6 +194,28 @@ export default function Hero() {
                 />
               </a>
             </motion.div>
+
+            {/* Named-award proof line: a recruiter should see WHAT was won
+                without scrolling. Sourced from the awards data. */}
+            <motion.ul
+              className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-2.5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.68 }}
+            >
+              {awards.slice(0, 2).map((a) => (
+                <li
+                  key={a.id}
+                  className="flex items-center gap-2.5 font-mono text-[10px] tracking-[0.18em] text-zinc-500 uppercase"
+                >
+                  <Trophy className="size-3.5 shrink-0 text-cyan-300/80" aria-hidden="true" />
+                  <span>
+                    {a.event} —{" "}
+                    <span className="text-zinc-300">{a.result.split(" — ")[0]}</span>
+                  </span>
+                </li>
+              ))}
+            </motion.ul>
           </div>
 
           <HeroPortrait />

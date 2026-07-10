@@ -16,7 +16,7 @@ export const profile = {
     { label: "Duke M.Eng", tone: "violet" },
     { label: "I³T Lab", tone: "cyan" },
     { label: "XR / Game Dev", tone: "blue" },
-    { label: "Hackathon Winner", tone: "purple" },
+    { label: "2× Hackathon Winner", tone: "purple" },
   ],
 };
 
