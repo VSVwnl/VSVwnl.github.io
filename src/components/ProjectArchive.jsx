@@ -130,8 +130,12 @@ export default function ProjectArchive() {
           ))}
         </div>
 
+        {/* No mode="popLayout" here. Combined with `layout` on both this list and
+            each row, exiting children never finished their exit animation and so
+            were never unmounted — every project stayed on screen no matter which
+            category was selected, which made the filter look inert. */}
         <motion.ul layout className="divide-y divide-white/8 border-b border-white/8">
-          <AnimatePresence mode="popLayout" initial={false}>
+          <AnimatePresence initial={false}>
             {visible.map((project, i) => (
               <motion.li
                 layout
