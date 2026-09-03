@@ -78,7 +78,7 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
       })}
 
       {/* clusters */}
-      {skillClusters.map((cluster) => {
+      {skillClusters.map((cluster, ci) => {
         const { hub, nodes } = layoutCluster(cluster);
         const dimmed = effective && effective !== cluster.id;
         const pillText = `${cluster.label} — ${cluster.skills.length}`;
@@ -87,9 +87,14 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
         return (
           <g
             key={cluster.id}
-            className="transition-opacity duration-500"
+            className="animate-float transition-opacity duration-500"
             style={{
               opacity: dimmed ? 0.14 : 1,
+              // Whole-cluster drift: every node and label in a cluster moves
+              // together, so this never reopens the label collisions the
+              // layout above solves. Staggered so the six hubs never sync up.
+              "--float-duration": `${6.5 + ci * 0.9}s`,
+              animationDelay: `${ci * 0.6}s`,
             }}
             onPointerEnter={() => onHover(cluster.id)}
             onPointerLeave={() => onHover(null)}
@@ -166,6 +171,8 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
           fill="none"
           stroke="rgba(255,255,255,0.14)"
           strokeDasharray="3 7"
+          className="animate-spin-slow"
+          style={{ transformOrigin: `${CX}px ${CY}px`, transformBox: "view-box", "--spin-duration": "34s" }}
         />
         <circle cx={CX} cy={CY} r="31" fill="#0b0b18" stroke="url(#core-grad)" strokeWidth="1.4" />
         <text
