@@ -3,6 +3,7 @@ import { ArrowUpRight, Award, Medal, Trophy } from "lucide-react";
 const ICONS = { trophy: Trophy, award: Award, medal: Medal };
 
 const TONES = {
+  teal: "text-teal-300 border-teal-400/30",
   cyan: "text-cyan-300 border-cyan-400/30",
   blue: "text-blue-300 border-blue-400/30",
   violet: "text-violet-300 border-violet-400/30",

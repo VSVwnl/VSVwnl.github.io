@@ -7,6 +7,13 @@ export const categories = ["XR", "Games", "AI/Cloud", "Research", "Game Jam", "T
 
 // Accent styles are full literal class strings so Tailwind can see them.
 const accents = {
+  teal: {
+    hex: "#5eead4",
+    glow: "rgba(45, 212, 191, 0.15)",
+    text: "text-teal-300",
+    chip: "border-teal-400/25 text-teal-200",
+    dot: "bg-teal-300",
+  },
   cyan: {
     hex: "#67e8f9",
     glow: "rgba(34, 211, 238, 0.14)",
@@ -39,8 +46,52 @@ const accents = {
 
 export const projects = [
   {
-    id: "mr-blueprint",
+    id: "cinemascout",
     code: "PRJ-001",
+    title: "LA48 CinemaScout",
+    featured: true,
+    thumbnail: "/Assets/profile/cinemascout.jpg",
+    // Click-to-play on the cover. The <video> element is only mounted on press,
+    // so the 4.6MB demo costs nothing on page load — the poster carries the card.
+    video: {
+      src: "/Assets/profile/cinemascout-demo.mp4",
+      poster: "/Assets/profile/cinemascout.jpg",
+      duration: "1:19",
+    },
+    accent: accents.teal,
+    categories: ["XR", "AI/Cloud", "Tools"],
+    role: "Unity / XR Developer",
+    platform: "PICO · WebSpatial",
+    year: "2026",
+    tech: [
+      "Unity",
+      "C#",
+      "PICO",
+      "WebSpatial",
+      "World Labs",
+      "Gaussian Splatting",
+      "Claude",
+      "OpenAI",
+    ],
+    achievement:
+      "1st Place — Best Spatial Reconstruction (XGRIDS) · 1st Place — Best App on Emulator (PICO) · Runner-Up — Best Interactive World Experience (World Labs)",
+    statusLabel: "3× Award Winner",
+    description:
+      "A spatial cinematography copilot for planning, previewing, and refining camera shots inside interactive 3D environments — letting filmmakers scout digitally reconstructed locations before physical production.",
+    highlights: [
+      "Walk through 3D Gaussian Splat reconstructions of real locations in headset.",
+      "Position virtual cinema cameras and tune focal length, field of view, aspect ratio, height, and clipping.",
+      "Preview shots from multiple viewpoints, save camera positions, and build move paths with a dolly-style path editor.",
+      "AI-assisted shot recommendations, coordinated through a spatial Mission Control interface.",
+    ],
+    links: [
+      { label: "View on Devpost", url: "https://devpost.com/software/we-re-so-fucked", icon: "external" },
+      { label: "Pitch Deck", url: "https://canva.link/vix03kkwc6jl2bi", icon: "external" },
+    ],
+  },
+  {
+    id: "mr-blueprint",
+    code: "PRJ-002",
     title: "MR Blueprint",
     featured: true,
     motif: "blueprint",
@@ -76,7 +127,7 @@ export const projects = [
   },
   {
     id: "draft-usa",
-    code: "PRJ-002",
+    code: "PRJ-003",
     title: "Draft USA",
     featured: true,
     motif: "draft",
@@ -104,7 +155,7 @@ export const projects = [
   },
   {
     id: "lumi",
-    code: "PRJ-003",
+    code: "PRJ-004",
     title: "Lumi — ICU VR Rehabilitation",
     featured: true,
     motif: "lumi",
@@ -127,7 +178,7 @@ export const projects = [
   },
   {
     id: "tower-of-tricks",
-    code: "PRJ-004",
+    code: "PRJ-005",
     title: "Tower of Tricks",
     featured: false,
     accent: accents.purple,
@@ -143,7 +194,7 @@ export const projects = [
   },
   {
     id: "hungry-owl",
-    code: "PRJ-005",
+    code: "PRJ-006",
     title: "Hungry Owl",
     featured: false,
     accent: accents.cyan,
@@ -159,7 +210,7 @@ export const projects = [
   },
   {
     id: "overpriced",
-    code: "PRJ-006",
+    code: "PRJ-007",
     title: "Overpriced",
     featured: false,
     accent: accents.blue,

@@ -8,6 +8,10 @@ verify-shots/
 .DS_Store
 Thumbs.db
 
+# Master video captures — the site serves compressed web MP4s built from these.
+# Keeps ~90MB source files out of git history.
+*.mov
+
 # Root CV copy — the site serves the tracked copy at public/Vishnu_Bodapati_CV.pdf
 /Vishnu_Bodapati_CV.pdf
 

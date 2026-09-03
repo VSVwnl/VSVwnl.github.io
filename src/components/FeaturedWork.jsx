@@ -10,7 +10,7 @@ export default function FeaturedWork() {
       eyebrow="Selected Works"
       title="Selected"
       accent="Works"
-      lead="Flagship builds — award-winning hackathon projects and research systems, from a mixed-reality physics sandbox to clinical VR rehabilitation."
+      lead="Flagship builds — award-winning hackathon projects and research systems, from a spatial cinematography copilot to a mixed-reality physics sandbox and clinical VR rehabilitation."
     >
       <div className="flex flex-col gap-8 md:gap-12">
         {featuredProjects.map((project, i) => (

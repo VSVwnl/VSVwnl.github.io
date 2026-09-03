@@ -16,7 +16,7 @@ export const profile = {
     { label: "Duke M.Eng", tone: "violet" },
     { label: "I³T Lab", tone: "cyan" },
     { label: "XR / Game Dev", tone: "blue" },
-    { label: "2× Hackathon Winner", tone: "purple" },
+    { label: "3× Hackathon Winner", tone: "purple" },
   ],
 };
 
@@ -76,8 +76,8 @@ export const about = {
     },
   ],
   facts: [
-    { value: "06", label: "Projects filed" },
-    { value: "02", label: "Hackathon wins" },
+    { value: "07", label: "Projects filed" },
+    { value: "03", label: "Hackathon wins" },
     { value: "02", label: "Game engines" },
     { value: "I³T", label: "Duke research lab" },
   ],
@@ -87,6 +87,24 @@ export const about = {
 
 export const awards = [
   {
+    id: "xgrids-spatial-reconstruction",
+    event: "Build Beyond · Worlds in Action [02-LA]",
+    result: "1st Place — Best Spatial Reconstruction (XGRIDS)",
+    project: "LA48 CinemaScout",
+    url: "https://devpost.com/software/we-re-so-fucked",
+    icon: "trophy",
+    tone: "teal",
+  },
+  {
+    id: "pico-best-app-emulator",
+    event: "Build Beyond · Worlds in Action [02-LA]",
+    result: "1st Place — Best App on Emulator (PICO)",
+    project: "LA48 CinemaScout",
+    url: "https://devpost.com/software/we-re-so-fucked",
+    icon: "trophy",
+    tone: "cyan",
+  },
+  {
     id: "designxr-2026",
     event: "DesignXR Hackathon 2026",
     result: "1st Place — Grand Winner",
@@ -94,6 +112,15 @@ export const awards = [
     url: "https://devpost.com/software/mr-blueprint",
     icon: "trophy",
     tone: "cyan",
+  },
+  {
+    id: "worldlabs-interactive-world",
+    event: "Build Beyond · Worlds in Action [02-LA]",
+    result: "Runner-Up — Best Interactive World Experience (World Labs)",
+    project: "LA48 CinemaScout",
+    url: "https://devpost.com/software/we-re-so-fucked",
+    icon: "medal",
+    tone: "blue",
   },
   {
     id: "teamusa-gcloud",

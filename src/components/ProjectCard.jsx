@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ExternalLink, Play, Trophy } from "lucide-react";
 import { FadeIn } from "./Section.jsx";
@@ -181,6 +182,31 @@ function Cover({ project }) {
   const Motif = MOTIFS[project.motif];
   const status = project.statusLabel ?? (project.achievement ? "Award Winner" : "In Research");
   const hasThumb = Boolean(project.thumbnail);
+  const video = project.video;
+  const [playing, setPlaying] = useState(false);
+
+  // The <video> is only mounted once the visitor presses play, so the demo
+  // costs zero bytes on load — the poster frame is doing all the work until then.
+  if (playing && video) {
+    return (
+      <div className="relative aspect-[16/11] overflow-hidden rounded-2xl border border-white/10 bg-black">
+        <video
+          // autoPlay alone depends on the click's user-activation still being
+          // live when React mounts this node; the ref retries explicitly and
+          // swallows the rejection, leaving the visible controls as the fallback.
+          ref={(el) => el?.play().catch(() => {})}
+          src={video.src}
+          poster={video.poster ?? project.thumbnail}
+          controls
+          autoPlay
+          playsInline
+          onEnded={() => setPlaying(false)}
+          aria-label={`${project.title} demo video`}
+          className="absolute inset-0 h-full w-full object-contain"
+        />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -237,6 +263,25 @@ function Cover({ project }) {
             </div>
           )}
         </>
+      )}
+
+      {video && (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          data-cursor
+          aria-label={`Play the ${project.title} demo video`}
+          className="group/play absolute inset-0 z-20 grid place-items-center"
+        >
+          <span className="flex flex-col items-center gap-3">
+            <span className="grid size-16 place-items-center rounded-full border border-white/25 bg-black/45 text-white transition-all duration-300 group-hover/play:scale-110 group-hover/play:border-cyan-300/70 group-hover/play:bg-black/70 md:size-20">
+              <Play className="size-6 translate-x-0.5 md:size-7" aria-hidden="true" />
+            </span>
+            <span className="font-mono text-[10px] tracking-[0.24em] text-zinc-300 uppercase">
+              Watch Demo · {video.duration}
+            </span>
+          </span>
+        </button>
       )}
 
       {/* HUD chrome */}
