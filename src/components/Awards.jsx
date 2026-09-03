@@ -6,7 +6,7 @@ export default function Awards() {
   return (
     <Section
       id="awards"
-      index="04"
+      index="05"
       eyebrow="Recognition"
       title="Awards &"
       accent="Recognition"

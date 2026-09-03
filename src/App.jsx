@@ -54,6 +54,9 @@ export default function App() {
           <FeaturedWork />
         </Deferred>
         <Deferred>
+          <SkillConstellation />
+        </Deferred>
+        <Deferred>
           <ProjectArchive />
         </Deferred>
         <Deferred>
@@ -64,9 +67,6 @@ export default function App() {
         </Deferred>
         <Deferred>
           <Timeline />
-        </Deferred>
-        <Deferred>
-          <SkillConstellation />
         </Deferred>
         <Deferred>
           <Education />

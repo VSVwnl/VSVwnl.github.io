@@ -182,12 +182,10 @@ export const marqueeItems = [
   "Mixed Reality",
   "Spatial Computing",
   "VR Rehabilitation",
-  "AI Tools",
   "Unity",
   "Unreal Engine",
   "Physics Sandboxes",
   "Game Design",
-  "Playdate",
   "Interactive Systems",
 ];
 

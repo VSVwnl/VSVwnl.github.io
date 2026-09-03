@@ -88,7 +88,7 @@ export default function ProjectArchive() {
   return (
     <Section
       id="archive"
-      index="03"
+      index="04"
       eyebrow="Project Archive"
       title="The"
       accent="Archive"

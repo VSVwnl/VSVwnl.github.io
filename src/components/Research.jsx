@@ -16,7 +16,7 @@ export default function Research() {
   return (
     <Section
       id="research"
-      index="05"
+      index="06"
       eyebrow={`Research — ${research.lab}`}
       title="Lab"
       accent="Work"

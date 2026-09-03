@@ -89,7 +89,7 @@ export default function Contact() {
             {/* Separate SWE-facing resume — same person, different framing. */}
             <a href={profile.resume} download className="btn-ghost">
               <FileText className="size-4" aria-hidden="true" />
-              SWE Resume
+              Resume
             </a>
             <p className="font-mono text-[11px] tracking-[0.2em] text-zinc-500 uppercase">
               Based in {profile.location} — building at the Duke I³T Lab

@@ -12,6 +12,7 @@ import { profile, socials } from "../data/profile.js";
 const LINKS = [
   { id: "about", label: "About" },
   { id: "work", label: "Work" },
+  { id: "skills", label: "Skills" },
   { id: "archive", label: "Archive" },
   { id: "research", label: "Research" },
   { id: "contact", label: "Contact" },
@@ -30,19 +31,41 @@ export default function Navbar() {
   });
 
   // Track which section is on screen for the active nav state.
+  //
+  // This deliberately re-queries the DOM on each pass rather than observing a
+  // fixed element list: every section below the fold is React.lazy, so at mount
+  // time most of these ids do not exist yet. An IntersectionObserver wired up
+  // once would only ever watch the handful present on first paint, which is why
+  // the indicator never lit up.
+  //
+  // Reads are throttled to one per animation frame, so scrolling costs at most
+  // a single layout read per frame.
   useEffect(() => {
-    const targets = LINKS.map(({ id }) => document.getElementById(id)).filter(Boolean);
-    if (!targets.length) return undefined;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }
-      },
-      { rootMargin: "-35% 0px -55% 0px" }
-    );
-    targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.4;
+      let current = "";
+      for (const { id } of LINKS) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      }
+      setActive(current);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   // Lock body scroll while the mobile menu is open.

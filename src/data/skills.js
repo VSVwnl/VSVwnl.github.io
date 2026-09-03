@@ -22,7 +22,7 @@ export const skillClusters = [
       "XR Toolkit",
       "Meta XR SDK",
       "PICO Unity SDK",
-      "Gaussian Splat",
+      "Gaussian Splatting",
       "WebSpatial",
     ],
   },
@@ -55,7 +55,7 @@ export const skillClusters = [
     text: "text-purple-300",
     chip: "border-purple-400/25 text-purple-100/90",
     skills: [
-      "Gameplay",
+      "Game states",
       "Physics",
       "UI / HUD",
       "Audio",
@@ -91,6 +91,6 @@ export const skillClusters = [
     hex: "#5eead4",
     text: "text-teal-300",
     chip: "border-teal-400/25 text-teal-100/90",
-    skills: ["Git", "VS Code", "Android Studio", "MySQL", "QA / Debug"],
+    skills: ["Git", "GitHub", "VS Code", "Android Studio", "Netlify", "QA / Debug"],
   },
 ];

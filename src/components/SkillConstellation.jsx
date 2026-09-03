@@ -3,7 +3,7 @@ import Section, { FadeIn } from "./Section.jsx";
 import { skillClusters } from "../data/skills.js";
 
 const CX = 600;
-const CY = 490;
+const CY = 520;
 const HUB_RADIUS = 210;
 
 const rad = (deg) => (deg * Math.PI) / 180;
@@ -14,19 +14,21 @@ function layoutCluster(cluster) {
   const hub = { x: CX + HUB_RADIUS * Math.cos(a), y: CY + HUB_RADIUS * Math.sin(a) };
 
   const n = cluster.skills.length;
-  // Wider fan + a 3-step radial stagger (below): with 7-9 long skill names a
-  // 2-step stagger put same-radius neighbours ~26 degrees apart, which overlapped
-  // their labels. Capped at 94 degrees so a fan never reaches its neighbour hub,
-  // which sits 60 degrees away.
-  const spread = n > 1 ? Math.min(94, (n - 1) * 16) : 0;
+  // Capped at 104 degrees so a fan never reaches its neighbour hub, 60 degrees away.
+  const spread = n > 1 ? Math.min(104, (n - 1) * 15) : 0;
   const start = cluster.angle - spread / 2;
   const step = n > 1 ? spread / (n - 1) : 0;
 
-  const nodes = cluster.skills.map((skill, i) => {
+  // Shortest label innermost, longest outermost. Arc length between two angular
+  // steps grows with radius, so the longest names land where there is most room.
+  // Together with the monotonic radius below (every node gets its own ring) this
+  // is what stops labels colliding: the previous cycling radius put same-ring
+  // neighbours only a few degrees apart and their text overlapped.
+  const ordered = [...cluster.skills].sort((a, b) => a.length - b.length);
+
+  const nodes = ordered.map((skill, i) => {
     const angle = rad(start + step * i);
-    // Dense clusters cycle through 4 radii instead of 3: same-radius neighbours
-    // end up further apart, which is what keeps their labels from touching.
-    const r = 100 + (i % (n >= 7 ? 4 : 3)) * 46;
+    const r = 104 + i * 20;
     const x = hub.x + r * Math.cos(angle);
     const y = hub.y + r * Math.sin(angle);
     const c = Math.cos(angle);
@@ -43,7 +45,7 @@ function layoutCluster(cluster) {
 function ConstellationSvg({ effective, onHover, onToggle }) {
   return (
     <svg
-      viewBox="0 0 1200 980"
+      viewBox="0 0 1200 1040"
       className="h-auto w-full"
       aria-hidden="true"
       role="presentation"
@@ -190,7 +192,7 @@ export default function SkillConstellation() {
   return (
     <Section
       id="skills"
-      index="07"
+      index="03"
       eyebrow="Stack & Systems"
       title="Skill"
       accent="Constellation"

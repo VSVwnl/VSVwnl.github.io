@@ -5,7 +5,7 @@ export default function Timeline() {
   return (
     <Section
       id="experience"
-      index="06"
+      index="07"
       eyebrow="Timeline"
       title="Experience"
       accent="Log"
