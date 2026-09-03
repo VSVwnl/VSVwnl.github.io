@@ -22,6 +22,7 @@ export const skillClusters = [
       "XR Toolkit",
       "Meta XR SDK",
       "PICO Unity SDK",
+      "Logitech MX Ink",
       "Gaussian Splatting",
       "WebSpatial",
     ],
@@ -79,8 +80,9 @@ export const skillClusters = [
       "Tailwind",
       "REST APIs",
       "Docker",
-      "Cloud Run",
+      "Google Cloud Run",
       "Gemini API",
+      "Claude / GPT",
     ],
   },
   {

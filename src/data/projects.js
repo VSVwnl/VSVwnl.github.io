@@ -3,7 +3,7 @@
 // flagship case-study card in Selected Works. Add new work to this array and
 // it will appear in the archive (and its category filters) automatically.
 
-export const categories = ["XR", "Games", "AI/Cloud", "Research", "Game Jam", "Tools"];
+export const categories = ["XR", "Games", "AI/Cloud", "Research", "Game Jam"];
 
 // Accent styles are full literal class strings so Tailwind can see them.
 const accents = {
