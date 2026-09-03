@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import Marquee from "./components/Marquee.jsx";
 import About from "./components/About.jsx";
-import CursorGlow from "./components/CursorGlow.jsx";
 import Preloader from "./components/Preloader.jsx";
 import { marqueeItems, contactMarqueeItems } from "./data/profile.js";
 
@@ -35,7 +34,6 @@ export default function App() {
       </a>
 
       <Preloader />
-      <CursorGlow />
 
       {/* Film-grain overlay for the whole page. No mix-blend-mode: a blended
           full-screen fixed layer forces the compositor to re-blend everything

@@ -267,7 +267,6 @@ function Cover({ project }) {
         <button
           type="button"
           onClick={() => setPlaying(true)}
-          data-cursor
           aria-label={`Play the ${project.title} demo video`}
           className="group/play absolute inset-0 z-20 grid place-items-center"
         >
@@ -429,7 +428,6 @@ export default function ProjectCard({ project, index }) {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      data-cursor
                       className={
                         primary
                           ? "inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 px-5 py-2.5 font-display text-sm font-semibold text-[#050509] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-12px_rgba(34,211,238,0.6)]"

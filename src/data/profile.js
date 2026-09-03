@@ -7,8 +7,9 @@ export const profile = {
   roles: ["XR Developer", "Spatial Computing Builder", "Game Developer"],
   positioning:
     "I build immersive worlds and interactive experiences through XR systems, spatial computing, and games that turn technical ideas into playable realities.",
-  email: "vishnu.bodapati@duke.edu",
+  email: "vishnusai.usa@gmail.com",
   cv: "/Vishnu_Bodapati_CV.pdf",
+  resume: "/Vishnu_Bodapati_SWE_Resume.pdf",
   portrait: "/Assets/profile/vishnu-headshot.jpg",
   location: "Durham, NC",
   coordinates: "35.99° N / 78.90° W",
@@ -42,8 +43,8 @@ export const socials = [
   {
     id: "email",
     label: "Email",
-    handle: "vishnu.bodapati@duke.edu",
-    url: "mailto:vishnu.bodapati@duke.edu",
+    handle: "vishnusai.usa@gmail.com",
+    url: "mailto:vishnusai.usa@gmail.com",
   },
 ];
 
@@ -88,18 +89,18 @@ export const about = {
 export const awards = [
   {
     id: "xgrids-spatial-reconstruction",
-    event: "Build Beyond · Worlds in Action [02-LA]",
+    event: "Worlds in Action Hack [02-LA]",
     result: "1st Place — Best Spatial Reconstruction (XGRIDS)",
-    project: "LA48 CinemaScout",
+    project: "CinemaScout",
     url: "https://devpost.com/software/we-re-so-fucked",
     icon: "trophy",
     tone: "teal",
   },
   {
     id: "pico-best-app-emulator",
-    event: "Build Beyond · Worlds in Action [02-LA]",
+    event: "Worlds in Action Hack [02-LA]",
     result: "1st Place — Best App on Emulator (PICO)",
-    project: "LA48 CinemaScout",
+    project: "CinemaScout",
     url: "https://devpost.com/software/we-re-so-fucked",
     icon: "trophy",
     tone: "cyan",
@@ -115,9 +116,9 @@ export const awards = [
   },
   {
     id: "worldlabs-interactive-world",
-    event: "Build Beyond · Worlds in Action [02-LA]",
+    event: "Worlds in Action Hack [02-LA]",
     result: "Runner-Up — Best Interactive World Experience (World Labs)",
-    project: "LA48 CinemaScout",
+    project: "CinemaScout",
     url: "https://devpost.com/software/we-re-so-fucked",
     icon: "medal",
     tone: "blue",

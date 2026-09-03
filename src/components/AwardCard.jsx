@@ -17,7 +17,6 @@ export default function AwardCard({ award, index }) {
       href={award.url}
       target="_blank"
       rel="noopener noreferrer"
-      data-cursor
       className="panel group flex items-center gap-5 p-6 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.05] md:gap-8 md:p-8"
     >
       <span className="hidden font-display text-sm font-bold text-zinc-600 sm:block">

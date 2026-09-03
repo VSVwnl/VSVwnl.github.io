@@ -60,7 +60,6 @@ export default function Footer() {
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             aria-label="Back to top"
-            data-cursor
             className="grid size-11 place-items-center rounded-full border border-white/15 text-zinc-100 transition-all duration-300 hover:border-cyan-400/60 hover:bg-cyan-400/10"
           >
             <ArrowUp className="size-4" aria-hidden="true" />

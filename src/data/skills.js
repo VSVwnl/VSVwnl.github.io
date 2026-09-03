@@ -2,6 +2,10 @@
 // Rendered as an interactive star map on desktop and cluster panels on mobile.
 // `angle` positions each cluster hub around the core (degrees, 0 = right,
 // clockwise in SVG space). Colors are literal class strings for Tailwind.
+//
+// Mirrors the TECHNICAL SKILLS section of the CV. The CV groups Engines and XR
+// together; they are split here so neither hub carries an unreadable node count.
+// Labels stay short on purpose — the hub pill is sized from its character count.
 
 export const skillClusters = [
   {
@@ -12,7 +16,15 @@ export const skillClusters = [
     hex: "#22d3ee",
     text: "text-cyan-400",
     chip: "border-cyan-400/25 text-cyan-100/90",
-    skills: ["Meta Quest 3", "OpenXR", "XR Interaction Toolkit", "Meta XR SDK", "URP"],
+    skills: [
+      "Meta Quest 3/3S",
+      "OpenXR",
+      "XR Toolkit",
+      "Meta XR SDK",
+      "PICO Unity SDK",
+      "Gaussian Splat",
+      "WebSpatial",
+    ],
   },
   {
     id: "engines",
@@ -22,7 +34,7 @@ export const skillClusters = [
     hex: "#a78bfa",
     text: "text-violet-300",
     chip: "border-violet-400/25 text-violet-100/90",
-    skills: ["Unity", "Unreal Engine"],
+    skills: ["Unity", "Unreal Engine", "URP"],
   },
   {
     id: "programming",
@@ -32,36 +44,53 @@ export const skillClusters = [
     hex: "#60a5fa",
     text: "text-blue-300",
     chip: "border-blue-400/25 text-blue-100/90",
-    skills: ["C#", "C++", "Python", "JavaScript", "TypeScript", "Java"],
+    skills: ["C#", "C++", "C", "Python", "JavaScript", "TypeScript", "Java", "Lua", "SQL"],
   },
   {
-    id: "web",
-    label: "Web",
-    icon: "globe",
+    id: "gameplay",
+    label: "Gameplay",
+    icon: "joystick",
     angle: 90,
     hex: "#c084fc",
     text: "text-purple-300",
     chip: "border-purple-400/25 text-purple-100/90",
-    skills: ["React", "Next.js", "Vite", "Tailwind CSS"],
+    skills: [
+      "Gameplay",
+      "Physics",
+      "UI / HUD",
+      "Audio",
+      "Input",
+      "Packaging",
+      "Profiling",
+    ],
+  },
+  {
+    id: "web-cloud",
+    label: "Web / Cloud",
+    icon: "globe",
+    angle: 30,
+    hex: "#93c5fd",
+    text: "text-sky-300",
+    chip: "border-sky-400/25 text-sky-100/90",
+    skills: [
+      "React",
+      "Next.js",
+      "Node.js",
+      "Tailwind",
+      "REST APIs",
+      "Docker",
+      "Cloud Run",
+      "Gemini API",
+    ],
   },
   {
     id: "tools",
     label: "Tools",
     icon: "wrench",
-    angle: 30,
-    hex: "#93c5fd",
-    text: "text-sky-300",
-    chip: "border-sky-400/25 text-sky-100/90",
-    skills: ["Git", "GitHub", "Android Studio", "MySQL", "UI/UX Prototyping"],
-  },
-  {
-    id: "ai-cloud",
-    label: "AI / Cloud",
-    icon: "sparkles",
     angle: -30,
-    hex: "#22d3ee",
-    text: "text-cyan-300",
-    chip: "border-cyan-400/25 text-cyan-50/90",
-    skills: ["Gemini", "Google Cloud Run", "AI-assisted tools"],
+    hex: "#5eead4",
+    text: "text-teal-300",
+    chip: "border-teal-400/25 text-teal-100/90",
+    skills: ["Git", "VS Code", "Android Studio", "MySQL", "QA / Debug"],
   },
 ];

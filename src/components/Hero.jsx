@@ -228,11 +228,11 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
             >
-              <a href="#work" className="btn-primary" data-cursor>
+              <a href="#work" className="btn-primary">
                 Explore Work
                 <ArrowDown className="size-4" aria-hidden="true" />
               </a>
-              <a href={profile.cv} download className="btn-ghost" data-cursor>
+              <a href={profile.cv} download className="btn-ghost">
                 <Download className="size-4" aria-hidden="true" />
                 Download CV
               </a>

@@ -48,7 +48,7 @@ export const projects = [
   {
     id: "cinemascout",
     code: "PRJ-001",
-    title: "LA48 CinemaScout",
+    title: "CinemaScout",
     featured: true,
     thumbnail: "/Assets/profile/cinemascout.jpg",
     // Click-to-play on the cover. The <video> element is only mounted on press,
@@ -79,10 +79,9 @@ export const projects = [
     description:
       "A spatial cinematography copilot for planning, previewing, and refining camera shots inside interactive 3D environments — letting filmmakers scout digitally reconstructed locations before physical production.",
     highlights: [
-      "Walk through 3D Gaussian Splat reconstructions of real locations in headset.",
-      "Position virtual cinema cameras and tune focal length, field of view, aspect ratio, height, and clipping.",
-      "Preview shots from multiple viewpoints, save camera positions, and build move paths with a dolly-style path editor.",
-      "AI-assisted shot recommendations, coordinated through a spatial Mission Control interface.",
+      "Built the Unity application letting filmmakers explore 3D Gaussian Splat reconstructions and plan shots at real-world scale before a physical site visit.",
+      "Implemented the virtual cinema camera system — focal length, field of view, aspect ratio, height and clipping — plus spline-based tracking-shot playback previewable in-headset.",
+      "Contributed the AI-assisted shot recommendation feature and the WebSpatial \"Mission Control\" dashboard for organizing and comparing candidate viewpoints.",
     ],
     links: [
       { label: "View on Devpost", url: "https://devpost.com/software/we-re-so-fucked", icon: "external" },

@@ -3,8 +3,8 @@ import Section, { FadeIn } from "./Section.jsx";
 import { skillClusters } from "../data/skills.js";
 
 const CX = 600;
-const CY = 430;
-const HUB_RADIUS = 225;
+const CY = 490;
+const HUB_RADIUS = 210;
 
 const rad = (deg) => (deg * Math.PI) / 180;
 
@@ -14,13 +14,19 @@ function layoutCluster(cluster) {
   const hub = { x: CX + HUB_RADIUS * Math.cos(a), y: CY + HUB_RADIUS * Math.sin(a) };
 
   const n = cluster.skills.length;
-  const spread = n > 1 ? Math.min(80, (n - 1) * 17) : 0;
+  // Wider fan + a 3-step radial stagger (below): with 7-9 long skill names a
+  // 2-step stagger put same-radius neighbours ~26 degrees apart, which overlapped
+  // their labels. Capped at 94 degrees so a fan never reaches its neighbour hub,
+  // which sits 60 degrees away.
+  const spread = n > 1 ? Math.min(94, (n - 1) * 16) : 0;
   const start = cluster.angle - spread / 2;
   const step = n > 1 ? spread / (n - 1) : 0;
 
   const nodes = cluster.skills.map((skill, i) => {
     const angle = rad(start + step * i);
-    const r = 118 + (i % 2) * 40;
+    // Dense clusters cycle through 4 radii instead of 3: same-radius neighbours
+    // end up further apart, which is what keeps their labels from touching.
+    const r = 100 + (i % (n >= 7 ? 4 : 3)) * 46;
     const x = hub.x + r * Math.cos(angle);
     const y = hub.y + r * Math.sin(angle);
     const c = Math.cos(angle);
@@ -37,7 +43,7 @@ function layoutCluster(cluster) {
 function ConstellationSvg({ effective, onHover, onToggle }) {
   return (
     <svg
-      viewBox="0 0 1200 860"
+      viewBox="0 0 1200 980"
       className="h-auto w-full"
       aria-hidden="true"
       role="presentation"
@@ -117,7 +123,6 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
             <g
               onClick={() => onToggle(cluster.id)}
               style={{ cursor: "pointer" }}
-              data-cursor
             >
               <rect
                 x={hub.x - pillW / 2}

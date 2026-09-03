@@ -1,4 +1,4 @@
-import { ArrowUpRight, Download, Gamepad2, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUpRight, Download, FileText, Gamepad2, Github, Linkedin, Mail } from "lucide-react";
 import { RevealLine, FadeIn } from "./Section.jsx";
 import { profile, socials } from "../data/profile.js";
 
@@ -42,7 +42,6 @@ export default function Contact() {
         <FadeIn delay={0.2}>
           <a
             href={`mailto:${profile.email}`}
-            data-cursor
             className="hover-link mt-6 inline-block max-w-full font-display text-[clamp(1.25rem,4.2vw,3.2rem)] font-bold tracking-tight break-all text-zinc-200 transition-colors duration-300 hover:text-cyan-300"
           >
             {profile.email}
@@ -58,7 +57,6 @@ export default function Contact() {
                   href={social.url}
                   target={social.id === "email" ? undefined : "_blank"}
                   rel={social.id === "email" ? undefined : "noopener noreferrer"}
-                  data-cursor
                   className="panel group flex h-full items-center gap-4 p-5 transition-all duration-500 hover:border-cyan-400/40 hover:bg-white/[0.05]"
                 >
                   <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/[0.03] text-zinc-300 transition-colors duration-300 group-hover:border-cyan-400/40 group-hover:text-cyan-400">
@@ -83,10 +81,15 @@ export default function Contact() {
         </div>
 
         <FadeIn delay={0.25}>
-          <div className="mt-12 flex flex-wrap items-center gap-6">
-            <a href={profile.cv} download className="btn-primary" data-cursor>
+          <div className="mt-12 flex flex-wrap items-center gap-4">
+            <a href={profile.cv} download className="btn-primary">
               <Download className="size-4" aria-hidden="true" />
               Download CV
+            </a>
+            {/* Separate SWE-facing resume — same person, different framing. */}
+            <a href={profile.resume} download className="btn-ghost">
+              <FileText className="size-4" aria-hidden="true" />
+              SWE Resume
             </a>
             <p className="font-mono text-[11px] tracking-[0.2em] text-zinc-500 uppercase">
               Based in {profile.location} — building at the Duke I³T Lab

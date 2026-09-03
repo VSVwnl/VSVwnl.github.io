@@ -15,7 +15,7 @@ function ArchiveRow({ project, index }) {
   const link = project.links[0];
   const Wrapper = link ? "a" : "div";
   const wrapperProps = link
-    ? { href: link.url, target: "_blank", rel: "noopener noreferrer", "data-cursor": true }
+    ? { href: link.url, target: "_blank", rel: "noopener noreferrer" }
     : {};
 
   return (
