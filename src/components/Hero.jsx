@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { ArrowDown, ArrowUpRight, Download, Trophy } from "lucide-react";
 import { awards, profile } from "../data/profile.js";
 import ParticleField from "./ParticleField.jsx";
@@ -7,12 +14,63 @@ import HeroPortrait from "./HeroPortrait.jsx";
 
 const EASE = [0.16, 1, 0.3, 1];
 
+// Same gate ProjectCard uses for tilt: on touch devices pointermove fires
+// during scroll, which would drive the rings for no benefit. Static site —
+// evaluated once at module load.
+const FINE_POINTER =
+  typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches;
+
 const CHIP_DOTS = {
   violet: "bg-violet-300",
-  cyan: "bg-cyan-300",
+  cyan: "bg-cyan-400",
   blue: "bg-blue-300",
   purple: "bg-purple-300",
 };
+
+/**
+ * Concentric rings that separate by depth as the pointer moves across the hero.
+ *
+ * Deliberately idle: with no pointer input the motion values sit at 0 and the
+ * rings render perfectly still, so coarse pointers and reduced-motion users get
+ * a static composition rather than a substitute animation. Nothing here loops.
+ */
+function OrbitalRings({ mx, my }) {
+  // Each ring takes a larger multiplier than the one outside it, so they
+  // spread apart under movement instead of translating as a single plate.
+  const rot1 = useTransform(mx, (v) => v * 10);
+  const rot2 = useTransform(mx, (v) => v * -16);
+  const rot3 = useTransform(mx, (v) => v * 24);
+  const x1 = useTransform(mx, (v) => v * 16);
+  const x2 = useTransform(mx, (v) => v * 30);
+  const x3 = useTransform(mx, (v) => v * 46);
+  const y1 = useTransform(my, (v) => v * 12);
+  const y2 = useTransform(my, (v) => v * 24);
+  const y3 = useTransform(my, (v) => v * 38);
+
+  return (
+    <div className="absolute top-1/2 right-[-24%] hidden aspect-square w-[56vw] max-w-[880px] -translate-y-1/2 md:block lg:right-[-14%] lg:w-[46vw]">
+      <motion.div
+        className="absolute inset-0 rounded-full border border-white/10"
+        style={{ rotate: rot1, x: x1, y: y1 }}
+      >
+        <span className="absolute top-1/2 -left-1 size-2 rounded-full bg-cyan-400 shadow-[0_0_18px_4px_rgba(34,211,238,0.55)]" />
+      </motion.div>
+      <motion.div
+        className="absolute inset-[14%] rounded-full border border-dashed border-violet-400/25"
+        style={{ rotate: rot2, x: x2, y: y2 }}
+      >
+        <span className="absolute -top-1 left-1/2 size-1.5 rounded-full bg-violet-300 shadow-[0_0_14px_3px_rgba(167,139,250,0.55)]" />
+      </motion.div>
+      <motion.div
+        className="absolute inset-[30%] rounded-full border border-white/8"
+        style={{ rotate: rot3, x: x3, y: y3 }}
+      >
+        <span className="absolute top-[12%] right-[8%] size-1.5 rounded-full bg-blue-300 shadow-[0_0_14px_3px_rgba(96,165,250,0.55)]" />
+      </motion.div>
+      <div className="absolute inset-[44%] rounded-full bg-gradient-to-br from-violet-500/12 to-cyan-400/12 blur-2xl" />
+    </div>
+  );
+}
 
 function HeroLine({ children, delay }) {
   return (
@@ -33,6 +91,26 @@ export default function Hero() {
   const reduce = useReducedMotion();
   const [roleIdx, setRoleIdx] = useState(0);
 
+  // Pointer position across the hero, normalised to -0.5..0.5 and smoothed.
+  // Left at 0 when the visitor can't (or shouldn't) drive it, which renders
+  // the rings static — see OrbitalRings.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const ringX = useSpring(pointerX, { stiffness: 70, damping: 20, mass: 0.7 });
+  const ringY = useSpring(pointerY, { stiffness: 70, damping: 20, mass: 0.7 });
+  const ringsInteractive = !reduce && FINE_POINTER;
+
+  const onPointerMove = (e) => {
+    if (!ringsInteractive) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    pointerX.set((e.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+  const onPointerLeave = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
+
   useEffect(() => {
     if (reduce) return undefined;
     const id = setInterval(
@@ -46,6 +124,8 @@ export default function Hero() {
     <section
       id="home"
       data-section
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       className="relative flex min-h-svh flex-col justify-center overflow-hidden px-5 pt-32 pb-24 sm:px-8 lg:px-14"
     >
       {/* ── Atmosphere ── */}
@@ -59,28 +139,8 @@ export default function Hero() {
         <div className="absolute top-[8%] right-[-14%] h-[55vh] w-[55vh] rounded-full bg-cyan-500/16 blur-[130px]" />
         <div className="absolute bottom-[10%] left-[30%] h-[40vh] w-[40vh] rounded-full bg-blue-600/14 blur-[120px]" />
 
-        {/* Orbital rings */}
-        <div className="absolute top-1/2 right-[-24%] hidden aspect-square w-[56vw] max-w-[880px] -translate-y-1/2 md:block lg:right-[-14%] lg:w-[46vw]">
-          <div
-            className="animate-spin-slow absolute inset-0 rounded-full border border-white/10"
-            style={{ "--spin-duration": "52s" }}
-          >
-            <span className="absolute top-1/2 -left-1 size-2 rounded-full bg-cyan-300 shadow-[0_0_18px_4px_rgba(103,232,249,0.55)]" />
-          </div>
-          <div
-            className="animate-spin-slow absolute inset-[14%] rounded-full border border-dashed border-violet-400/25"
-            style={{ "--spin-duration": "74s", animationDirection: "reverse" }}
-          >
-            <span className="absolute -top-1 left-1/2 size-1.5 rounded-full bg-violet-300 shadow-[0_0_14px_3px_rgba(167,139,250,0.55)]" />
-          </div>
-          <div
-            className="animate-spin-slow absolute inset-[30%] rounded-full border border-white/8"
-            style={{ "--spin-duration": "38s" }}
-          >
-            <span className="absolute top-[12%] right-[8%] size-1.5 rounded-full bg-blue-300 shadow-[0_0_14px_3px_rgba(96,165,250,0.55)]" />
-          </div>
-          <div className="absolute inset-[44%] rounded-full bg-gradient-to-br from-violet-500/12 to-cyan-400/12 blur-2xl" />
-        </div>
+        {/* Orbital rings — driven by the pointer, not a clock. See OrbitalRings. */}
+        <OrbitalRings mx={ringX} my={ringY} />
 
         {/* Perspective grid floor */}
         <div className="hero-floor absolute inset-x-[-18%] bottom-[-8%] h-[44vh]" />
@@ -96,7 +156,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
         >
           <p className="mono-label text-zinc-400">
-            <span className="text-cyan-300">◇</span> {profile.name}
+            <span className="text-cyan-400">◇</span> {profile.name}
           </p>
           <p className="mono-label hidden text-zinc-600 lg:block">
             {profile.location} — {profile.coordinates}
@@ -105,7 +165,7 @@ export default function Hero() {
 
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1.35fr_0.65fr] lg:items-center lg:gap-10 xl:gap-16">
           <div>
-            <h1 className="font-display text-[clamp(3.1rem,11.5vw,9.5rem)] leading-[0.92] font-bold tracking-tight text-white uppercase">
+            <h1 className="font-display text-[clamp(3.1rem,11.5vw,9.5rem)] leading-[0.92] font-bold tracking-tight text-zinc-200 uppercase">
               <HeroLine delay={0.1}>Building</HeroLine>
               <HeroLine delay={0.18}>
                 <span className="text-gradient">Playable</span>
@@ -121,11 +181,11 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.35 }}
             >
-              <span aria-hidden="true" className="h-px w-8 bg-cyan-300/70" />
+              <span aria-hidden="true" className="h-px w-8 bg-cyan-400/70" />
               <AnimatePresence mode="wait">
                 <motion.span
                   key={roleIdx}
-                  className="font-mono text-xs tracking-[0.24em] text-cyan-200 uppercase md:text-sm"
+                  className="font-mono text-xs tracking-[0.24em] text-cyan-300 uppercase md:text-sm"
                   initial={{ y: 18, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -18, opacity: 0 }}
@@ -151,18 +211,11 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.48, ease: EASE }}
             >
-              {profile.statusChips.map((chip, i) => (
-                <span
-                  key={chip.label}
-                  className="chip animate-float"
-                  style={{
-                    "--float-duration": `${6 + i * 1.3}s`,
-                    animationDelay: `${i * 0.65}s`,
-                  }}
-                >
+              {profile.statusChips.map((chip) => (
+                <span key={chip.label} className="chip">
                   <span
                     aria-hidden="true"
-                    className={`animate-pulse-soft size-1.5 rounded-full ${CHIP_DOTS[chip.tone]}`}
+                    className={`size-1.5 rounded-full ${CHIP_DOTS[chip.tone]}`}
                   />
                   {chip.label}
                 </span>
@@ -189,7 +242,7 @@ export default function Hero() {
               >
                 Contact
                 <ArrowUpRight
-                  className="size-4 text-cyan-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="size-4 text-cyan-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   aria-hidden="true"
                 />
               </a>
@@ -208,7 +261,7 @@ export default function Hero() {
                   key={a.id}
                   className="flex items-center gap-2.5 font-mono text-[10px] tracking-[0.18em] text-zinc-500 uppercase"
                 >
-                  <Trophy className="size-3.5 shrink-0 text-cyan-300/80" aria-hidden="true" />
+                  <Trophy className="size-3.5 shrink-0 text-cyan-400/80" aria-hidden="true" />
                   <span>
                     {a.event} —{" "}
                     <span className="text-zinc-300">{a.result.split(" — ")[0]}</span>
@@ -233,7 +286,7 @@ export default function Hero() {
         <span className="mono-label text-zinc-600">Scroll</span>
         <span className="relative h-12 w-px overflow-hidden bg-white/10">
           <motion.span
-            className="absolute top-0 left-0 h-4 w-full bg-gradient-to-b from-transparent via-cyan-300 to-cyan-300"
+            className="absolute top-0 left-0 h-4 w-full bg-gradient-to-b from-transparent via-cyan-400 to-cyan-400"
             animate={reduce ? undefined : { y: [-16, 48] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeIn" }}
           />

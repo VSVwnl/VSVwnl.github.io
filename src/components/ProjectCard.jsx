@@ -19,7 +19,7 @@ function BlueprintMotif({ hex }) {
     <svg viewBox="0 0 400 275" className="h-full w-full" aria-hidden="true">
       {/* dashed orbit + tracked dot */}
       <circle cx="200" cy="140" r="112" fill="none" stroke={hex} strokeOpacity="0.22" strokeWidth="1" strokeDasharray="3 7" />
-      <g className="animate-spin-slow" style={{ transformOrigin: "200px 140px", transformBox: "view-box", "--spin-duration": "26s" }}>
+      <g>
         <circle cx="312" cy="140" r="3" fill={hex} />
       </g>
 
@@ -30,7 +30,7 @@ function BlueprintMotif({ hex }) {
       <line x1="344" y1="140" x2="376" y2="140" stroke={hex} strokeOpacity="0.3" strokeWidth="1" />
 
       {/* isometric wireframe cube with edit handles */}
-      <g className="animate-float" style={{ "--float-duration": "7s" }}>
+      <g>
         <g fill="none" stroke={hex} strokeWidth="1.3" strokeOpacity="0.9" strokeLinejoin="round">
           <path d="M200 78 L258 108 L200 138 L142 108 Z" />
           <path d="M258 108 L258 172 L200 202 L200 138" />
@@ -56,7 +56,7 @@ function BlueprintMotif({ hex }) {
       </g>
 
       {/* physics arc */}
-      <path d="M96 220 Q 150 150 232 212" fill="none" stroke={hex} strokeOpacity="0.4" strokeWidth="1.2" strokeDasharray="5 6" className="animate-dash" />
+      <path d="M96 220 Q 150 150 232 212" fill="none" stroke={hex} strokeOpacity="0.4" strokeWidth="1.2" strokeDasharray="5 6" />
       <circle cx="96" cy="220" r="3.5" fill={hex} fillOpacity="0.8" />
     </svg>
   );
@@ -80,7 +80,7 @@ function DraftMotif({ hex }) {
       <line x1="200" y1="12" x2="200" y2="248" stroke={hex} strokeOpacity="0.14" strokeWidth="1" />
 
       {/* rotating sweep */}
-      <g className="animate-spin-slow" style={{ transformOrigin: "200px 130px", transformBox: "view-box", "--spin-duration": "9s" }}>
+      <g>
         <path d="M200 130 L318 130 A118 118 0 0 0 302 71 Z" fill="url(#draft-sweep)" />
         <line x1="200" y1="130" x2="318" y2="130" stroke={hex} strokeOpacity="0.7" strokeWidth="1.2" />
       </g>
@@ -91,7 +91,7 @@ function DraftMotif({ hex }) {
       ].map(([x, y, r], i) => (
         <g key={i}>
           <circle cx={x} cy={y} r={r} fill={hex} fillOpacity="0.9" />
-          <circle cx={x} cy={y} r={r + 5} fill="none" stroke={hex} strokeOpacity="0.35" strokeWidth="1" className="animate-pulse-soft" style={{ animationDelay: `${i * 0.5}s` }} />
+          <circle cx={x} cy={y} r={r + 5} fill="none" stroke={hex} strokeOpacity="0.35" strokeWidth="1" />
         </g>
       ))}
 
@@ -129,20 +129,18 @@ function LumiMotif({ hex }) {
           stroke={hex}
           strokeOpacity={0.34 - i * 0.07}
           strokeWidth="1.1"
-          className="animate-pulse-soft"
-          style={{ animationDelay: `${i * 0.65}s`, animationDuration: "5.2s" }}
         />
       ))}
 
       {/* comfort orb */}
-      <g className="animate-float" style={{ "--float-duration": "8s" }}>
+      <g>
         <circle cx="200" cy="128" r="42" fill="url(#lumi-orb)" />
         <circle cx="200" cy="128" r="14" fill={hex} fillOpacity="0.9" />
         <circle cx="200" cy="128" r="22" fill="none" stroke="#fff" strokeOpacity="0.35" strokeWidth="1" strokeDasharray="2 5" />
       </g>
 
       {/* guided head-rotation arc with endpoints */}
-      <path d="M92 196 A 122 122 0 0 1 308 196" fill="none" stroke={hex} strokeOpacity="0.5" strokeWidth="1.3" strokeDasharray="6 7" className="animate-dash" />
+      <path d="M92 196 A 122 122 0 0 1 308 196" fill="none" stroke={hex} strokeOpacity="0.5" strokeWidth="1.3" strokeDasharray="6 7" />
       <circle cx="92" cy="196" r="4" fill="none" stroke={hex} strokeWidth="1.4" />
       <circle cx="308" cy="196" r="4" fill="none" stroke={hex} strokeWidth="1.4" />
 
@@ -167,7 +165,7 @@ const MOTIFS = {
 /* ─── Cover panel (the "interactive window") ─────────────────────────────── */
 
 function CornerBrackets() {
-  const base = "absolute size-5 border-cyan-300/40";
+  const base = "absolute size-5 border-cyan-400/40";
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-3 transition-opacity duration-500">
       <span className={`${base} top-0 left-0 border-t border-l`} />
@@ -274,7 +272,7 @@ function Cover({ project }) {
           className="group/play absolute inset-0 z-20 grid place-items-center"
         >
           <span className="flex flex-col items-center gap-3">
-            <span className="grid size-16 place-items-center rounded-full border border-white/25 bg-black/45 text-white transition-all duration-300 group-hover/play:scale-110 group-hover/play:border-cyan-300/70 group-hover/play:bg-black/70 md:size-20">
+            <span className="grid size-16 place-items-center rounded-full border border-white/25 bg-black/45 text-zinc-100 transition-all duration-300 group-hover/play:scale-110 group-hover/play:border-cyan-400/70 group-hover/play:bg-black/70 md:size-20">
               <Play className="size-6 translate-x-0.5 md:size-7" aria-hidden="true" />
             </span>
             <span className="font-mono text-[10px] tracking-[0.24em] text-zinc-300 uppercase">
@@ -290,7 +288,7 @@ function Cover({ project }) {
           {project.code} // {project.id}
         </span>
         <span className={`hidden items-center gap-1.5 truncate rounded-full border px-2.5 py-1 font-mono text-[9px] tracking-[0.18em] whitespace-nowrap uppercase sm:inline-flex ${project.accent.chip}`}>
-          <span className={`size-1 shrink-0 rounded-full ${project.accent.dot} animate-pulse-soft`} />
+          <span className={`size-1 shrink-0 rounded-full ${project.accent.dot}`} />
           {status}
         </span>
       </div>
@@ -368,7 +366,7 @@ export default function ProjectCard({ project, index }) {
               </span>
             </div>
 
-            <h3 className="mt-4 font-display text-3xl font-bold tracking-tight text-white md:text-[2.6rem] md:leading-[1.05]">
+            <h3 className="mt-4 font-display text-3xl font-bold tracking-tight text-zinc-200 md:text-[2.6rem] md:leading-[1.05]">
               {project.title}
             </h3>
             <p className={`mt-2 font-mono text-xs tracking-[0.18em] uppercase ${project.accent.text}`}>
@@ -383,7 +381,7 @@ export default function ProjectCard({ project, index }) {
                     key={honor}
                     className="inline-flex items-start gap-2.5 rounded-2xl border border-white/12 bg-gradient-to-r from-violet-500/12 via-blue-500/10 to-cyan-400/12 px-4 py-2.5 text-xs leading-relaxed text-zinc-200 md:text-sm"
                   >
-                    <Trophy className="mt-0.5 size-4 shrink-0 text-cyan-300" aria-hidden="true" />
+                    <Trophy className="mt-0.5 size-4 shrink-0 text-cyan-400" aria-hidden="true" />
                     {honor}
                   </p>
                 ))}
@@ -434,7 +432,7 @@ export default function ProjectCard({ project, index }) {
                       data-cursor
                       className={
                         primary
-                          ? "inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-300 px-5 py-2.5 font-display text-sm font-semibold text-[#050509] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-12px_rgba(103,232,249,0.6)]"
+                          ? "inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 px-5 py-2.5 font-display text-sm font-semibold text-[#050509] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_-12px_rgba(34,211,238,0.6)]"
                           : "inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-5 py-2.5 font-display text-sm font-semibold text-zinc-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/[0.07]"
                       }
                     >

@@ -43,14 +43,14 @@ export default function About() {
         <div className="flex flex-col gap-5">
           <FadeIn delay={0.12}>
             <div className="panel p-6 md:p-7">
-              <p className="mono-label flex items-center gap-2.5 text-cyan-300">
+              <p className="mono-label flex items-center gap-2.5 text-cyan-400">
                 <Compass className="size-4" aria-hidden="true" />
                 Currently Exploring
               </p>
               <ul className="mt-5 space-y-3.5">
                 {about.exploring.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-zinc-300">
-                    <span aria-hidden="true" className="mt-[7px] size-1.5 shrink-0 rotate-45 bg-cyan-300/80" />
+                    <span aria-hidden="true" className="mt-[7px] size-1.5 shrink-0 rotate-45 bg-cyan-400/80" />
                     {item}
                   </li>
                 ))}
@@ -61,7 +61,7 @@ export default function About() {
           {about.principles.map((p, i) => (
             <FadeIn key={p.title} delay={0.18 + i * 0.07}>
               <div className="panel group p-6 transition-colors duration-500 hover:border-white/20">
-                <p className="flex items-center gap-2.5 font-display text-base font-semibold text-white">
+                <p className="flex items-center gap-2.5 font-display text-base font-semibold text-zinc-100">
                   <Sparkles className="size-4 text-violet-300 transition-transform duration-500 group-hover:rotate-12" aria-hidden="true" />
                   {p.title}
                 </p>

@@ -68,15 +68,15 @@ export default function Section({
       <div className="mx-auto w-full max-w-7xl">
         <header className="mb-14 md:mb-20">
           <FadeIn y={14} className="flex items-center gap-4">
-            <span className="mono-label text-cyan-300/90">{index}</span>
+            <span className="mono-label text-cyan-400/90">{index}</span>
             <span
               aria-hidden="true"
-              className="h-px w-14 bg-gradient-to-r from-cyan-300/60 to-transparent"
+              className="h-px w-14 bg-gradient-to-r from-cyan-400/60 to-transparent"
             />
             <span className="mono-label text-zinc-500">{eyebrow}</span>
           </FadeIn>
 
-          <h2 className="mt-6 font-display text-[clamp(2.5rem,7vw,5.4rem)] leading-[0.95] font-bold tracking-tight text-white uppercase">
+          <h2 className="mt-6 font-display text-[clamp(2.5rem,7vw,5.4rem)] leading-[0.95] font-bold tracking-tight text-zinc-200 uppercase">
             <RevealLine>{title}</RevealLine>
             {accent && (
               <RevealLine delay={0.1}>

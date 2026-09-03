@@ -28,7 +28,7 @@ function ArchiveRow({ project, index }) {
       </span>
 
       <span className="min-w-0">
-        <span className="block font-display text-xl font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-cyan-200 md:text-2xl">
+        <span className="block font-display text-xl font-semibold tracking-tight text-zinc-200 transition-colors duration-300 group-hover:text-cyan-300 md:text-2xl">
           {project.title}
         </span>
         <span className="mt-1.5 block max-w-xl text-sm leading-relaxed text-zinc-500">
@@ -66,7 +66,7 @@ function ArchiveRow({ project, index }) {
         aria-hidden={link ? undefined : "true"}
         className={`grid size-10 place-items-center justify-self-end rounded-full border transition-all duration-300 md:size-11 ${
           link
-            ? "border-white/15 text-white group-hover:border-cyan-300/60 group-hover:bg-cyan-300/10"
+            ? "border-white/15 text-zinc-200 group-hover:border-cyan-400/60 group-hover:bg-cyan-400/10"
             : "border-white/8 text-zinc-700"
         }`}
       >
@@ -105,8 +105,8 @@ export default function ProjectArchive() {
               aria-pressed={isActive}
               className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-300 ${
                 isActive
-                  ? "border-transparent bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-300 font-medium text-[#050509]"
-                  : "border-white/12 bg-white/[0.03] text-zinc-400 hover:border-white/30 hover:text-white"
+                  ? "border-transparent bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 font-medium text-[#050509]"
+                  : "border-white/12 bg-white/[0.03] text-zinc-400 hover:border-white/30 hover:text-zinc-200"
               }`}
             >
               {f}

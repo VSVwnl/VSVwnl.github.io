@@ -4,7 +4,7 @@ const ICONS = { trophy: Trophy, award: Award, medal: Medal };
 
 const TONES = {
   teal: "text-teal-300 border-teal-400/30",
-  cyan: "text-cyan-300 border-cyan-400/30",
+  cyan: "text-cyan-400 border-cyan-400/30",
   blue: "text-blue-300 border-blue-400/30",
   violet: "text-violet-300 border-violet-400/30",
 };
@@ -32,7 +32,7 @@ export default function AwardCard({ award, index }) {
 
       <span className="min-w-0 flex-1">
         <span className="mono-label block text-zinc-500">{award.event}</span>
-        <span className="mt-2 block font-display text-lg leading-tight font-bold tracking-tight text-white md:text-2xl">
+        <span className="mt-2 block font-display text-lg leading-tight font-bold tracking-tight text-zinc-200 md:text-2xl">
           {award.result}
         </span>
         <span className="mt-2 block font-mono text-[11px] tracking-[0.16em] text-zinc-500 uppercase">
@@ -42,7 +42,7 @@ export default function AwardCard({ award, index }) {
 
       <span
         aria-hidden="true"
-        className="grid size-11 shrink-0 place-items-center rounded-full border border-white/15 text-white transition-all duration-300 group-hover:border-cyan-300/60 group-hover:bg-cyan-300/10"
+        className="grid size-11 shrink-0 place-items-center rounded-full border border-white/15 text-zinc-100 transition-all duration-300 group-hover:border-cyan-400/60 group-hover:bg-cyan-400/10"
       >
         <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </span>

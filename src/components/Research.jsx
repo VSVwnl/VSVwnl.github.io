@@ -3,12 +3,12 @@ import Section, { FadeIn } from "./Section.jsx";
 import { research } from "../data/profile.js";
 
 const STATUS_TONES = {
-  ACTIVE: "text-cyan-300 border-cyan-400/30",
+  ACTIVE: "text-cyan-400 border-cyan-400/30",
   ONGOING: "text-violet-300 border-violet-400/30",
 };
 
 const STATUS_DOTS = {
-  ACTIVE: "bg-cyan-300",
+  ACTIVE: "bg-cyan-400",
   ONGOING: "bg-violet-300",
 };
 
@@ -28,10 +28,10 @@ export default function Research() {
         <div className="panel mb-6 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between md:p-8">
           <div className="flex items-center gap-5">
             <span className="grid size-13 shrink-0 place-items-center rounded-2xl border border-cyan-400/30 bg-cyan-400/5 md:size-14">
-              <FlaskConical className="size-6 text-cyan-300" aria-hidden="true" />
+              <FlaskConical className="size-6 text-cyan-400" aria-hidden="true" />
             </span>
             <div>
-              <p className="font-display text-xl font-bold tracking-tight text-white md:text-2xl">
+              <p className="font-display text-xl font-bold tracking-tight text-zinc-200 md:text-2xl">
                 {research.lab}
               </p>
               <p className="mt-1 font-mono text-[11px] tracking-[0.16em] text-zinc-500 uppercase">
@@ -40,7 +40,7 @@ export default function Research() {
             </div>
           </div>
           <span className="chip w-fit">
-            <span aria-hidden="true" className="animate-pulse-soft size-1.5 rounded-full bg-cyan-300" />
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-cyan-400" />
             {research.period}
           </span>
         </div>
@@ -50,7 +50,7 @@ export default function Research() {
       <div className="grid gap-5 md:grid-cols-3">
         {research.threads.map((thread, i) => (
           <FadeIn key={thread.id} delay={0.08 + i * 0.08} className="h-full">
-            <article className="group flex h-full flex-col rounded-3xl border border-dashed border-white/14 bg-white/[0.02] p-6 transition-colors duration-500 hover:border-cyan-300/40 md:p-7">
+            <article className="group flex h-full flex-col rounded-3xl border border-dashed border-white/14 bg-white/[0.02] p-6 transition-colors duration-500 hover:border-cyan-400/40 md:p-7">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] tracking-[0.28em] text-zinc-600 uppercase">
                   {thread.id}
@@ -60,13 +60,13 @@ export default function Research() {
                 >
                   <span
                     aria-hidden="true"
-                    className={`animate-pulse-soft size-1 rounded-full ${STATUS_DOTS[thread.status]}`}
+                    className={`size-1 rounded-full ${STATUS_DOTS[thread.status]} ${thread.status === "ACTIVE" ? "animate-pulse-soft" : ""}`}
                   />
                   {thread.status}
                 </span>
               </div>
 
-              <h3 className="mt-5 font-display text-lg leading-snug font-bold tracking-tight text-white md:text-xl">
+              <h3 className="mt-5 font-display text-lg leading-snug font-bold tracking-tight text-zinc-200 md:text-xl">
                 {thread.title}
               </h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-zinc-400">{thread.text}</p>

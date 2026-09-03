@@ -20,13 +20,13 @@ export default function Education() {
                 </span>
                 <span className="chip">
                   {entry.current && (
-                    <span aria-hidden="true" className="animate-pulse-soft size-1.5 rounded-full bg-cyan-300" />
+                    <span aria-hidden="true" className="size-1.5 rounded-full bg-cyan-400" />
                   )}
                   {entry.period}
                 </span>
               </div>
 
-              <h3 className="mt-7 font-display text-2xl font-bold tracking-tight text-white md:text-3xl">
+              <h3 className="mt-7 font-display text-2xl font-bold tracking-tight text-zinc-200 md:text-3xl">
                 {entry.school}
               </h3>
               <p className="text-gradient mt-3 font-display text-base font-semibold md:text-lg">

@@ -15,11 +15,11 @@ const accents = {
     dot: "bg-teal-300",
   },
   cyan: {
-    hex: "#67e8f9",
+    hex: "#22d3ee",
     glow: "rgba(34, 211, 238, 0.14)",
-    text: "text-cyan-300",
-    chip: "border-cyan-400/25 text-cyan-200",
-    dot: "bg-cyan-300",
+    text: "text-cyan-400",
+    chip: "border-cyan-400/25 text-cyan-300",
+    dot: "bg-cyan-400",
   },
   blue: {
     hex: "#60a5fa",

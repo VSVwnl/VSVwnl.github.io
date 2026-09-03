@@ -58,7 +58,7 @@ export default function Navbar() {
       {/* Scroll progress */}
       <motion.div
         aria-hidden="true"
-        className="fixed inset-x-0 top-0 z-[70] h-[2px] origin-left bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-300"
+        className="fixed inset-x-0 top-0 z-[70] h-[2px] origin-left bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400"
         style={{ scaleX: progress }}
       />
 
@@ -74,11 +74,11 @@ export default function Navbar() {
           className="mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-14 md:h-[72px]"
         >
           <a href="#home" className="group flex items-center gap-3">
-            <span className="grid size-9 place-items-center rounded-xl border border-white/15 bg-white/5 transition-colors duration-300 group-hover:border-cyan-300/50">
+            <span className="grid size-9 place-items-center rounded-xl border border-white/15 bg-white/5 transition-colors duration-300 group-hover:border-cyan-400/50">
               <span className="text-gradient font-display text-sm font-bold">VB</span>
             </span>
             <span className="hidden flex-col leading-none sm:flex">
-              <span className="font-display text-[13px] font-semibold tracking-[0.16em] text-white uppercase">
+              <span className="font-display text-[13px] font-semibold tracking-[0.16em] text-zinc-100 uppercase">
                 Vishnu Bodapati
               </span>
               <span className="mt-1.5 font-mono text-[9px] tracking-[0.32em] text-zinc-500 uppercase">
@@ -93,13 +93,13 @@ export default function Navbar() {
                 key={id}
                 href={`#${id}`}
                 className={`mono-label relative transition-colors duration-300 ${
-                  active === id ? "text-white" : "text-zinc-500 hover:text-white"
+                  active === id ? "text-zinc-100" : "text-zinc-500 hover:text-zinc-100"
                 }`}
               >
                 {label}
                 <span
                   aria-hidden="true"
-                  className={`absolute -bottom-2 left-1/2 size-1 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400 to-cyan-300 transition-opacity duration-300 ${
+                  className={`absolute -bottom-2 left-1/2 size-1 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400 to-cyan-400 transition-opacity duration-300 ${
                     active === id ? "opacity-100" : "opacity-0"
                   }`}
                 />
@@ -108,7 +108,7 @@ export default function Navbar() {
             <a
               href={profile.cv}
               download
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 font-mono text-[10px] tracking-[0.22em] text-zinc-200 uppercase transition-all duration-300 hover:border-cyan-300/50 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 font-mono text-[10px] tracking-[0.22em] text-zinc-100 uppercase transition-all duration-300 hover:border-cyan-400/50 hover:text-zinc-100"
             >
               <Download className="size-3.5" aria-hidden="true" />
               CV
@@ -117,7 +117,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="grid size-10 place-items-center rounded-xl border border-white/15 bg-white/5 text-white md:hidden"
+            className="grid size-10 place-items-center rounded-xl border border-white/15 bg-white/5 text-zinc-100 md:hidden"
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
@@ -143,13 +143,13 @@ export default function Navbar() {
                   key={id}
                   href={`#${id}`}
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-between border-b border-white/8 py-4 font-display text-4xl font-bold tracking-tight text-white uppercase"
+                  className="flex items-center justify-between border-b border-white/8 py-4 font-display text-4xl font-bold tracking-tight text-zinc-100 uppercase"
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
                   {label}
-                  <ArrowUpRight className="size-6 text-cyan-300" aria-hidden="true" />
+                  <ArrowUpRight className="size-6 text-cyan-400" aria-hidden="true" />
                 </motion.a>
               ))}
             </nav>
@@ -171,7 +171,7 @@ export default function Navbar() {
                     href={s.url}
                     target={s.id === "email" ? undefined : "_blank"}
                     rel={s.id === "email" ? undefined : "noopener noreferrer"}
-                    className="mono-label text-zinc-500 transition-colors hover:text-white"
+                    className="mono-label text-zinc-500 transition-colors hover:text-zinc-100"
                   >
                     {s.label}
                   </a>

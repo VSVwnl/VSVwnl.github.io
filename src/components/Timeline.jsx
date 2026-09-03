@@ -18,12 +18,12 @@ export default function Timeline() {
               <span
                 className={`size-3.5 rounded-full border-2 border-void ${
                   entry.current
-                    ? "bg-cyan-300 shadow-[0_0_16px_3px_rgba(103,232,249,0.5)]"
+                    ? "bg-cyan-400 shadow-[0_0_16px_3px_rgba(34,211,238,0.5)]"
                     : "bg-zinc-600"
                 }`}
               />
               {entry.current && (
-                <span className="animate-pulse-soft absolute size-6 rounded-full border border-cyan-300/40" />
+                <span className="animate-pulse-soft absolute size-6 rounded-full border border-cyan-400/40" />
               )}
             </span>
 
@@ -33,13 +33,13 @@ export default function Timeline() {
                   {entry.period}
                 </span>
                 {entry.current && (
-                  <span className="rounded-full border border-cyan-400/30 px-2.5 py-0.5 font-mono text-[9px] tracking-[0.2em] text-cyan-300 uppercase">
+                  <span className="rounded-full border border-cyan-400/30 px-2.5 py-0.5 font-mono text-[9px] tracking-[0.2em] text-cyan-400 uppercase">
                     Current
                   </span>
                 )}
               </div>
 
-              <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-white md:text-3xl">
+              <h3 className="mt-3 font-display text-2xl font-bold tracking-tight text-zinc-200 md:text-3xl">
                 {entry.role}
               </h3>
               <p className="mt-1.5 font-display text-base font-semibold text-zinc-300">

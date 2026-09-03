@@ -20,12 +20,12 @@ export default function Contact() {
 
       <div className="relative z-10 mx-auto w-full max-w-7xl">
         <FadeIn y={14} className="flex items-center gap-4">
-          <span className="mono-label text-cyan-300/90">09</span>
-          <span aria-hidden="true" className="h-px w-14 bg-gradient-to-r from-cyan-300/60 to-transparent" />
+          <span className="mono-label text-cyan-400/90">09</span>
+          <span aria-hidden="true" className="h-px w-14 bg-gradient-to-r from-cyan-400/60 to-transparent" />
           <span className="mono-label text-zinc-500">Contact</span>
         </FadeIn>
 
-        <h2 className="mt-8 font-display text-[clamp(2.7rem,8.5vw,6.8rem)] leading-[0.95] font-bold tracking-tight text-white uppercase">
+        <h2 className="mt-8 font-display text-[clamp(2.7rem,8.5vw,6.8rem)] leading-[0.95] font-bold tracking-tight text-zinc-200 uppercase">
           <RevealLine>Have something</RevealLine>
           <RevealLine delay={0.1}>
             <span className="text-gradient">worth building?</span>
@@ -43,7 +43,7 @@ export default function Contact() {
           <a
             href={`mailto:${profile.email}`}
             data-cursor
-            className="hover-link mt-6 inline-block max-w-full font-display text-[clamp(1.25rem,4.2vw,3.2rem)] font-bold tracking-tight break-all text-white transition-colors duration-300 hover:text-cyan-200"
+            className="hover-link mt-6 inline-block max-w-full font-display text-[clamp(1.25rem,4.2vw,3.2rem)] font-bold tracking-tight break-all text-zinc-200 transition-colors duration-300 hover:text-cyan-300"
           >
             {profile.email}
           </a>
@@ -59,13 +59,13 @@ export default function Contact() {
                   target={social.id === "email" ? undefined : "_blank"}
                   rel={social.id === "email" ? undefined : "noopener noreferrer"}
                   data-cursor
-                  className="panel group flex h-full items-center gap-4 p-5 transition-all duration-500 hover:border-cyan-300/40 hover:bg-white/[0.05]"
+                  className="panel group flex h-full items-center gap-4 p-5 transition-all duration-500 hover:border-cyan-400/40 hover:bg-white/[0.05]"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/[0.03] text-zinc-300 transition-colors duration-300 group-hover:border-cyan-300/40 group-hover:text-cyan-300">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-white/12 bg-white/[0.03] text-zinc-300 transition-colors duration-300 group-hover:border-cyan-400/40 group-hover:text-cyan-400">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block font-display text-sm font-semibold text-white">
+                    <span className="block font-display text-sm font-semibold text-zinc-100">
                       {social.label}
                     </span>
                     <span className="mt-0.5 block truncate font-mono text-[11px] text-zinc-500">
@@ -73,7 +73,7 @@ export default function Contact() {
                     </span>
                   </span>
                   <ArrowUpRight
-                    className="size-4 shrink-0 text-zinc-600 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-cyan-300"
+                    className="size-4 shrink-0 text-zinc-600 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-cyan-400"
                     aria-hidden="true"
                   />
                 </a>

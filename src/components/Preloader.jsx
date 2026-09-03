@@ -46,7 +46,7 @@ export default function Preloader() {
             </div>
             <div className="h-px w-44 overflow-hidden bg-white/10">
               <motion.div
-                className="h-full w-1/2 bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-300"
+                className="h-full w-1/2 bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400"
                 animate={{ x: ["-110%", "220%"] }}
                 transition={{ repeat: Infinity, duration: 1.1, ease: "easeInOut" }}
               />

@@ -3,8 +3,8 @@ import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-moti
 
 /**
  * Custom cursor: crisp dot + trailing ring in difference blend.
- * Only mounts for fine pointers with motion enabled; native cursor
- * is hidden via the `cursor-hidden` class on <html>.
+ * Only mounts for fine pointers with motion enabled. The native cursor stays
+ * visible underneath — this is an accent, not a replacement.
  *
  * Perf: position + hover-scale are driven entirely through motion values,
  * so moving the mouse never triggers a React re-render. Hover state is
@@ -28,7 +28,6 @@ export default function CursorGlow() {
     if (!fine || reduce) return undefined;
 
     setEnabled(true);
-    document.documentElement.classList.add("cursor-hidden");
 
     const onMove = (e) => {
       x.set(e.clientX);
@@ -53,7 +52,6 @@ export default function CursorGlow() {
       document.documentElement.removeEventListener("pointerleave", onLeave);
       document.removeEventListener("pointerover", onOver);
       document.removeEventListener("pointerout", onOut);
-      document.documentElement.classList.remove("cursor-hidden");
     };
   }, [reduce, x, y, opacity, scale]);
 

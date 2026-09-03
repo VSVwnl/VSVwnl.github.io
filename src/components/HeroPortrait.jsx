@@ -25,14 +25,13 @@ export default function HeroPortrait() {
       {/* orbit accents */}
       <div
         aria-hidden="true"
-        className="absolute -top-7 -right-7 hidden size-16 rounded-full border border-cyan-300/25 sm:block"
+        className="absolute -top-7 -right-7 hidden size-16 rounded-full border border-cyan-400/25 sm:block"
       >
-        <span className="absolute top-1/2 -right-1 size-1.5 -translate-y-1/2 rounded-full bg-cyan-300 shadow-[0_0_12px_3px_rgba(103,232,249,0.6)]" />
+        <span className="absolute top-1/2 -right-1 size-1.5 -translate-y-1/2 rounded-full bg-cyan-400 shadow-[0_0_12px_3px_rgba(34,211,238,0.6)]" />
       </div>
       <div
         aria-hidden="true"
-        className="animate-spin-slow absolute -bottom-8 -left-8 hidden size-20 rounded-full border border-dashed border-violet-400/25 sm:block"
-        style={{ "--spin-duration": "60s" }}
+        className="absolute -bottom-8 -left-8 hidden size-20 rounded-full border border-dashed border-violet-400/25 sm:block"
       >
         <span className="absolute -top-1 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-violet-300 shadow-[0_0_12px_3px_rgba(167,139,250,0.55)]" />
       </div>
@@ -59,10 +58,10 @@ export default function HeroPortrait() {
 
           {/* corner brackets */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-3">
-            <span className="absolute top-0 left-0 size-5 border-t border-l border-cyan-300/45" />
-            <span className="absolute top-0 right-0 size-5 border-t border-r border-cyan-300/45" />
-            <span className="absolute bottom-0 left-0 size-5 border-b border-l border-cyan-300/45" />
-            <span className="absolute right-0 bottom-0 size-5 border-r border-b border-cyan-300/45" />
+            <span className="absolute top-0 left-0 size-5 border-t border-l border-cyan-400/45" />
+            <span className="absolute top-0 right-0 size-5 border-t border-r border-cyan-400/45" />
+            <span className="absolute bottom-0 left-0 size-5 border-b border-l border-cyan-400/45" />
+            <span className="absolute right-0 bottom-0 size-5 border-r border-b border-cyan-400/45" />
           </div>
 
           {/* HUD caption */}
@@ -70,8 +69,8 @@ export default function HeroPortrait() {
             <span className="font-mono text-[9px] tracking-[0.24em] text-white/70 uppercase">
               VSV // 01
             </span>
-            <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em] text-cyan-200 uppercase">
-              <span aria-hidden="true" className="animate-pulse-soft size-1 rounded-full bg-cyan-300" />
+            <span className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em] text-cyan-300 uppercase">
+              <span aria-hidden="true" className="size-1 rounded-full bg-cyan-400" />
               Online
             </span>
           </div>

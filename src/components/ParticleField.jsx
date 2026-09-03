@@ -2,9 +2,9 @@ import { useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 
 const COLORS = [
-  [255, 255, 255],
+  [228, 228, 231],
   [167, 139, 250],
-  [103, 232, 249],
+  [34, 211, 238],
   [96, 165, 250],
 ];
 

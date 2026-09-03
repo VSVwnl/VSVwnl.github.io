@@ -25,7 +25,7 @@ export default function Marquee({ items, tone = "quiet" }) {
           <svg
             aria-hidden="true"
             viewBox="0 0 12 12"
-            className={`${loud ? "size-4 md:size-6" : "size-2.5 md:size-3"} text-cyan-300/80`}
+            className={`${loud ? "size-4 md:size-6" : "size-2.5 md:size-3"} text-cyan-400/80`}
             fill="currentColor"
           >
             <path d="M6 0 L7.6 4.4 L12 6 L7.6 7.6 L6 12 L4.4 7.6 L0 6 L4.4 4.4 Z" />

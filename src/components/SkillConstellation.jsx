@@ -46,7 +46,7 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
         <linearGradient id="core-grad" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#a78bfa" />
           <stop offset="0.5" stopColor="#60a5fa" />
-          <stop offset="1" stopColor="#67e8f9" />
+          <stop offset="1" stopColor="#22d3ee" />
         </linearGradient>
       </defs>
 
@@ -70,7 +70,7 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
       })}
 
       {/* clusters */}
-      {skillClusters.map((cluster, ci) => {
+      {skillClusters.map((cluster) => {
         const { hub, nodes } = layoutCluster(cluster);
         const dimmed = effective && effective !== cluster.id;
         const pillText = `${cluster.label} — ${cluster.skills.length}`;
@@ -79,11 +79,9 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
         return (
           <g
             key={cluster.id}
-            className="animate-float transition-opacity duration-500"
+            className="transition-opacity duration-500"
             style={{
               opacity: dimmed ? 0.14 : 1,
-              "--float-duration": `${6.5 + ci * 0.9}s`,
-              animationDelay: `${ci * 0.6}s`,
             }}
             onPointerEnter={() => onHover(cluster.id)}
             onPointerLeave={() => onHover(null)}
@@ -161,8 +159,6 @@ function ConstellationSvg({ effective, onHover, onToggle }) {
           fill="none"
           stroke="rgba(255,255,255,0.14)"
           strokeDasharray="3 7"
-          className="animate-spin-slow"
-          style={{ transformOrigin: `${CX}px ${CY}px`, transformBox: "view-box", "--spin-duration": "34s" }}
         />
         <circle cx={CX} cy={CY} r="31" fill="#0b0b18" stroke="url(#core-grad)" strokeWidth="1.4" />
         <text
@@ -216,8 +212,8 @@ export default function SkillConstellation() {
               aria-pressed={isActive}
               className={`inline-flex items-center gap-2.5 rounded-full border px-4 py-2 font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-300 ${
                 isActive
-                  ? "border-white/40 bg-white/10 text-white"
-                  : "border-white/12 bg-white/[0.03] text-zinc-400 hover:border-white/30 hover:text-white"
+                  ? "border-white/40 bg-white/10 text-zinc-200"
+                  : "border-white/12 bg-white/[0.03] text-zinc-400 hover:border-white/30 hover:text-zinc-200"
               }`}
             >
               <span aria-hidden="true" className="size-1.5 rounded-full" style={{ background: cluster.hex }} />

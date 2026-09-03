@@ -19,7 +19,7 @@ function LabTime() {
 
   return (
     <p className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.2em] text-zinc-500 uppercase">
-      <span aria-hidden="true" className="animate-pulse-soft size-1.5 rounded-full bg-cyan-300" />
+      <span aria-hidden="true" className="size-1.5 rounded-full bg-cyan-400" />
       Durham, NC — {time} ET
     </p>
   );
@@ -61,7 +61,7 @@ export default function Footer() {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             aria-label="Back to top"
             data-cursor
-            className="grid size-11 place-items-center rounded-full border border-white/15 text-white transition-all duration-300 hover:border-cyan-300/60 hover:bg-cyan-300/10"
+            className="grid size-11 place-items-center rounded-full border border-white/15 text-zinc-100 transition-all duration-300 hover:border-cyan-400/60 hover:bg-cyan-400/10"
           >
             <ArrowUp className="size-4" aria-hidden="true" />
           </button>
