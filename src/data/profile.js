@@ -77,7 +77,7 @@ export const about = {
     },
   ],
   facts: [
-    { value: "07", label: "Projects filed" },
+    { value: "09", label: "Projects filed" },
     { value: "03", label: "Hackathon wins" },
     { value: "02", label: "Game engines" },
     { value: "I³T", label: "Duke research lab" },

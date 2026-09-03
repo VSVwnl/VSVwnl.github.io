@@ -223,6 +223,45 @@ export const projects = [
     highlights: [],
     links: [],
   },
+  {
+    id: "skylar-knight",
+    code: "PRJ-008",
+    title: "The Misadventures of Skylar Knight",
+    featured: false,
+    accent: accents.violet,
+    categories: ["Games", "Game Jam"],
+    role: "Gameplay Programmer / Audio Engineer / UI Developer",
+    platform: "PC · Unreal Engine",
+    year: "2026",
+    tech: ["Unreal Engine", "C++", "UMG", "Audio Systems"],
+    achievement: null,
+    description:
+      "An Unreal Engine game jam project built around player mechanics, core game logic, and a 3D-to-2D gameplay adaptation, with UI and audio feedback throughout.",
+    highlights: [
+      "Implemented player mechanics, interactions, and core game logic.",
+      "Built UI and audio feedback systems, including the 3D-to-2D gameplay adaptation.",
+      "Handled build testing, packaging, and version control support for the team.",
+    ],
+    links: [
+      { label: "View Source", url: "https://github.com/VSVwnl/The_Misadventures_of_Skylar_Knight", icon: "external" },
+    ],
+  },
+  {
+    id: "meteor-mayhem",
+    code: "PRJ-009",
+    title: "Meteor Mayhem",
+    featured: false,
+    accent: accents.purple,
+    categories: ["Games"],
+    role: "Gameplay & Computer Vision",
+    platform: "PC · Unity + Python",
+    tech: ["Unity", "C#", "Python", "Computer Vision"],
+    achievement: null,
+    description:
+      "A gesture-controlled Unity game driven by Python-based real-time hand gesture recognition, mapping physical hand movement to in-game actions.",
+    highlights: [],
+    links: [],
+  },
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
