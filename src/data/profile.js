@@ -1,199 +1,121 @@
-// ─── Identity / global site data ─────────────────────────────────────────────
+// ─── Identity and site-wide content ──────────────────────────────────────────
 
 export const profile = {
   name: "Vishnu Sai Vardhan Bodapati",
   shortName: "Vishnu Bodapati",
-  handle: "VSVwnl",
-  roles: ["XR Developer", "Spatial Computing Builder", "Game Developer"],
-  positioning:
-    "I build immersive worlds and interactive experiences through XR systems, spatial computing, and games that turn technical ideas into playable realities.",
+  role: "XR & Spatial Computing Developer",
+  headline: "Building tools and experiences for spatial interaction.",
+  intro:
+    "I'm Vishnu, a developer working across XR, interactive systems and games — from VR rehabilitation for ICU patients to spatial tools for creating and exploring 3D worlds.",
+  affiliation: "M.Eng at Duke University · Research assistant at the Duke I³T Lab",
   email: "vishnusai.usa@gmail.com",
-  cv: "/Vishnu_Bodapati_CV.pdf",
-  resume: "/Vishnu_Bodapati_SWE_Resume.pdf",
-  portrait: "/Assets/profile/vishnu-headshot.jpg",
-  location: "Durham, NC",
-  coordinates: "35.99° N / 78.90° W",
-  statusChips: [
-    { label: "Duke M.Eng", tone: "violet" },
-    { label: "I³T Lab", tone: "cyan" },
-    { label: "XR / Game Dev", tone: "blue" },
-    { label: "3× Hackathon Winner", tone: "purple" },
-  ],
+  location: "Durham, North Carolina",
+
+  // Two documents, two audiences. "Resume" in the navigation points at the CV,
+  // which matches the XR/games positioning; About explains the distinction and
+  // links both, rather than showing two competing buttons everywhere.
+  resume: {
+    primary: {
+      href: "/Vishnu_Bodapati_CV.pdf",
+      label: "Resume",
+      note: "XR, games and research — the fuller record of projects and awards.",
+    },
+    secondary: {
+      href: "/Vishnu_Bodapati_SWE_Resume.pdf",
+      label: "Software engineering resume",
+      note: "A one-page version framed for general software engineering roles.",
+    },
+  },
 };
+
+export const nav = [
+  { label: "Work", href: "/work/" },
+  { label: "About", href: "/about/" },
+  { label: "Resume", href: profile.resume.primary.href, download: true },
+  { label: "Contact", href: "#contact" },
+];
 
 export const socials = [
+  { label: "Email", href: `mailto:${profile.email}`, handle: profile.email },
+  { label: "GitHub", href: "https://github.com/VSVwnl", handle: "@VSVwnl" },
   {
-    id: "github",
-    label: "GitHub",
-    handle: "@VSVwnl",
-    url: "https://github.com/VSVwnl",
-  },
-  {
-    id: "linkedin",
     label: "LinkedIn",
+    href: "https://www.linkedin.com/in/vishnu-sai-vardhan-bodapati/",
     handle: "vishnu-sai-vardhan-bodapati",
-    url: "https://www.linkedin.com/in/vishnu-sai-vardhan-bodapati/",
   },
-  {
-    id: "itch",
-    label: "itch.io",
-    handle: "vsvwnl.itch.io",
-    url: "https://vsvwnl.itch.io/",
-  },
-  {
-    id: "email",
-    label: "Email",
-    handle: "vishnusai.usa@gmail.com",
-    url: "mailto:vishnusai.usa@gmail.com",
-  },
+  { label: "itch.io", href: "https://vsvwnl.itch.io/", handle: "vsvwnl.itch.io" },
 ];
 
-// ─── About / personal studio ─────────────────────────────────────────────────
+// ─── Home: brief personal introduction (40-70 words) ─────────────────────────
+
+export const homeIntro =
+  "Most of my work sits between a technical system and a person who has to use it in the air in front of them. That means building the interaction, then spending just as long on whether it feels legible, comfortable and steady enough to trust — in a hospital room, a headset, or a hackathon demo.";
+
+// ─── About ───────────────────────────────────────────────────────────────────
 
 export const about = {
-  statement: [
-    "I'm Vishnu Sai Vardhan Bodapati — a builder working across XR, spatial computing, AI tools, interactive systems, and games. My work lives where technical implementation meets game feel: physics sandboxes in mixed reality, VR rehabilitation for ICU patients, AI-assisted drafting platforms, and complete little games shipped on tiny handheld hardware.",
-    "Currently at Duke pursuing an M.Eng in Game Design, Development & Innovation, and building VR gameplay and research systems at the Duke I³T Lab. Every project runs the same loop: prototype fast, obsess over interaction design and game feel, and let research drive the next iteration.",
+  story: [
+    "I build immersive and interactive software: mixed reality tools, VR rehabilitation systems, AI-assisted web products, and complete small games. The thread through all of it is spatial interaction — how someone understands and operates a system that exists around them rather than on a screen.",
+    "I'm currently finishing an M.Eng in Game Design, Development and Innovation at Duke, and working as a research assistant at the Duke I³T Lab, where I build VR gameplay for ICU rehabilitation research. Before that I studied Computer Science with a focus on game and mobile development at the University of Wollongong.",
+    "The constraints I find most interesting are the unglamorous ones — what someone can physically reach from a hospital bed, whether a frame drop breaks the illusion, whether a scene can be reproduced exactly on a second run. Those tend to decide whether spatial software is usable at all.",
   ],
-  exploring: [
-    "Gaussian splatting for VR scene reconstruction",
-    "AI-generated environments for VR rehabilitation",
-    "Mixed reality creation tools & stylus input (Logitech MX Ink)",
-    "Spatial computing interfaces & interaction design",
-    "Patient comfort & performance budgets on Quest 3",
-  ],
-  principles: [
+
+  // Grouped capabilities, drawn from the CV. Plain text, no bars or scores.
+  capabilities: [
     {
-      title: "Playable > possible",
-      text: "A running prototype argues better than any deck. Everything I build has to be touchable.",
+      title: "XR & Unity",
+      items: [
+        "Unity",
+        "C#",
+        "Meta Quest 3 / 3S",
+        "OpenXR",
+        "XR Interaction Toolkit",
+        "Meta XR SDK",
+        "PICO Unity Integration SDK",
+        "Logitech MX Ink SDK",
+        "URP",
+      ],
     },
     {
-      title: "Interaction is the interface",
-      text: "Grab, draw, throw, rotate — spatial software should be learned through the hands, not a manual.",
+      title: "Spatial tooling & 3D",
+      items: [
+        "3D Gaussian Splatting",
+        "WebSpatial",
+        "World-space XR UI",
+        "Virtual camera systems",
+        "Interaction design",
+      ],
     },
     {
-      title: "Comfort is a feature",
-      text: "In XR, frame timing and motion design are user-facing. In clinical VR, they're patient-facing.",
+      title: "Gameplay & interactive systems",
+      items: [
+        "Unreal Engine",
+        "C++",
+        "Gameplay programming",
+        "Physics interactions",
+        "UI / HUD systems",
+        "Audio implementation",
+        "Build packaging",
+        "Performance profiling",
+      ],
+    },
+    {
+      title: "Web, cloud & AI",
+      items: [
+        "React",
+        "Next.js",
+        "Node.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Docker",
+        "Google Cloud Run",
+        "Gemini API",
+        "Claude / GPT APIs",
+      ],
     },
   ],
-  facts: [
-    { value: "09", label: "Projects filed" },
-    { value: "03", label: "Hackathon wins" },
-    { value: "02", label: "Game engines" },
-    { value: "I³T", label: "Duke research lab" },
-  ],
+
+  // Short summary. Exact award wording lives on the project pages.
+  recognitionSummary:
+    "Three category awards at Worlds in Action Hack [02-LA] for CinemaScout, first place at DesignXR Hackathon 2026 and a Top 50 placing at DevStudio 2026 for MR Blueprint, and an honorable mention at the Team USA × Google Cloud Hackathon for Draft USA.",
 };
-
-// ─── Awards & recognition ────────────────────────────────────────────────────
-
-export const awards = [
-  {
-    id: "xgrids-spatial-reconstruction",
-    event: "Worlds in Action Hack [02-LA]",
-    result: "1st Place — Best Spatial Reconstruction (XGRIDS)",
-    project: "CinemaScout",
-    url: "https://devpost.com/software/we-re-so-fucked",
-    icon: "trophy",
-    tone: "teal",
-  },
-  {
-    id: "pico-best-app-emulator",
-    event: "Worlds in Action Hack [02-LA]",
-    result: "1st Place — Best App on Emulator (PICO)",
-    project: "CinemaScout",
-    url: "https://devpost.com/software/we-re-so-fucked",
-    icon: "trophy",
-    tone: "cyan",
-  },
-  {
-    id: "designxr-2026",
-    event: "DesignXR Hackathon 2026",
-    result: "1st Place — Grand Winner",
-    project: "MR Blueprint",
-    url: "https://devpost.com/software/mr-blueprint",
-    icon: "trophy",
-    tone: "cyan",
-  },
-  {
-    id: "worldlabs-interactive-world",
-    event: "Worlds in Action Hack [02-LA]",
-    result: "Runner-Up — Best Interactive World Experience (World Labs)",
-    project: "CinemaScout",
-    url: "https://devpost.com/software/we-re-so-fucked",
-    icon: "medal",
-    tone: "blue",
-  },
-  {
-    id: "teamusa-gcloud",
-    event: "Team USA × Google Cloud Hackathon",
-    result: "Winner — Honorable Mentions",
-    project: "Draft USA",
-    url: "https://devpost.com/software/draft-usa",
-    icon: "award",
-    tone: "blue",
-  },
-  {
-    id: "devstudio-2026",
-    event: "DevStudio 2026 by Logitech",
-    result: "Top 50 Semifinalist",
-    project: "MR Blueprint",
-    url: "https://devpost.com/software/mr-blueprint",
-    icon: "medal",
-    tone: "violet",
-  },
-];
-
-// ─── Research / lab work ─────────────────────────────────────────────────────
-
-export const research = {
-  lab: "Duke I³T Lab",
-  role: "Research Assistant — VR Gameplay & Research Developer",
-  period: "Oct 2025 — Present",
-  intro:
-    "Building VR gameplay systems for clinical rehabilitation, where frame timing, comfort, and interaction design are patient-facing constraints — not nice-to-haves.",
-  threads: [
-    {
-      id: "RT-01",
-      status: "ACTIVE",
-      title: "Lumi — ICU VR Rehabilitation",
-      text: "A VR rehabilitation game for ICU patients supporting mobility recovery through guided, seated, head-rotation-friendly interaction. Gameplay mechanics tuned for accessibility, comfort, and smooth interaction.",
-      tags: ["Unity", "Quest 3", "XR Interaction Toolkit", "URP"],
-    },
-    {
-      id: "RT-02",
-      status: "ACTIVE",
-      title: "Generative environments for VR rehab",
-      text: "Exploring gaussian splatting and AI-generated scenes as lightweight, comfortable environments for rehabilitation experiences in VR.",
-      tags: ["Gaussian Splatting", "AI-generated scenes", "VR"],
-    },
-    {
-      id: "RT-03",
-      status: "ONGOING",
-      title: "Comfort & performance on Quest 3",
-      text: "Frame-rate stability, input responsiveness, and interaction smoothness as first-class research requirements, translated into usable gameplay systems.",
-      tags: ["Performance", "Patient comfort", "Unity XR"],
-    },
-  ],
-};
-
-// ─── Marquee strips ──────────────────────────────────────────────────────────
-
-export const marqueeItems = [
-  "Mixed Reality",
-  "Spatial Computing",
-  "VR Rehabilitation",
-  "Unity",
-  "Unreal Engine",
-  "Physics Sandboxes",
-  "Game Design",
-  "Interactive Systems",
-];
-
-export const contactMarqueeItems = [
-  "Let's Build",
-  "Get In Touch",
-  "XR",
-  "Games",
-  "Research",
-  "Collaboration",
-];

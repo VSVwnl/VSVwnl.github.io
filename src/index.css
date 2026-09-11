@@ -1,296 +1,255 @@
 @import "tailwindcss";
 
-/* ─── Design tokens ─────────────────────────────────────────────────────── */
+/* ─── Design tokens ──────────────────────────────────────────────────────────
+   One dark theme, one accent. No theme switcher, no gradients on text, no
+   glow or glass. Values follow the redesign brief's starting palette. */
 
 @theme {
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-bg: #111214;
+  --color-surface: #1a1c20;
+  --color-ink: #f2f0eb;
+  --color-muted: #b5b8bf;
+  --color-line: #34373e;
+  --color-accent: #a7b9ff;
 
-  --color-void: #0a0a12;
-  --color-ink: #0b0b18;
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
-
-/* ─── Base ──────────────────────────────────────────────────────────────── */
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    background-color: var(--color-void);
-    color: var(--color-zinc-300);
-    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-muted);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
-    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (max-width: 640px) {
+    body {
+      font-size: 16px;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, generous focus ring. Never rely on color alone. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   ::selection {
-    background: rgba(139, 92, 246, 0.45);
-    color: #f4f4f5;
-  }
-
-  :focus-visible {
-    outline: 2px solid rgba(34, 211, 238, 0.9);
-    outline-offset: 3px;
-    border-radius: 4px;
+    background: rgba(167, 185, 255, 0.25);
+    color: var(--color-ink);
   }
 
   ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-void);
+    background: var(--color-bg);
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
+    background: #2b2e35;
     border-radius: 999px;
-    border: 2px solid var(--color-void);
+    border: 2px solid var(--color-bg);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.22);
+    background: #3c4049;
   }
-
 }
 
-/* ─── Components ────────────────────────────────────────────────────────── */
-
 @layer components {
-  .mono-label {
+  /* ─── Layout ─────────────────────────────────────────────────────────── */
+
+  .shell {
+    width: 100%;
+    max-width: 1160px;
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 48px;
+    }
+  }
+
+  /* Article measure: ~65-72 characters. */
+  .prose-measure {
+    max-width: 68ch;
+  }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* ─── Type scale ─────────────────────────────────────────────────────── */
+
+  .t-hero {
+    font-size: clamp(2.5rem, 4.4vw, 4rem);
+    line-height: 1.07;
+    letter-spacing: -0.025em;
+  }
+
+  .t-section {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .t-title {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    letter-spacing: -0.02em;
+  }
+
+  /* Metadata: readable, not tiny tracked uppercase. */
+  .t-meta {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .t-mono {
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.02em;
   }
 
-  .text-gradient {
-    background: linear-gradient(100deg, #a78bfa 0%, #60a5fa 45%, #22d3ee 90%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* ─── Links and controls ─────────────────────────────────────────────── */
+
+  .link {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition:
+      color 160ms ease,
+      text-decoration-color 160ms ease;
+  }
+  .link:hover {
+    color: var(--color-accent);
+    text-decoration-color: var(--color-accent);
   }
 
-  .text-outline {
-    color: transparent;
-    -webkit-text-stroke: 1.2px rgba(228, 228, 231, 0.38);
+  .link-quiet {
+    color: var(--color-muted);
+    transition: color 160ms ease;
+  }
+  .link-quiet:hover {
+    color: var(--color-ink);
   }
 
-  /* No backdrop-filter here on purpose: blurring the backdrop of every card
-     forces a full repaint of each panel on every scroll frame, which is the
-     dominant cause of scroll jank. A slightly more opaque fill over the dark
-     void reads as the same floating-glass card without the per-frame cost. */
-  .panel {
-    position: relative;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    background: linear-gradient(
-      160deg,
-      rgba(255, 255, 255, 0.055),
-      rgba(255, 255, 255, 0.02)
-    );
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  /* ~44px touch target on both buttons. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0 1.15rem;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition:
+      background-color 170ms ease,
+      border-color 170ms ease,
+      color 170ms ease;
+  }
+
+  .btn-primary {
+    background: var(--color-ink);
+    color: #14151a;
+  }
+  .btn-primary:hover {
+    background: var(--color-accent);
+  }
+
+  .btn-ghost {
+    border-color: var(--color-line);
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
 
   .chip {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    border: 1px solid var(--color-line);
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 0.3rem 0.8rem;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-zinc-300);
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    border-radius: 999px;
-    padding: 0.85rem 1.6rem;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.875rem;
-    letter-spacing: 0.04em;
-    color: #050509;
-    background: linear-gradient(100deg, #a78bfa, #60a5fa 50%, #22d3ee);
-    transition:
-      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-      filter 0.3s;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-    box-shadow: 0 14px 52px -14px rgba(34, 211, 238, 0.65);
-  }
-
-  .btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    border-radius: 999px;
-    padding: 0.85rem 1.6rem;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.875rem;
-    letter-spacing: 0.04em;
-    color: #f4f4f5;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.05);
-    transition:
-      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 0.3s,
-      background-color 0.3s;
-  }
-  .btn-ghost:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.38);
-    background: rgba(255, 255, 255, 0.08);
-  }
-
-  .hover-link {
-    position: relative;
-  }
-  .hover-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    height: 1.5px;
-    width: 100%;
-    background: linear-gradient(90deg, #a78bfa, #22d3ee);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .hover-link:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
+    padding: 0.25rem 0.7rem;
+    font-size: 13px;
+    color: var(--color-muted);
   }
 }
 
-/* ─── Utilities ─────────────────────────────────────────────────────────── */
+/* ─── Motion ─────────────────────────────────────────────────────────────────
+   One-time entrance only: 8px of travel, no loops, no scroll hijacking.
+   Content is visible by default and the class only ever *adds* the offset, so
+   if the observer script never runs nothing stays hidden. */
 
-@utility bg-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-
-@utility bg-grid-fine {
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
-  background-size: 28px 28px;
+.reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 320ms ease-out,
+    transform 320ms ease-out;
 }
 
-@utility noise {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
 }
 
-/* ─── Keyframe animations ───────────────────────────────────────────────── */
-
-@keyframes marquee-x {
-  to {
-    transform: translateX(-50%);
-  }
+/* No JS? Show everything. */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
 }
-.animate-marquee {
-  animation: marquee-x var(--marquee-duration, 38s) linear infinite;
-}
-
-@keyframes float-y {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-11px);
-  }
-}
-.animate-float {
-  animation: float-y var(--float-duration, 7s) ease-in-out infinite;
-}
-
-@keyframes spin-360 {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.animate-spin-slow {
-  animation: spin-360 var(--spin-duration, 46s) linear infinite;
-}
-
-@keyframes pulse-soft {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-.animate-pulse-soft {
-  animation: pulse-soft 2.6s ease-in-out infinite;
-}
-
-/* The scrolling grid lives on a ::before and animates `transform` (composited)
-   instead of `background-position` (repaints the whole floor every frame —
-   a measurable scroll-jank source, especially on mobile GPUs). The layer
-   starts one grid cell above the box and slides down exactly 64px, which
-   loops seamlessly; the parent's mask clips the overflow. */
-@keyframes floor-slide {
-  to {
-    transform: translateY(64px);
-  }
-}
-.hero-floor {
-  transform: perspective(620px) rotateX(63deg);
-  transform-origin: top center;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%);
-}
-.hero-floor::before {
-  content: "";
-  position: absolute;
-  inset: -64px 0 0 0;
-  background-image:
-    linear-gradient(rgba(34, 211, 238, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.14) 1px, transparent 1px);
-  background-size: 64px 64px;
-  animation: floor-slide 3.2s linear infinite;
-  will-change: transform;
-}
-
-@keyframes dash-rotate {
-  to {
-    stroke-dashoffset: -400;
-  }
-}
-.animate-dash {
-  animation: dash-rotate 32s linear infinite;
-}
-
-/* ─── Reduced motion ────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .animate-marquee,
-  .animate-float,
-  .animate-spin-slow,
-  .animate-pulse-soft,
-  .animate-dash,
-  .hero-floor::before {
-    animation: none !important;
+  .reveal,
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
