@@ -16,68 +16,6 @@
 export const projects = [
   /* ─── Featured ───────────────────────────────────────────────────────── */
 
-  {
-    slug: "lumi-vr",
-    title: "Lumi VR",
-    category: "VR rehabilitation · Research",
-    featured: true,
-    summary:
-      "A seated VR rehabilitation experience for ICU patients, with interactions designed around comfort, accessibility, and the movement constraints of a hospital bed.",
-    roleLine: "Research assistant at the Duke I³T Lab, working on VR gameplay",
-    recognition: null,
-
-    // No approved gameplay, environment or interaction asset exists in this
-    // repository. Rendering a neutral panel rather than inventing a screenshot.
-    media: { kind: "none" },
-
-    facts: [
-      { label: "Role", value: "Research Assistant — VR gameplay & research developer" },
-      { label: "Context", value: "Duke I³T Lab, alongside researchers and developers" },
-      { label: "Status", value: "Oct 2025 — present, in active development" },
-      { label: "Platform", value: "Meta Quest 3 · Unity" },
-    ],
-
-    problem: [
-      "Patients recovering in intensive care need to keep moving, but almost every condition of the setting works against it. Sessions happen seated or in a fixed position, range of movement is limited and varies from person to person, and anything that provokes discomfort is a reason to stop.",
-      "Lumi approaches that as an interaction design problem. The work is to make a VR experience that stays legible and comfortable inside those constraints, and that behaves the same way every session so it can be used for research.",
-    ],
-
-    contribution: [
-      "Implement and iterate on Unity and Meta Quest gameplay mechanics, including tutorial and calibration flows and interaction feedback.",
-      "Design interactions around seated, fixed-position use and constrained patient movement, prioritising comfort, accessibility and clear feedback.",
-      "Work on repeated-session reliability so the experience behaves consistently across research sessions rather than only on a first run.",
-      "Optimise frame-rate stability, input responsiveness and interaction smoothness to reduce the risk of motion discomfort.",
-      "Collaborate with researchers to translate clinical requirements into usable gameplay systems, testing workflows and patient-friendly interaction design.",
-    ],
-
-    howItWorks: [
-      "The experience is built in Unity for Meta Quest 3 and assumes the player is seated and may not be able to turn, reach or stand. Interaction is designed to stay within a comfortable envelope, with guided, head-rotation-friendly movement rather than room-scale navigation.",
-      "Calibration and tutorial flows run before the session proper, so the experience can adapt to what a particular person can actually do that day, and so a researcher can set it up the same way each time.",
-    ],
-
-    decisions: [
-      {
-        title: "Seated and fixed-position as the default, not a fallback",
-        text: "The constrained case is the normal case here, so the interaction envelope is designed for it first rather than being adapted down from a room-scale build.",
-      },
-      {
-        title: "Frame-time stability treated as patient-facing",
-        text: "In clinical VR, dropped frames are not a polish issue. Frame-rate stability, input responsiveness and interaction smoothness are worked on directly to reduce the risk of motion discomfort.",
-      },
-      {
-        title: "Repeatability over novelty",
-        text: "Because the app is used across repeated research sessions, consistent behaviour between runs matters more than adding variety, which shapes what goes into the baseline build.",
-      },
-    ],
-
-    outcome: [
-      "Lumi is in active development at the Duke I³T Lab and is used as a research application. No clinical results, patient outcomes or validation are claimed here.",
-      "Separately, integration paths for 3D Gaussian Splatting and AI-generated scenes are being evaluated as a way to build richer therapy environments. That work is exploratory and is not part of the baseline application.",
-    ],
-
-    tech: ["Unity", "C#", "Meta Quest 3", "XR Interaction Toolkit", "URP"],
-    links: [],
-  },
 
   {
     slug: "cinemascout",
@@ -229,6 +167,68 @@ export const projects = [
       { label: "Watch the demo", url: "https://www.youtube.com/watch?v=ggg8-Duyzn4&t=2s" },
       { label: "View on Devpost", url: "https://devpost.com/software/mr-blueprint" },
     ],
+  },
+  {
+    slug: "lumi-vr",
+    title: "Lumi VR",
+    category: "VR rehabilitation · Research",
+    featured: true,
+    summary:
+      "A seated VR rehabilitation experience for ICU patients, with interactions designed around comfort, accessibility, and the movement constraints of a hospital bed.",
+    roleLine: "Research assistant at the Duke I³T Lab, working on VR gameplay",
+    recognition: null,
+
+    // No approved gameplay, environment or interaction asset exists in this
+    // repository. Rendering a neutral panel rather than inventing a screenshot.
+    media: { kind: "none" },
+
+    facts: [
+      { label: "Role", value: "Research Assistant — VR gameplay & research developer" },
+      { label: "Context", value: "Duke I³T Lab, alongside researchers and developers" },
+      { label: "Status", value: "Oct 2025 — present, in active development" },
+      { label: "Platform", value: "Meta Quest 3 · Unity" },
+    ],
+
+    problem: [
+      "Patients recovering in intensive care need to keep moving, but almost every condition of the setting works against it. Sessions happen seated or in a fixed position, range of movement is limited and varies from person to person, and anything that provokes discomfort is a reason to stop.",
+      "Lumi approaches that as an interaction design problem. The work is to make a VR experience that stays legible and comfortable inside those constraints, and that behaves the same way every session so it can be used for research.",
+    ],
+
+    contribution: [
+      "Implement and iterate on Unity and Meta Quest gameplay mechanics, including tutorial and calibration flows and interaction feedback.",
+      "Design interactions around seated, fixed-position use and constrained patient movement, prioritising comfort, accessibility and clear feedback.",
+      "Work on repeated-session reliability so the experience behaves consistently across research sessions rather than only on a first run.",
+      "Optimise frame-rate stability, input responsiveness and interaction smoothness to reduce the risk of motion discomfort.",
+      "Collaborate with researchers to translate clinical requirements into usable gameplay systems, testing workflows and patient-friendly interaction design.",
+    ],
+
+    howItWorks: [
+      "The experience is built in Unity for Meta Quest 3 and assumes the player is seated and may not be able to turn, reach or stand. Interaction is designed to stay within a comfortable envelope, with guided, head-rotation-friendly movement rather than room-scale navigation.",
+      "Calibration and tutorial flows run before the session proper, so the experience can adapt to what a particular person can actually do that day, and so a researcher can set it up the same way each time.",
+    ],
+
+    decisions: [
+      {
+        title: "Seated and fixed-position as the default, not a fallback",
+        text: "The constrained case is the normal case here, so the interaction envelope is designed for it first rather than being adapted down from a room-scale build.",
+      },
+      {
+        title: "Frame-time stability treated as patient-facing",
+        text: "In clinical VR, dropped frames are not a polish issue. Frame-rate stability, input responsiveness and interaction smoothness are worked on directly to reduce the risk of motion discomfort.",
+      },
+      {
+        title: "Repeatability over novelty",
+        text: "Because the app is used across repeated research sessions, consistent behaviour between runs matters more than adding variety, which shapes what goes into the baseline build.",
+      },
+    ],
+
+    outcome: [
+      "Lumi is in active development at the Duke I³T Lab and is used as a research application. No clinical results, patient outcomes or validation are claimed here.",
+      "Separately, integration paths for 3D Gaussian Splatting and AI-generated scenes are being evaluated as a way to build richer therapy environments. That work is exploratory and is not part of the baseline application.",
+    ],
+
+    tech: ["Unity", "C#", "Meta Quest 3", "XR Interaction Toolkit", "URP"],
+    links: [],
   },
 
   /* ─── Remaining work ─────────────────────────────────────────────────── */

@@ -11,14 +11,57 @@ import { useReveal } from "../hooks.js";
  * recognition, one project link.
  */
 
+/* Each feature sits on its own soft colour stage so the three read as distinct
+   designed blocks rather than three items on one flat background. Static, low
+   opacity, and keyed within the violet/cyan system — no extra animation. */
+const TONES = {
+  cinemascout: {
+    a: "rgba(113,219,223,0.22)",
+    b: "rgba(164,151,255,0.12)",
+    at: "24% 30%",
+  },
+  "mr-blueprint": {
+    a: "rgba(164,151,255,0.26)",
+    b: "rgba(113,219,223,0.10)",
+    at: "78% 32%",
+  },
+  "lumi-vr": {
+    a: "rgba(164,151,255,0.22)",
+    b: "rgba(113,219,223,0.14)",
+    at: "50% 42%",
+  },
+};
+
+function Stage({ slug, children }) {
+  const t = TONES[slug] ?? TONES.cinemascout;
+  return (
+    <div className="relative">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-x-5 -inset-y-10 -z-10 rounded-[32px] md:-inset-x-10 md:-inset-y-14"
+        style={{
+          background: `radial-gradient(58% 58% at ${t.at}, ${t.a}, transparent 70%), radial-gradient(48% 48% at 80% 74%, ${t.b}, transparent 72%)`,
+        }}
+      />
+      {children}
+    </div>
+  );
+}
+
 function Meta({ project, index }) {
   return (
     <>
-      <div className="flex items-baseline gap-4">
-        <span className="t-numeral select-none">{String(index + 1).padStart(2, "0")}</span>
+      <div className="flex items-center gap-3.5">
+        <span className="t-numeral select-none leading-none">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span
+          aria-hidden="true"
+          className="h-px w-8 shrink-0 bg-[var(--color-violet)] opacity-50"
+        />
         <span className="t-mono text-[var(--color-cyan)]">{project.category}</span>
       </div>
-      <h3 className="t-project mt-3">{project.title}</h3>
+      <h3 className="t-project mt-4">{project.title}</h3>
       <p className="measure mt-4">{project.summary}</p>
       <p className="t-meta mt-4">{project.roleLine}</p>
       {project.recognition ? (
@@ -43,7 +86,8 @@ function LumiFeature({ project, index }) {
   const [ref, cls] = useReveal();
   return (
     <article ref={ref} className={cls}>
-      <div className="panel relative overflow-hidden">
+      <Stage slug={project.slug}>
+      <div className="panel feature-media relative overflow-hidden">
         {/* The artwork is a band above the copy on narrow screens and fills the
             panel behind it from lg up. Overlaying it at every width put text
             straight over the glowing path. */}
@@ -70,6 +114,7 @@ function LumiFeature({ project, index }) {
           </div>
         </div>
       </div>
+      </Stage>
     </article>
   );
 }
@@ -80,10 +125,11 @@ function CinemaFeature({ project, index }) {
   const [ref, cls] = useReveal();
   return (
     <article ref={ref} className={cls}>
+      <Stage slug={project.slug}>
       <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:gap-14">
         <div className="group relative">
           {/* shot-guide framing, echoing the tool's purpose */}
-          <div className="panel relative overflow-hidden p-2 transition-colors duration-300 group-hover:border-[var(--color-cyan)]">
+          <div className="panel feature-media relative overflow-hidden p-2 group-hover:border-[var(--color-cyan)]">
             <div className="relative aspect-[16/9] overflow-hidden rounded-[8px]">
               <DemoVideo
                 media={project.media}
@@ -113,6 +159,7 @@ function CinemaFeature({ project, index }) {
           <Meta project={project} index={index} />
         </div>
       </div>
+      </Stage>
     </article>
   );
 }
@@ -123,13 +170,14 @@ function BlueprintFeature({ project, index }) {
   const [ref, cls] = useReveal();
   return (
     <article ref={ref} className={cls}>
-      <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:gap-14">
+      <Stage slug={project.slug}>
+      <div className="group grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:gap-14">
         <div className="order-2 lg:order-1">
           <Meta project={project} index={index} />
         </div>
 
         <div
-          className="panel order-1 relative flex aspect-[16/10] items-center justify-center overflow-hidden lg:order-2"
+          className="panel feature-media order-1 relative flex aspect-[16/10] items-center justify-center overflow-hidden lg:order-2"
           style={{ background: "var(--color-ink-800)" }}
         >
           <BlueprintBackdrop id="mrb-home" />
@@ -146,6 +194,7 @@ function BlueprintFeature({ project, index }) {
           />
         </div>
       </div>
+      </Stage>
     </article>
   );
 }

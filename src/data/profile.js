@@ -9,7 +9,6 @@ export const profile = {
     "I'm Vishnu, a developer working across XR, interactive systems and games — from VR rehabilitation for ICU patients to spatial tools for creating and exploring 3D worlds.",
   affiliation: "M.Eng at Duke University · Research assistant at the Duke I³T Lab",
   email: "vishnusai.usa@gmail.com",
-  location: "Durham, North Carolina",
 
   // Two documents, two audiences. "Resume" in the navigation points at the CV,
   // which matches the XR/games positioning; About explains the distinction and

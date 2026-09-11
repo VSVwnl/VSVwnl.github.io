@@ -44,10 +44,7 @@ export default function SiteFooter() {
           <p className="t-meta">
             © {year} {profile.name}
           </p>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-2">
-            <p className="t-meta">{profile.location}</p>
-            <MotionToggle />
-          </div>
+          <MotionToggle />
         </div>
       </div>
     </footer>
