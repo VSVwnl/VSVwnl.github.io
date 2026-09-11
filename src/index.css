@@ -1,20 +1,24 @@
 @import "tailwindcss";
 
-/* ─── Design tokens ──────────────────────────────────────────────────────────
-   One dark theme, one accent. No theme switcher, no gradients on text, no
-   glow or glass. Values follow the redesign brief's starting palette. */
+/* ─── V2 design tokens ───────────────────────────────────────────────────────
+   Deep ink ground, tinted surfaces, warm off-white text. Electric violet is the
+   expressive colour; cyan supports interaction. Colour is allowed to take over
+   a hero shape or a project backdrop — long-form reading stays restrained. */
 
 @theme {
-  --color-bg: #111214;
-  --color-surface: #1a1c20;
-  --color-ink: #f2f0eb;
-  --color-muted: #b5b8bf;
-  --color-line: #34373e;
-  --color-accent: #a7b9ff;
+  --color-ink-900: #101017;
+  --color-ink-800: #15141f;
+  --color-surface: #1a1926;
+  --color-surface-2: #221f31;
+  --color-paper: #f2f0eb;
+  --color-muted: #a8a5b8;
+  --color-line: #2e2c3e;
+  --color-violet: #a497ff;
+  --color-cyan: #71dbdf;
 
+  --font-display: Anton, "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
   --font-sans:
-    Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+    Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono:
     "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -26,13 +30,12 @@
   }
 
   body {
-    background-color: var(--color-bg);
+    background-color: var(--color-ink-900);
     color: var(--color-muted);
     font-family: var(--font-sans);
     font-size: 17px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
   }
 
   @media (max-width: 640px) {
@@ -45,10 +48,7 @@
   h2,
   h3,
   h4 {
-    color: var(--color-ink);
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
+    color: var(--color-paper);
     text-wrap: balance;
   }
 
@@ -56,53 +56,56 @@
     text-wrap: pretty;
   }
 
-  /* Visible, generous focus ring. Never rely on color alone. */
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-cyan);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 3px;
   }
 
   ::selection {
-    background: rgba(167, 185, 255, 0.25);
-    color: var(--color-ink);
+    background: rgba(164, 151, 255, 0.3);
+    color: var(--color-paper);
   }
 
   ::-webkit-scrollbar {
     width: 10px;
-    height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-bg);
+    background: var(--color-ink-900);
   }
   ::-webkit-scrollbar-thumb {
-    background: #2b2e35;
+    background: #322f45;
     border-radius: 999px;
-    border: 2px solid var(--color-bg);
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #3c4049;
+    border: 2px solid var(--color-ink-900);
   }
 }
 
 @layer components {
   /* ─── Layout ─────────────────────────────────────────────────────────── */
 
-  .shell {
+  /* Wide stage for composed sections. Paragraphs are constrained separately. */
+  .stage {
     width: 100%;
-    max-width: 1160px;
+    max-width: 1320px;
     margin-inline: auto;
-    padding-inline: 24px;
+    padding-inline: 22px;
   }
   @media (min-width: 768px) {
-    .shell {
-      padding-inline: 48px;
+    .stage {
+      padding-inline: 44px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .stage {
+      padding-inline: 64px;
     }
   }
 
-  /* Article measure: ~65-72 characters. */
-  .prose-measure {
-    max-width: 68ch;
+  .measure {
+    max-width: 62ch;
+  }
+  .measure-tight {
+    max-width: 48ch;
   }
 
   .rule {
@@ -110,94 +113,123 @@
     border-top: 1px solid var(--color-line);
   }
 
-  /* ─── Type scale ─────────────────────────────────────────────────────── */
+  /* ─── Expressive type ────────────────────────────────────────────────── */
 
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.88;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    color: var(--color-paper);
+  }
+
+  /* 48-68px mobile, 80-128px wide desktop */
   .t-hero {
-    font-size: clamp(2.5rem, 4.4vw, 4rem);
-    line-height: 1.07;
-    letter-spacing: -0.025em;
+    font-size: clamp(3rem, 9vw, 8rem);
   }
 
   .t-section {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(2.25rem, 5vw, 4rem);
   }
 
-  .t-title {
-    font-size: clamp(1.5rem, 2.4vw, 2rem);
+  /* Project titles read as titles, not as display slabs. */
+  .t-project {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(1.6rem, 2.6vw, 2.35rem);
     letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
-  /* Metadata: readable, not tiny tracked uppercase. */
+  .t-sub {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 1.6vw, 1.3rem);
+    letter-spacing: -0.01em;
+    color: var(--color-paper);
+  }
+
   .t-meta {
     font-size: 13.5px;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--color-muted);
   }
 
   .t-mono {
     font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.02em;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  /* ─── Links and controls ─────────────────────────────────────────────── */
+  /* Oversized project numerals used as composition anchors. */
+  .t-numeral {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 11vw, 10rem);
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-line);
+  }
+
+  /* ─── Controls ───────────────────────────────────────────────────────── */
 
   .link {
-    color: var(--color-ink);
+    color: var(--color-paper);
     text-decoration: underline;
     text-decoration-color: var(--color-line);
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
     transition:
-      color 160ms ease,
-      text-decoration-color 160ms ease;
+      color 170ms ease,
+      text-decoration-color 170ms ease;
   }
   .link:hover {
-    color: var(--color-accent);
-    text-decoration-color: var(--color-accent);
+    color: var(--color-cyan);
+    text-decoration-color: var(--color-cyan);
   }
 
   .link-quiet {
     color: var(--color-muted);
-    transition: color 160ms ease;
+    transition: color 170ms ease;
   }
   .link-quiet:hover {
-    color: var(--color-ink);
+    color: var(--color-paper);
   }
 
-  /* ~44px touch target on both buttons. */
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    min-height: 44px;
-    padding: 0 1.15rem;
-    border-radius: 6px;
+    gap: 0.55rem;
+    min-height: 46px;
+    padding: 0 1.3rem;
+    border-radius: 999px;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 550;
     border: 1px solid transparent;
     transition:
-      background-color 170ms ease,
-      border-color 170ms ease,
-      color 170ms ease;
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
   }
 
   .btn-primary {
-    background: var(--color-ink);
-    color: #14151a;
+    background: var(--color-violet);
+    color: #14121f;
   }
   .btn-primary:hover {
-    background: var(--color-accent);
+    background: var(--color-cyan);
+    transform: translateY(-1px);
   }
 
   .btn-ghost {
     border-color: var(--color-line);
-    color: var(--color-ink);
+    color: var(--color-paper);
   }
   .btn-ghost:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+    border-color: var(--color-violet);
+    color: var(--color-violet);
+    transform: translateY(-1px);
   }
 
   .chip {
@@ -205,51 +237,144 @@
     align-items: center;
     border: 1px solid var(--color-line);
     border-radius: 999px;
-    padding: 0.25rem 0.7rem;
-    font-size: 13px;
+    padding: 0.28rem 0.75rem;
+    font-size: 12.5px;
     color: var(--color-muted);
+  }
+
+  .panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
   }
 }
 
 /* ─── Motion ─────────────────────────────────────────────────────────────────
-   One-time entrance only: 8px of travel, no loops, no scroll hijacking.
-   Content is visible by default and the class only ever *adds* the offset, so
-   if the observer script never runs nothing stays hidden. */
+   Motion is a first-class part of this design, so it gets a real switch rather
+   than being hard-coded. `data-motion` is set on <html> before paint by an
+   inline script; reduced-motion users default to "off" and a footer control can
+   override either way. Every continuous animation keys off this attribute, so
+   one flag genuinely stops all of it. */
 
-.reveal {
+.anim-in {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(14px);
+}
+
+[data-motion="on"] .anim-in {
+  animation: rise 620ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Motion off: no entrance at all, content simply present. */
+[data-motion="off"] .anim-in {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scroll-triggered entrance (JS adds .is-in). Same failsafe principle: the
+   hidden state is only applied once we know something can remove it. */
+.reveal.armed {
+  opacity: 0;
+  transform: translateY(14px);
   transition:
-    opacity 320ms ease-out,
-    transform 320ms ease-out;
+    opacity 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.reveal.is-in {
+.reveal.armed.is-in {
   opacity: 1;
   transform: none;
 }
 
-/* No JS? Show everything. */
-.no-js .reveal {
-  opacity: 1;
-  transform: none;
+/* Continuous decorative motion. Paused when offscreen (.is-paused), when the
+   tab is hidden, or when motion is switched off. */
+[data-motion="on"] .drift {
+  animation: drift 18s ease-in-out infinite alternate;
+}
+[data-motion="on"] .drift-slow {
+  animation: drift 26s ease-in-out infinite alternate;
+}
+[data-motion="on"] .pulse-soft {
+  animation: pulse-soft 5.5s ease-in-out infinite;
+}
+
+.is-paused *,
+.is-paused {
+  animation-play-state: paused !important;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(0, -14px, 0) rotate(1.4deg);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* Lumi: one travelling highlight along the guided path. */
+[data-motion="on"] .lumi-travel {
+  animation: lumi-travel 7s linear infinite;
+}
+[data-motion="off"] .lumi-travel {
+  opacity: 0;
+}
+
+@keyframes lumi-travel {
+  from {
+    stroke-dashoffset: 826;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Skill tree, narrow screens: reorder into an accordion so the selected
+   branch's skills and evidence appear directly beneath it. Above lg the grid
+   takes over and these orders are not applied. */
+@media (max-width: 1023px) {
+  /* Not `> *`: the branch column uses display:contents, which changes box
+     generation but not selector matching, so its buttons are still
+     grandchildren to the selector engine. Match the marker class instead. */
+  .tree-flow .tree-item {
+    order: var(--o, 0);
+  }
+}
+
+/* Skill-tree connectors draw once on entry, then stay. */
+[data-motion="on"] .draw-line {
+  stroke-dasharray: var(--len, 400);
+  stroke-dashoffset: var(--len, 400);
+  animation: draw 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .reveal,
-  .reveal.is-in {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
   }
 }

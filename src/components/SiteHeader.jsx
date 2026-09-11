@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { nav, profile } from "../data/profile.js";
-import SpatialMark from "./SpatialMark.jsx";
 
 export default function SiteHeader({ current }) {
   const [open, setOpen] = useState(false);
@@ -41,14 +40,18 @@ export default function SiteHeader({ current }) {
     current && item.href === `/${current}/` ? "page" : undefined;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[var(--color-bg)]/92 backdrop-blur-sm">
-      <div className="shell flex h-[68px] items-center justify-between gap-6">
-        <a
-          href="/"
-          className="link-quiet flex items-center gap-2.5 text-[var(--color-ink)] no-underline"
-        >
-          <SpatialMark className="text-[var(--color-accent)]" size={18} />
-          <span className="font-medium tracking-tight">{profile.shortName}</span>
+    <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[var(--color-ink-900)]/90 backdrop-blur-sm">
+      <div className="stage flex h-[72px] items-center justify-between gap-6">
+        <a href="/" className="group flex items-center gap-2.5 no-underline">
+          <span
+            aria-hidden="true"
+            className="grid size-7 place-items-center rounded-md border border-[var(--color-violet)]/60 text-[11px] font-semibold text-[var(--color-violet)] transition-colors duration-200 group-hover:border-[var(--color-cyan)] group-hover:text-[var(--color-cyan)]"
+          >
+            VB
+          </span>
+          <span className="font-medium tracking-tight text-[var(--color-paper)]">
+            {profile.shortName}
+          </span>
         </a>
 
         <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
@@ -60,7 +63,7 @@ export default function SiteHeader({ current }) {
               {...(item.download ? { download: "" } : {})}
               className={
                 isCurrent(item)
-                  ? "text-[15px] text-[var(--color-ink)]"
+                  ? "text-[15px] text-[var(--color-paper)]"
                   : "link-quiet text-[15px]"
               }
             >
@@ -86,9 +89,9 @@ export default function SiteHeader({ current }) {
         <div
           id="mobile-nav"
           ref={panelRef}
-          className="border-t border-[var(--color-line)] bg-[var(--color-bg)] md:hidden"
+          className="border-t border-[var(--color-line)] bg-[var(--color-ink-900)] md:hidden"
         >
-          <nav aria-label="Primary" className="shell flex flex-col py-2">
+          <nav aria-label="Primary" className="stage flex flex-col py-2">
             {nav.map((item) => (
               <a
                 key={item.label}
@@ -96,7 +99,7 @@ export default function SiteHeader({ current }) {
                 aria-current={isCurrent(item)}
                 {...(item.download ? { download: "" } : {})}
                 onClick={() => setOpen(false)}
-                className="flex min-h-[52px] items-center border-b border-[var(--color-line)] text-[17px] text-[var(--color-ink)] last:border-b-0"
+                className="flex min-h-[52px] items-center border-b border-[var(--color-line)] text-[17px] text-[var(--color-paper)] last:border-b-0"
               >
                 {item.label}
               </a>

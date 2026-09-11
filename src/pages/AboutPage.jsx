@@ -1,17 +1,17 @@
 import Page from "../components/Page.jsx";
-import Reveal from "../components/Reveal.jsx";
+import { useReveal } from "../hooks.js";
 import { about, profile } from "../data/profile.js";
 import { experience, education } from "../data/experience.js";
 
 export default function AboutPage() {
   return (
     <Page current="about">
-      <section className="shell pt-16 pb-12 md:pt-20">
+      <section className="stage pt-16 pb-12 md:pt-20">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,0.85fr)] md:items-start md:gap-16">
           <div>
-            <h1 className="t-hero max-w-[14ch]">About</h1>
+            <h1 className="t-display t-hero">About</h1>
             {about.story.map((p) => (
-              <p key={p} className="prose-measure mt-6">
+              <p key={p} className="measure mt-6">
                 {p}
               </p>
             ))}
@@ -32,21 +32,21 @@ export default function AboutPage() {
       </section>
 
       {/* ── Experience ────────────────────────────────────────────────────── */}
-      <section className="shell mt-16 md:mt-20">
+      <section className="stage mt-16 md:mt-20">
         <hr className="rule" />
-        <Reveal className="pt-12">
-          <h2 className="t-section">Experience</h2>
+        <section className="pt-12">
+          <h2 className="t-display t-section">Experience</h2>
           <ul className="mt-8 space-y-10">
             {experience.map((entry) => (
               <li key={entry.id}>
                 <p className="t-meta">{entry.period}</p>
-                <h3 className="mt-1.5 text-[1.25rem] font-medium text-[var(--color-ink)]">
+                <h3 className="mt-1.5 text-[1.25rem] font-medium text-[var(--color-paper)]">
                   {entry.role}
                 </h3>
                 <p className="t-meta mt-0.5">
                   {entry.org} — {entry.subtitle}
                 </p>
-                <ul className="prose-measure mt-3 space-y-2">
+                <ul className="measure mt-3 space-y-2">
                   {entry.points.map((point) => (
                     <li key={point} className="flex gap-3">
                       <span
@@ -60,19 +60,19 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </Reveal>
+        </section>
       </section>
 
       {/* ── Education ─────────────────────────────────────────────────────── */}
-      <section className="shell mt-16 md:mt-20">
+      <section className="stage mt-16 md:mt-20">
         <hr className="rule" />
-        <Reveal className="pt-12">
-          <h2 className="t-section">Education</h2>
+        <section className="pt-12">
+          <h2 className="t-display t-section">Education</h2>
           <ul className="mt-8 grid gap-8 sm:grid-cols-2">
             {education.map((entry) => (
               <li key={entry.id}>
                 <p className="t-meta">{entry.period}</p>
-                <h3 className="mt-1.5 text-[1.125rem] font-medium text-[var(--color-ink)]">
+                <h3 className="mt-1.5 text-[1.125rem] font-medium text-[var(--color-paper)]">
                   {entry.school}
                 </h3>
                 <p className="mt-1">{entry.degree}</p>
@@ -80,49 +80,49 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </Reveal>
+        </section>
       </section>
 
       {/* ── Capabilities ──────────────────────────────────────────────────── */}
-      <section className="shell mt-16 md:mt-20">
+      <section className="stage mt-16 md:mt-20">
         <hr className="rule" />
-        <Reveal className="pt-12">
-          <h2 className="t-section">Capabilities</h2>
+        <section className="pt-12">
+          <h2 className="t-display t-section">Capabilities</h2>
           <div className="mt-8 grid gap-10 sm:grid-cols-2">
             {about.capabilities.map((group) => (
               <div key={group.title}>
-                <h3 className="text-[1.0625rem] font-medium text-[var(--color-ink)]">
+                <h3 className="text-[1.0625rem] font-medium text-[var(--color-paper)]">
                   {group.title}
                 </h3>
                 <p className="mt-2 text-[15px]">{group.items.join(" · ")}</p>
               </div>
             ))}
           </div>
-        </Reveal>
+        </section>
       </section>
 
       {/* ── Recognition + documents ───────────────────────────────────────── */}
-      <section className="shell mt-16 md:mt-20">
+      <section className="stage mt-16 md:mt-20">
         <hr className="rule" />
-        <Reveal className="pt-12">
-          <h2 className="t-section">Recognition</h2>
-          <p className="prose-measure mt-5">{about.recognitionSummary}</p>
+        <section className="pt-12">
+          <h2 className="t-display t-section">Recognition</h2>
+          <p className="measure mt-5">{about.recognitionSummary}</p>
           <p className="t-meta mt-3">
             Exact award names and evidence sit on each project page.
           </p>
 
-          <h2 className="t-section mt-14">Documents</h2>
+          <h2 className="t-display t-section mt-14">Documents</h2>
           <ul className="mt-5 space-y-5">
             {[profile.resume.primary, profile.resume.secondary].map((doc) => (
               <li key={doc.href}>
-                <a href={doc.href} download className="link text-[var(--color-ink)]">
+                <a href={doc.href} download className="link text-[var(--color-paper)]">
                   {doc.label}
                 </a>
                 <p className="t-meta mt-1">{doc.note}</p>
               </li>
             ))}
           </ul>
-        </Reveal>
+        </section>
       </section>
     </Page>
   );

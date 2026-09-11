@@ -1,15 +1,16 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import Page from "../components/Page.jsx";
-import Reveal from "../components/Reveal.jsx";
-import ProjectMedia from "../components/ProjectMedia.jsx";
+import ProjectVisual from "../components/ProjectVisual.jsx";
+import { useReveal } from "../hooks.js";
 import { featured, bySlug } from "../data/projects.js";
 
 function Block({ heading, children }) {
+  const [ref, cls] = useReveal();
   return (
-    <Reveal as="section" className="mt-14 md:mt-16">
-      <h2 className="t-section text-[clamp(1.5rem,2.4vw,1.875rem)]">{heading}</h2>
-      <div className="mt-4">{children}</div>
-    </Reveal>
+    <section ref={ref} className={`mt-14 md:mt-16 ${cls}`}>
+      <h2 className="t-display text-[clamp(1.5rem,2.6vw,2.1rem)]">{heading}</h2>
+      <div className="mt-5">{children}</div>
+    </section>
   );
 }
 
@@ -27,7 +28,7 @@ export default function CaseStudy({ slug }) {
 
   return (
     <Page current="work">
-      <article className="shell pt-10 pb-4 md:pt-14">
+      <article className="stage pt-10 pb-4 md:pt-14">
         <p>
           <a href="/work/" className="link-quiet inline-flex items-center gap-1.5 text-[15px]">
             <ArrowLeft className="size-4" aria-hidden="true" />
@@ -36,9 +37,9 @@ export default function CaseStudy({ slug }) {
         </p>
 
         <header className="mt-8">
-          <p className="t-mono text-[var(--color-accent)]">{project.category}</p>
-          <h1 className="t-hero mt-4 max-w-[16ch]">{project.title}</h1>
-          <p className="prose-measure mt-6 text-[17px] md:text-[18px]">{project.summary}</p>
+          <p className="t-mono text-[var(--color-cyan)]">{project.category}</p>
+          <h1 className="t-display t-section mt-4 max-w-[16ch]">{project.title}</h1>
+          <p className="measure mt-6 text-[17px] md:text-[18.5px]">{project.summary}</p>
         </header>
 
         {/* Compact facts — only verified ones are in the data. */}
@@ -46,24 +47,19 @@ export default function CaseStudy({ slug }) {
           {project.facts.map((fact) => (
             <div key={fact.label}>
               <dt className="t-mono text-[var(--color-muted)]">{fact.label}</dt>
-              <dd className="mt-1.5 text-[15px] text-[var(--color-ink)]">{fact.value}</dd>
+              <dd className="mt-1.5 text-[15px] text-[var(--color-paper)]">{fact.value}</dd>
             </div>
           ))}
         </dl>
 
         <div className="mt-10">
-          <ProjectMedia media={project.media} title={project.title} priority />
-          {project.media?.kind === "none" ? (
-            <p className="t-meta mt-3">
-              No public capture of this project is available to publish.
-            </p>
-          ) : null}
+          <ProjectVisual project={project} priority />
         </div>
 
         {project.problem?.length ? (
           <Block heading="The problem">
             {project.problem.map((p) => (
-              <p key={p} className="prose-measure mt-4 first:mt-0">
+              <p key={p} className="measure mt-4 first:mt-0">
                 {p}
               </p>
             ))}
@@ -72,7 +68,7 @@ export default function CaseStudy({ slug }) {
 
         {project.contribution?.length ? (
           <Block heading="My contribution">
-            <ul className="prose-measure space-y-3">
+            <ul className="measure space-y-3">
               {project.contribution.map((c) => (
                 <li key={c} className="flex gap-3">
                   <span
@@ -89,7 +85,7 @@ export default function CaseStudy({ slug }) {
         {project.howItWorks?.length ? (
           <Block heading="How it works">
             {project.howItWorks.map((p) => (
-              <p key={p} className="prose-measure mt-4 first:mt-0">
+              <p key={p} className="measure mt-4 first:mt-0">
                 {p}
               </p>
             ))}
@@ -101,10 +97,10 @@ export default function CaseStudy({ slug }) {
             <div className="space-y-7">
               {project.decisions.map((d) => (
                 <div key={d.title}>
-                  <h3 className="text-[1.0625rem] font-medium text-[var(--color-ink)]">
+                  <h3 className="text-[1.0625rem] font-medium text-[var(--color-paper)]">
                     {d.title}
                   </h3>
-                  <p className="prose-measure mt-2">{d.text}</p>
+                  <p className="measure mt-2">{d.text}</p>
                 </div>
               ))}
             </div>
@@ -114,7 +110,7 @@ export default function CaseStudy({ slug }) {
         {project.outcome?.length ? (
           <Block heading="Outcome and current state">
             {project.outcome.map((p) => (
-              <p key={p} className="prose-measure mt-4 first:mt-0">
+              <p key={p} className="measure mt-4 first:mt-0">
                 {p}
               </p>
             ))}
@@ -122,7 +118,7 @@ export default function CaseStudy({ slug }) {
         ) : null}
 
         {/* Tech + links */}
-        <Reveal as="section" className="mt-14 border-t border-[var(--color-line)] pt-10 md:mt-16">
+        <section className="mt-14 border-t border-[var(--color-line)] pt-10 md:mt-16">
           <h2 className="t-mono text-[var(--color-muted)]">Built with</h2>
           <ul className="mt-4 flex flex-wrap gap-2">
             {project.tech.map((t) => (
@@ -149,7 +145,7 @@ export default function CaseStudy({ slug }) {
               ))}
             </ul>
           ) : null}
-        </Reveal>
+        </section>
 
         {/* Next project */}
         <nav
@@ -158,7 +154,7 @@ export default function CaseStudy({ slug }) {
         >
           <a href={`/work/${next.slug}/`} className="link-quiet group inline-flex flex-col gap-1">
             <span className="t-mono">Next project</span>
-            <span className="inline-flex items-center gap-2 text-[1.25rem] text-[var(--color-ink)]">
+            <span className="inline-flex items-center gap-2 text-[1.25rem] text-[var(--color-paper)]">
               {next.title}
               <ArrowRight className="size-4" aria-hidden="true" />
             </span>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#111214" />
+    <meta name="theme-color" content="#101017" />
 
     <title>MR Blueprint — Vishnu Bodapati</title>
     <meta name="description" content="A Meta Quest mixed reality physics sandbox for spawning, editing, drawing and simulating interactive 3D scenes in the space around you." />
@@ -30,12 +30,28 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
+
+    <!-- Resolve the motion preference before first paint so reduced-motion
+         visitors never see a frame of animation. Mirrors src/motion.js. -->
+    <script>(function(){try{var s=localStorage.getItem("vsv:motion");var m=(s==="on"||s==="off")?s:(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches?"off":"on");document.documentElement.setAttribute("data-motion",m);}catch(e){document.documentElement.setAttribute("data-motion","on");}})();</script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="padding:2rem;max-width:40rem;margin:0 auto;font-family:system-ui,sans-serif;color:#f2f0eb">
+        <h1 style="font-size:1.5rem">Vishnu Bodapati — XR &amp; Spatial Computing Developer</h1>
+        <p>This portfolio needs JavaScript to render. You can still reach me directly:</p>
+        <ul>
+          <li><a style="color:#a497ff" href="mailto:vishnusai.usa@gmail.com">vishnusai.usa@gmail.com</a></li>
+          <li><a style="color:#a497ff" href="/Vishnu_Bodapati_CV.pdf">Download resume (PDF)</a></li>
+          <li><a style="color:#a497ff" href="https://github.com/VSVwnl">GitHub</a></li>
+          <li><a style="color:#a497ff" href="https://www.linkedin.com/in/vishnu-sai-vardhan-bodapati/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </noscript>
     <script type="module" src="/src/entries/mr-blueprint.jsx"></script>
   </body>
 </html>
