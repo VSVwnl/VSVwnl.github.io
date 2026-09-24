@@ -70,17 +70,23 @@ export default function HomePage() {
       </section>
 
       {/* ── Selected work ────────────────────────────────────────────────── */}
-      <section id="work" className="stage scroll-mt-24">
-        <hr className="rule" />
-        <div ref={workRef} className={`flex flex-wrap items-end justify-between gap-4 pt-14 ${workCls}`}>
-          <h2 className="t-display t-section">Selected work</h2>
-          <a href="/work/" className="link-quiet inline-flex items-center gap-1.5 pb-2 text-[15px]">
-            All projects
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </a>
+      <section id="work" className="scroll-mt-24">
+        <div className="stage">
+          <hr className="rule" />
+          <div
+            ref={workRef}
+            className={`flex flex-wrap items-end justify-between gap-4 pt-14 pb-12 ${workCls}`}
+          >
+            <h2 className="t-display t-section">Selected work</h2>
+            <a href="/work/" className="link-quiet inline-flex items-center gap-1.5 pb-2 text-[15px]">
+              All projects
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </a>
+          </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-20 md:gap-28">
+        {/* Full-width bands: outside .stage on purpose. */}
+        <div className="flex flex-col gap-4 md:gap-6">
           {featured.map((project, i) => (
             <ProjectFeature key={project.slug} project={project} index={i} />
           ))}
