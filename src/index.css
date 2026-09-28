@@ -700,7 +700,7 @@ main:focus {
   border-left: 1px solid var(--line);
   padding-left: 30px;
 }
-.skill-evidence > .eyebrow {
+.skill-evidence-content > .eyebrow {
   color: var(--accent);
   font-size: 9px;
 }
@@ -709,7 +709,7 @@ main:focus {
   font-size: 25px;
   letter-spacing: -0.02em;
 }
-.skill-evidence > p:not(.eyebrow) {
+.skill-evidence-content > p:not(.eyebrow) {
   font-size: 13px;
   color: var(--muted);
   margin-top: 16px;
@@ -927,6 +927,9 @@ main:focus {
   gap: 12px;
 }
 .case-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
   font-size: 12px;
   color: var(--muted);
 }
@@ -1370,7 +1373,7 @@ main:focus {
   .skill-evidence h3 {
     margin-top: 13px;
   }
-  .skill-evidence > p:not(.eyebrow) {
+  .skill-evidence-content > p:not(.eyebrow) {
     min-height: 0;
     margin-top: 12px;
     max-width: 50ch;
@@ -1460,7 +1463,7 @@ main:focus {
     margin: 0;
   }
   .case-nav a {
-    font-size: 11px;
+    font-size: 12px;
   }
   .case-block {
     padding-bottom: 30px;
@@ -1496,6 +1499,29 @@ main:focus {
   }
   .resume-sections {
     padding-bottom: 35px;
+  }
+}
+/* Short, non-blocking entrances. No opacity gating or perpetual motion. */
+@keyframes settle-in {
+  from { transform: translateY(14px); }
+  to { transform: translateY(0); }
+}
+@keyframes skill-in {
+  from { transform: translateX(6px); }
+  to { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-name {
+    animation: settle-in 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero-intro {
+    animation: settle-in 650ms 70ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .skill-evidence-content {
+    animation: skill-in 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .skill-evidence-content:focus-within {
+    animation: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

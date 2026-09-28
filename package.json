@@ -9,7 +9,7 @@
     "build": "vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "og": "node scripts/generate-og.mjs",
-    "test": "node scripts/verify-site.mjs"
+    "test": "node scripts/verify-site.mjs && node --test scripts/page-motion.test.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.525.0",

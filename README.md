@@ -30,6 +30,9 @@ npm run preview
 - `src/entries/` and matching root HTML documents: the seven route entry points.
 - `scripts/prerender.mjs`: build-time HTML rendering using the same React components.
 - `scripts/verify-site.mjs`: route, asset, data and accessibility invariants.
+- `src/lib/page-motion.js`: one-time, visible-by-default viewport motion with live reduced-motion and keyboard-focus handling.
+- `scripts/page-motion.test.mjs`: regression tests for motion, cleanup and fallback behavior.
+- `scripts/audit-links.mjs`: optional public-link availability check (`node scripts/audit-links.mjs` after building); not run in CI.
 - `scripts/generate-og.mjs`: regenerate social SVG/PNG and touch icon via `npm run og`.
 
 The stack remains React, Vite, Tailwind CSS and Lucide. Sharp is development-only, used for social assets. Compiled assets use `_app/` to avoid a case-only collision with the existing `public/Assets/` directory on Windows.
@@ -41,6 +44,8 @@ Personal contributions and team results are separate fields. Keep both grounded 
 The navigation downloads `public/Vishnu_Bodapati_SWE_Resume.pdf`, the supplied general-purpose resume. About also offers the older extended CV at `public/Vishnu_Bodapati_CV.pdf`. Do not replace the primary download with a company-tailored file.
 
 See [content evidence](docs/content-evidence.md) for the combined-resume source policy, verified awards, external evidence and precise remaining asset gaps. See [verification](docs/verification.md) for testing coverage.
+
+The [September 28 recruiter and website audit](docs/audit-2026-09-28.md) separates tested behavior from editorial recommendations and unverified items.
 
 ## Deployment
 

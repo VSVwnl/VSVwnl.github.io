@@ -60,29 +60,31 @@ export default function SkillTree() {
           aria-live="polite"
           aria-atomic="true"
         >
-          <p className="eyebrow">In practice</p>
-          <h3>{skill.label}</h3>
-          <p>{skill.use}</p>
-          <ul>
-            {skill.projects.map((slug) => {
-              const p = bySlug(slug);
-              return (
-                p && (
-                  <li key={slug}>
-                    <a
-                      className="text-link"
-                      href={
-                        p.featured ? `/work/${p.slug}/` : `/work/#${p.slug}`
-                      }
-                    >
-                      {p.title}
-                      <ArrowRight size={16} aria-hidden="true" />
-                    </a>
-                  </li>
-                )
-              );
-            })}
-          </ul>
+          <div className="skill-evidence-content" key={`${branchId}-${skill.id}`}>
+            <p className="eyebrow">In practice</p>
+            <h3>{skill.label}</h3>
+            <p>{skill.use}</p>
+            <ul>
+              {skill.projects.map((slug) => {
+                const p = bySlug(slug);
+                return (
+                  p && (
+                    <li key={slug}>
+                      <a
+                        className="text-link"
+                        href={
+                          p.featured ? `/work/${p.slug}/` : `/work/#${p.slug}`
+                        }
+                      >
+                        {p.title}
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </a>
+                    </li>
+                  )
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
 
 export default function DemoVideo({
@@ -9,10 +9,17 @@ export default function DemoVideo({
 }) {
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
+  const player = useRef(null);
+  const fallback = useRef(null);
+  useEffect(() => {
+    if (playing) (failed ? fallback.current : player.current)?.focus();
+  }, [playing, failed]);
   return (
     <div className="video-wrap">
       {playing && !failed ? (
         <video
+          ref={player}
+          tabIndex={0}
           src={media.src}
           poster={media.poster}
           controls
@@ -37,6 +44,7 @@ export default function DemoVideo({
             <div className="video-fallback">
               <p>The video could not load.</p>
               <a
+                ref={fallback}
                 href={fallbackUrl}
                 target="_blank"
                 rel="noopener noreferrer"

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile, stat } from "node:fs/promises";
 import { resolve, join } from "node:path";
+import { gzipSync } from "node:zlib";
 import { projects, featured, bySlug } from "../src/data/projects.js";
 import { profile } from "../src/data/profile.js";
 import { branches } from "../src/data/skilltree.js";
@@ -117,6 +118,15 @@ for (const [fg, bg] of [
 const css = await readFile("src/index.css", "utf8");
 assert.match(css, /prefers-reduced-motion/);
 assert.match(css, /:focus-visible/);
+const homeAssets = [...new Set([...pages.get("/").matchAll(/(?:href|src)="(\/_app\/[^\"]+)"/g)].map(m => m[1]))];
+const compressed = { js: 0, css: 0 };
+for (const asset of homeAssets) {
+  const type = asset.endsWith(".js") ? "js" : asset.endsWith(".css") ? "css" : null;
+  if (type) compressed[type] += gzipSync(await readFile(join(root, asset))).length;
+}
+assert.ok(compressed.js > 0 && compressed.js < 100 * 1024, "Home JS budget: 100 KiB gzip");
+assert.ok(compressed.css > 0 && compressed.css < 10 * 1024, "Home CSS budget: 10 KiB gzip");
+console.log(`Home referenced JS: ${(compressed.js / 1024).toFixed(1)} KiB gzip; CSS: ${(compressed.css / 1024).toFixed(1)} KiB gzip (fonts, HTML and media separate).`);
 console.log(
   `PASS: ${routes.length} prerendered routes, ${checkedLinks} local links/assets, project/skill data, resume PDFs, six text-contrast pairs, reduced motion and focus styles.`,
 );
