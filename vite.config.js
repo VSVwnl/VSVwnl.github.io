@@ -14,12 +14,15 @@ export default defineConfig({
   base: "/",
   plugins: [react(), tailwindcss()],
   build: {
+    // Avoid a case-only collision with public/Assets on Windows.
+    assetsDir: "_app",
     rollupOptions: {
       input: {
         home: resolve(__dirname, "index.html"),
         work: resolve(__dirname, "work/index.html"),
         about: resolve(__dirname, "about/index.html"),
         lumi: resolve(__dirname, "work/lumi-vr/index.html"),
+        draftUsa: resolve(__dirname, "work/draft-usa/index.html"),
         cinemascout: resolve(__dirname, "work/cinemascout/index.html"),
         mrBlueprint: resolve(__dirname, "work/mr-blueprint/index.html"),
       },

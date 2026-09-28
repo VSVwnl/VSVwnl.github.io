@@ -22,7 +22,8 @@ export const experience = [
     period: "Oct 2024 — Dec 2024",
     current: false,
     points: [
-      "Research and analysis on the Singapore gaming and graphics startup ecosystem.",
+      "Researched gaming, graphics, robotics, VR/AR and AI startup ecosystems.",
+      "Turned industry trends, competitor research and investment activity into reports for client strategy and opportunity evaluation.",
     ],
   },
 ];
@@ -35,7 +36,7 @@ export const education = [
     school: "Duke University",
     degree: "Master of Engineering",
     program: "Game Design, Development and Innovation",
-    period: "Aug 2025 — Present",
+    period: "Aug 2025 — Expected May 2027",
     current: true,
   },
   {

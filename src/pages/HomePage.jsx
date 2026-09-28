@@ -1,111 +1,170 @@
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import Page from "../components/Page.jsx";
-import HeroPlanes from "../components/HeroPlanes.jsx";
 import ProjectFeature from "../components/ProjectFeatures.jsx";
+import ProjectArchive from "../components/ProjectArchive.jsx";
 import SkillTree from "../components/SkillTree.jsx";
-import { useReveal } from "../hooks.js";
 import { featured } from "../data/projects.js";
 import { profile } from "../data/profile.js";
 
 export default function HomePage() {
-  const [workRef, workCls] = useReveal();
-  const [treeRef, treeCls] = useReveal();
-
   return (
     <Page>
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden">
-        <div className="stage relative grid items-center gap-10 pt-14 pb-20 md:pt-20 md:pb-28 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8">
-          {/* Text is stationary and readable; only the artwork moves. */}
-          <div className="relative z-10">
-            <p className="t-mono anim-in text-[var(--color-cyan)]" style={{ "--d": "80ms" }}>
-              {profile.role}
-            </p>
-
-            <h1 className="mt-6">
-              <span
-                className="anim-in block text-[clamp(1.1rem,2vw,1.4rem)] font-medium tracking-[0.02em] text-[var(--color-muted)]"
-                style={{ "--d": "160ms" }}
-              >
-                {profile.shortName}
-              </span>
-              <span
-                className="t-display t-hero anim-in mt-3 block"
-                style={{ "--d": "260ms" }}
-              >
-                Building beyond the screen.
-              </span>
-            </h1>
-
-            <p
-              className="measure anim-in mt-7 text-[17px] md:text-[18.5px]"
-              style={{ "--d": "380ms" }}
-            >
-              {profile.intro}
-            </p>
-            <p className="t-meta anim-in mt-4" style={{ "--d": "440ms" }}>
-              {profile.affiliation}
-            </p>
-
-            <div
-              className="anim-in mt-9 flex flex-wrap items-center gap-3"
-              style={{ "--d": "500ms" }}
-            >
-              <a href="#work" className="btn btn-primary">
-                Explore my work
-                <ArrowDown className="size-4" aria-hidden="true" />
-              </a>
-              <a href={profile.resume.primary.href} download className="btn btn-ghost">
-                Resume
-              </a>
-            </div>
-          </div>
-
-          {/* Desktop: the composition sits beside the type. Mobile: it gets its
-              own reserved band below, rather than a shrunken miniature. */}
-          <HeroPlanes className="hidden h-[34rem] lg:block" />
+      <section className="hero stage" aria-labelledby="intro-title">
+        <div className="hero-topline">
+          <p className="eyebrow">Software engineer & creative developer</p>
+          <span className="eyebrow hero-index" aria-hidden="true">
+            Selected work / 2025—26
+          </span>
         </div>
-
-        <HeroPlanes className="stage -mt-6 mb-10 block h-[19rem] sm:h-[23rem] lg:hidden" />
-      </section>
-
-      {/* ── Selected work ────────────────────────────────────────────────── */}
-      <section id="work" className="scroll-mt-24">
-        <div className="stage">
-          <hr className="rule" />
-          <div
-            ref={workRef}
-            className={`flex flex-wrap items-end justify-between gap-4 pt-14 pb-12 ${workCls}`}
-          >
-            <h2 className="t-display t-section">Selected work</h2>
-            <a href="/work/" className="link-quiet inline-flex items-center gap-1.5 pb-2 text-[15px]">
-              All projects
-              <ArrowRight className="size-4" aria-hidden="true" />
+        <div className="hero-layout">
+          <h1 id="intro-title" className="hero-name">
+            Vishnu
+            <br />
+            <span>
+              Bodapati<span className="accent">.</span>
+            </span>
+          </h1>
+          <div className="hero-intro">
+            <p className="hero-statement">
+              I build interactive software.
+              <br />
+              <span>
+                From human input
+                <br /> to worlds in motion.
+              </span>
+            </p>
+            <p className="hero-description">
+              Real-time 3D tools, accessible VR, games, and AI applications. I
+              work on the systems that make them respond.
+            </p>
+            <p className="hero-affiliation">
+              Research assistant, Duke I³T Lab
+              <br />
+              M.Eng. candidate · Expected May 2027
+            </p>
+          </div>
+        </div>
+        <div className="hero-bottom">
+          <div className="action-row">
+            <a href="#work" className="btn btn-primary">
+              Selected work <ArrowDown size={17} aria-hidden="true" />
+            </a>
+            <a
+              href={profile.resume.primary.href}
+              download
+              className="text-link"
+            >
+              Resume <ArrowDown size={16} aria-hidden="true" />
+            </a>
+            <a
+              href="https://github.com/VSVwnl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-link"
+            >
+              GitHub <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+            <a href="#contact" className="text-link">
+              Contact <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
+          <p className="hero-note">Unity / C# · Lua · Python · TypeScript</p>
         </div>
-
-        {/* Full-width bands: outside .stage on purpose. */}
-        <div className="flex flex-col gap-4 md:gap-6">
+      </section>
+      <section
+        id="work"
+        className="stage work-section"
+        aria-labelledby="work-title"
+      >
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">01 / Selected work</p>
+            <h2 id="work-title">
+              Four ways to
+              <br />
+              make software tangible.
+            </h2>
+          </div>
+          <p className="section-aside">
+            Research, hackathons, and tools.
+            <br />
+            My role, the engineering, and the evidence.
+          </p>
+        </div>
+        <div className="featured-grid">
           {featured.map((project, i) => (
             <ProjectFeature key={project.slug} project={project} index={i} />
           ))}
         </div>
       </section>
-
-      {/* ── How I build ──────────────────────────────────────────────────── */}
-      <section id="how-i-build" className="stage mt-28 scroll-mt-24 md:mt-36">
-        <hr className="rule" />
-        <div ref={treeRef} className={`pt-14 ${treeCls}`}>
-          <h2 className="t-display t-section">How I build</h2>
-          <p className="measure mt-5">
-            Four areas I work across, and where each one actually shows up. Pick a
-            branch, then a skill, to see the projects behind it.
-          </p>
+      <section
+        className="stage archive-section"
+        aria-labelledby="archive-title"
+      >
+        <div className="section-heading compact">
+          <div>
+            <p className="eyebrow">02 / More from the workbench</p>
+            <h2 id="archive-title">Small games. Real systems.</h2>
+          </div>
+          <a href="/work/#archive" className="text-link">
+            All projects <ArrowRight size={17} aria-hidden="true" />
+          </a>
         </div>
-
-        <div className="mt-12">
+        <ProjectArchive compact />
+      </section>
+      <section
+        id="how-i-build"
+        className="skills-section theme-dark"
+        aria-labelledby="skills-title"
+      >
+        <div className="stage">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">03 / Connected skills</p>
+              <h2 id="skills-title">Follow the work.</h2>
+            </div>
+            <p className="section-aside">
+              Pick an area, then a skill.
+              <br />
+              Every connection leads to a project.
+            </p>
+          </div>
           <SkillTree />
+        </div>
+      </section>
+      <section className="stage home-about" aria-labelledby="about-title">
+        <div className="about-portrait">
+          <img
+            src="/Assets/profile/vishnu-headshot.jpg"
+            alt="Vishnu Bodapati"
+            width="1066"
+            height="1600"
+            loading="lazy"
+            decoding="async"
+          />
+          <span className="eyebrow">Vishnu / Durham, NC</span>
+        </div>
+        <div>
+          <p className="eyebrow">04 / The person behind the systems</p>
+          <h2 id="about-title">
+            The interaction is
+            <br />
+            part of the engineering.
+          </h2>
+          <p className="large-copy">
+            At Duke’s I³T Lab, I build VR gameplay for ICU rehabilitation
+            research. The constraints are concrete: seated movement, clear
+            feedback, and software that behaves consistently from one session to
+            the next.
+          </p>
+          <p>
+            I bring that same attention to a virtual camera, a physics sandbox,
+            or a game controlled with a crank. I like turning a technical system
+            into something another person can use.
+          </p>
+          <a href="/about/" className="text-link">
+            More about me <ArrowRight size={17} aria-hidden="true" />
+          </a>
         </div>
       </section>
     </Page>

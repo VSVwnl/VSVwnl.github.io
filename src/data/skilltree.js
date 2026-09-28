@@ -1,164 +1,123 @@
-// ─── "How I build" — branching skill map ─────────────────────────────────────
-//
-// Organising categories, not a claim of mastery and not a prerequisite tree.
-// Every skill carries one sentence of documented use and links only to projects
-// that actually evidence it. No levels, percentages, XP or locked nodes.
-//
-// `projects` values are slugs from data/projects.js. If a mapping is not
-// supported by the CV or a linked public page, it is not listed here.
-
-export const root = "Spatial & interactive systems";
-
+// Each skill links to work supported by the supplied resume collection or public project evidence.
 export const branches = [
   {
     id: "xr",
     label: "XR & interaction",
-    blurb: "Headset-native interaction, on Quest and PICO.",
     skills: [
       {
-        id: "unity-csharp",
+        id: "unity",
         label: "Unity & C#",
-        use: "The engine and language behind both the ICU rehabilitation work and the mixed reality sandbox.",
+        use: "I implement interaction mechanics, calibration and feedback for Lumi, and object manipulation and inspector systems for MR Blueprint.",
         projects: ["lumi-vr", "mr-blueprint"],
       },
       {
-        id: "quest",
-        label: "Meta Quest 3",
-        use: "Target hardware for Lumi's seated sessions and MR Blueprint's in-room workspace.",
-        projects: ["lumi-vr", "mr-blueprint"],
-      },
-      {
-        id: "xrit",
-        label: "XR Interaction Toolkit",
-        use: "Drives the grab, select and manipulate interactions in the Quest builds.",
-        projects: ["mr-blueprint", "lumi-vr"],
-      },
-      {
-        id: "world-ui",
-        label: "World-space XR UI",
-        use: "Inspector panels and controls placed in the room rather than on a flat HUD.",
+        id: "input",
+        label: "Headset & stylus input",
+        use: "Meta Quest interaction is the basis of the sandbox. I also contributed pressure-sensitive spatial drawing with the Logitech MX Ink SDK.",
         projects: ["mr-blueprint"],
       },
       {
-        id: "stylus",
-        label: "Stylus input",
-        use: "Pressure-sensitive spatial drawing, contributed to MR Blueprint's Draw Mode via the Logitech MX Ink SDK.",
-        projects: ["mr-blueprint"],
+        id: "accessible",
+        label: "Accessible interaction",
+        use: "In Lumi, I work within seated movement constraints and iterate on clear feedback, responsiveness and patient comfort.",
+        projects: ["lumi-vr"],
+      },
+      {
+        id: "openxr",
+        label: "OpenXR & PICO",
+        use: "CinemaScout combines Unity XR with PICO integration and emulator testing for exploring reconstructed scenes and previewing camera shots.",
+        projects: ["cinemascout"],
       },
     ],
   },
   {
     id: "spatial",
-    label: "Spatial tools & 3D",
-    blurb: "Capturing real places and composing shots inside them.",
+    label: "3D & spatial tools",
     skills: [
       {
+        id: "camera",
+        label: "Virtual cameras",
+        use: "I implemented controls for focal length, field of view, aspect ratio, camera height and clipping in CinemaScout.",
+        projects: ["cinemascout"],
+      },
+      {
+        id: "splines",
+        label: "Spline-based playback",
+        use: "The virtual camera follows a spline so filmmakers can preview tracking shots inside the headset.",
+        projects: ["cinemascout"],
+      },
+      {
         id: "splatting",
-        label: "3D Gaussian Splatting",
-        use: "Real locations captured as splat reconstructions that can be walked through at true scale.",
+        label: "Gaussian Splatting",
+        use: "CinemaScout uses reconstructed real locations as the scene for camera placement, spatial exploration and shot planning.",
         projects: ["cinemascout"],
       },
       {
-        id: "virtual-camera",
-        label: "Virtual camera systems",
-        use: "Focal length, field of view, aspect ratio, height and clipping, configured the way a physical camera would be.",
-        projects: ["cinemascout"],
-      },
-      {
-        id: "spline-paths",
-        label: "Spline shot paths",
-        use: "Camera positions saved as knots on a path and played back as a tracking shot with adjustable easing.",
-        projects: ["cinemascout"],
-      },
-      {
-        id: "webspatial",
-        label: "WebSpatial",
-        use: "A companion 2D dashboard for organising and comparing candidate viewpoints alongside the headset.",
-        projects: ["cinemascout"],
-      },
-      {
-        id: "urp",
-        label: "URP",
-        use: "The render pipeline used for the Quest builds.",
-        projects: ["lumi-vr"],
+        id: "physics",
+        label: "Physics & scene state",
+        use: "I built Edit / Simulate workflows and contributed to PhysicsLens and snapshot / restore for repeatable experiments.",
+        projects: ["mr-blueprint"],
       },
     ],
   },
   {
     id: "gameplay",
     label: "Gameplay & systems",
-    blurb: "Engine-level systems work across Unreal and Unity.",
     skills: [
       {
+        id: "lua",
+        label: "Lua & Playdate",
+        use: "I built Hungry Owl solo: crank and button input, enemy behavior, scoring, difficulty progression and game-state logic.",
+        projects: ["hungry-owl"],
+      },
+      {
         id: "unreal",
-        label: "Unreal Engine & C++",
-        use: "Used across the game jam and course projects, including gameplay logic, UI and build work.",
-        projects: ["tower-of-tricks", "skylar-knight"],
-      },
-      {
-        id: "physics",
-        label: "Physics simulation",
-        use: "Edit and Simulate modes with adjustable physics, plus snapshot and restore for repeatable scenarios.",
-        projects: ["mr-blueprint"],
-      },
-      {
-        id: "ui-hud",
-        label: "UI & HUD systems",
-        use: "Menus, HUD elements and settings flows built in UMG.",
-        projects: ["tower-of-tricks", "skylar-knight"],
+        label: "Unreal UI & builds",
+        use: "I implemented menus and HUD flows and investigated map loading, asset references and initialization issues in packaged builds.",
+        projects: ["tower-of-tricks"],
       },
       {
         id: "audio",
-        label: "Audio implementation",
-        use: "Sound cue setup, event triggering and contextual feedback tied to gameplay interactions.",
+        label: "Gameplay & audio",
+        use: "I connected gameplay events to audio and interaction feedback across Unreal game jam projects.",
         projects: ["overpriced", "skylar-knight"],
       },
       {
-        id: "packaging",
-        label: "Build & packaging",
-        use: "Packaging configuration and debugging the differences between editor and packaged builds.",
-        projects: ["tower-of-tricks"],
+        id: "vision",
+        label: "Python & computer vision",
+        use: "Meteor Mayhem connects a Python hand-gesture recognition pipeline to Unity gameplay, turning camera input into in-game actions.",
+        projects: ["meteor-mayhem"],
       },
     ],
   },
   {
     id: "web",
-    label: "Web & AI tools",
-    blurb: "Shipping full-stack products, with model APIs behind them.",
+    label: "Web & applied AI",
     skills: [
       {
-        id: "react-next",
-        label: "React & Next.js",
-        use: "The front end for the Draft USA platform, and for this site.",
+        id: "next",
+        label: "Next.js & TypeScript",
+        use: "My Draft USA work includes roster and dashboard views that make the draft state, scoring and recommendations readable.",
         projects: ["draft-usa"],
       },
       {
         id: "gemini",
-        label: "Gemini API",
-        use: "Server-side routes powering roster analysis, scout recommendations and next-pick suggestions.",
+        label: "Server-side Gemini",
+        use: "I integrated Gemini through server-side routes for roster analysis and contextual guidance, with constraints on the generated language.",
         projects: ["draft-usa"],
       },
       {
-        id: "cloud-run",
-        label: "Google Cloud Run",
-        use: "Containerised deployment for the Draft USA app.",
-        projects: ["draft-usa"],
-      },
-      {
-        id: "llm-apis",
-        label: "Claude & GPT APIs",
-        use: "Contributed to an AI-assisted shot recommendation feature in CinemaScout.",
+        id: "webspatial",
+        label: "WebSpatial",
+        use: "I contributed to CinemaScout’s Mission Control workflow for organizing and comparing viewpoints alongside the immersive application.",
         projects: ["cinemascout"],
       },
       {
-        id: "cv",
-        label: "Computer vision",
-        use: "Python-based real-time hand gesture recognition driving a Unity game.",
-        projects: ["meteor-mayhem"],
+        id: "webcontrol",
+        label: "Browser-to-app workflows",
+        use: "I worked on browser-triggered session and scene control for a Unity VR application, including communication and state-synchronization issues.",
+        projects: ["vr-web-controller"],
       },
     ],
   },
 ];
-
-export const findSkill = (branchId, skillId) =>
-  branches.find((b) => b.id === branchId)?.skills.find((s) => s.id === skillId);

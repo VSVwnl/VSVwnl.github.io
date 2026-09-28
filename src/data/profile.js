@@ -3,26 +3,26 @@
 export const profile = {
   name: "Vishnu Sai Vardhan Bodapati",
   shortName: "Vishnu Bodapati",
-  role: "XR & Spatial Computing Developer",
-  headline: "Building tools and experiences for spatial interaction.",
+  role: "Software engineer & creative developer",
+  headline: "Real-time systems, spatial tools, and games.",
   intro:
-    "I'm Vishnu, a developer working across XR, interactive systems and games — from VR rehabilitation for ICU patients to spatial tools for creating and exploring 3D worlds.",
-  affiliation: "M.Eng at Duke University · Research assistant at the Duke I³T Lab",
+    "I build the systems people use to explore, create, and play in real time — from clinical VR interaction at Duke to spatial camera tools, AI web products, and small games built end to end.",
+  affiliation:
+    "Duke M.Eng., expected May 2027 · Research assistant at the Duke I³T Lab",
   email: "vishnusai.usa@gmail.com",
 
-  // Two documents, two audiences. "Resume" in the navigation points at the CV,
-  // which matches the XR/games positioning; About explains the distinction and
-  // links both, rather than showing two competing buttons everywhere.
+  // The general-purpose SWE resume is primary; the older extended CV is secondary.
+  // Preserve the supplied documents rather than silently rewriting either.
   resume: {
     primary: {
-      href: "/Vishnu_Bodapati_CV.pdf",
+      href: "/Vishnu_Bodapati_SWE_Resume.pdf",
       label: "Resume",
-      note: "XR, games and research — the fuller record of projects and awards.",
+      note: "General software engineering resume — systems, real-time graphics, web, and research. One page.",
     },
     secondary: {
-      href: "/Vishnu_Bodapati_SWE_Resume.pdf",
-      label: "Software engineering resume",
-      note: "A one-page version framed for general software engineering roles.",
+      href: "/Vishnu_Bodapati_CV.pdf",
+      label: "Extended CV",
+      note: "A longer record of XR, games, research, and earlier projects. This supplied PDF predates CinemaScout; the current resume above includes it.",
     },
   },
 };
@@ -42,7 +42,11 @@ export const socials = [
     href: "https://www.linkedin.com/in/vishnu-sai-vardhan-bodapati/",
     handle: "vishnu-sai-vardhan-bodapati",
   },
-  { label: "itch.io", href: "https://vsvwnl.itch.io/", handle: "vsvwnl.itch.io" },
+  {
+    label: "itch.io",
+    href: "https://vsvwnl.itch.io/",
+    handle: "vsvwnl.itch.io",
+  },
 ];
 
 // ─── Home: brief personal introduction (40-70 words) ─────────────────────────
@@ -54,8 +58,8 @@ export const homeIntro =
 
 export const about = {
   story: [
-    "I build immersive and interactive software: mixed reality tools, VR rehabilitation systems, AI-assisted web products, and complete small games. The thread through all of it is spatial interaction — how someone understands and operates a system that exists around them rather than on a screen.",
-    "I'm currently finishing an M.Eng in Game Design, Development and Innovation at Duke, and working as a research assistant at the Duke I³T Lab, where I build VR gameplay for ICU rehabilitation research. Before that I studied Computer Science with a focus on game and mobile development at the University of Wollongong.",
+    "I build interactive software: mixed reality tools, VR rehabilitation systems, AI-assisted web products, and complete small games. The thread through all of it is interaction — turning a complex system into something a person can understand and control.",
+    "I'm pursuing an M.Eng in Game Design, Development and Innovation at Duke, with expected graduation in May 2027. At the Duke I³T Lab, I build VR gameplay for ICU rehabilitation research. Before that I studied Computer Science with a focus on game and mobile development at the University of Wollongong.",
     "The constraints I find most interesting are the unglamorous ones — what someone can physically reach from a hospital bed, whether a frame drop breaks the illusion, whether a scene can be reproduced exactly on a second run. Those tend to decide whether spatial software is usable at all.",
   ],
 
