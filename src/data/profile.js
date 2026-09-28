@@ -1,8 +1,8 @@
 // ─── Identity and site-wide content ──────────────────────────────────────────
 
 export const profile = {
-  name: "Vishnu Sai Vardhan Bodapati",
-  shortName: "Vishnu Bodapati",
+  name: "Vishnu Sai Bodapati",
+  shortName: "Vishnu Sai Bodapati",
   role: "Software engineer & creative developer",
   headline: "Real-time systems, spatial tools, and games.",
   intro:

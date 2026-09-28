@@ -1197,7 +1197,7 @@ main:focus {
     padding-block: 32px;
   }
   .hero-name {
-    font-size: clamp(4.5rem, 17.6vw, 8rem);
+    font-size: clamp(4rem, 17.6vw, 8rem);
   }
   .hero-intro {
     border-left: 0;

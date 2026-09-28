@@ -18,7 +18,7 @@ export default function HomePage() {
         </div>
         <div className="hero-layout">
           <h1 id="intro-title" className="hero-name">
-            Vishnu
+            Vishnu Sai
             <br />
             <span>
               Bodapati<span className="accent">.</span>
@@ -136,7 +136,7 @@ export default function HomePage() {
         <div className="about-portrait">
           <img
             src="/Assets/profile/vishnu-headshot.jpg"
-            alt="Vishnu Bodapati"
+            alt="Vishnu Sai Bodapati"
             width="1066"
             height="1600"
             loading="lazy"

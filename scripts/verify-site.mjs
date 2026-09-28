@@ -22,6 +22,7 @@ const pages = new Map(
 );
 let checkedLinks = 0;
 for (const [route, html] of pages) {
+  assert.ok(html.includes(profile.shortName), `${route}: current display name`);
   assert.equal(
     (html.match(/<h1[ >]/g) || []).length,
     1,

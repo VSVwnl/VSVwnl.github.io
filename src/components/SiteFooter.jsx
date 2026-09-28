@@ -46,7 +46,7 @@ export default function SiteFooter() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} Vishnu Sai Vardhan Bodapati</p>
+          <p>© {new Date().getFullYear()} Vishnu Sai Bodapati</p>
           <p>Built with care. Made to be explored.</p>
           <a href="#main" className="text-link">
             Back to top ↑

@@ -1,4 +1,4 @@
-# Vishnu Bodapati — Portfolio
+# Vishnu Sai Bodapati — Portfolio
 
 All-purpose professional portfolio for interactive software, real-time 3D, XR, games and applied AI.
 

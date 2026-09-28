@@ -33,11 +33,11 @@ export default function SiteHeader({ current }) {
   return (
     <header ref={header} className="site-header">
       <div className="stage header-inner">
-        <a className="wordmark" href="/" aria-label="Vishnu Bodapati — home">
+        <a className="wordmark" href="/" aria-label="Vishnu Sai Bodapati — home">
           <span className="monogram" aria-hidden="true">
             vb.
           </span>
-          <span>Vishnu Bodapati</span>
+          <span>Vishnu Sai Bodapati</span>
         </a>
         <button
           ref={toggle}

@@ -9,7 +9,7 @@ export default function AboutPage() {
       <div className="stage">
         <header className="about-intro">
           <div>
-            <p className="eyebrow">About / Vishnu Bodapati</p>
+            <p className="eyebrow">About / Vishnu Sai Bodapati</p>
             <h1>
               Thinking in systems.
               <br />
