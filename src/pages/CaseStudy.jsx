@@ -6,6 +6,8 @@ import { featured, bySlug } from "../data/projects.js";
 export default function CaseStudy({ slug }) {
   const project = bySlug(slug);
   if (!project) return null;
+  const isTeamResult = project.proof?.startsWith("Team result:");
+  const resultSummary = project.proof?.replace(/^Team result:\s*/, "");
   const next =
     featured[
       (featured.findIndex((p) => p.slug === slug) + 1) % featured.length
@@ -16,7 +18,7 @@ export default function CaseStudy({ slug }) {
         <header className="stage case-intro">
           <a href="/work/" className="text-link">
             <ArrowLeft size={15} aria-hidden="true" />
-            All work
+            All projects
           </a>
           <p className="eyebrow">{project.category} / Case study</p>
           <div className="case-title">
@@ -53,29 +55,44 @@ export default function CaseStudy({ slug }) {
               <p className="case-status">{project.statusNote}</p>
             )}
           </div>
+          <div className="case-summary">
+            <div className="case-summary-contribution">
+              <p className="eyebrow">My contribution</p>
+              <h2>What I built</h2>
+              <p>{project.focus}</p>
+            </div>
+            {resultSummary && (
+              <div className="case-summary-result">
+                <p className="eyebrow">
+                  {isTeamResult ? "Team result" : "Project status"}
+                </p>
+                <p>{resultSummary}</p>
+              </div>
+            )}
+          </div>
         </header>
-        <div className="stage case-cover">
+        <div className="stage case-cover" id="demo">
           <ProjectVisual project={project} priority />
         </div>
         <div className="stage case-body">
           <nav className="case-nav" aria-label="Case study sections">
             <p className="eyebrow">Inside the project</p>
-            <a href="#problem">01 / The problem</a>
-            <a href="#contribution">02 / My contribution</a>
-            <a href="#engineering">03 / Engineering</a>
-            <a href="#outcome">04 / Result</a>
+            <a href="#problem">Context</a>
+            <a href="#contribution">My contribution</a>
+            <a href="#engineering">Engineering</a>
+            <a href="#outcome">Results</a>
           </nav>
           <div className="case-content">
             <section className="case-block" id="problem">
-              <p className="eyebrow">01 / Context</p>
-              <h2>The problem.</h2>
+              <p className="eyebrow">Context</p>
+              <h2>The problem</h2>
               {project.problem?.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </section>
             <section className="case-block" id="contribution">
-              <p className="eyebrow">02 / Personal contribution</p>
-              <h2>What I built.</h2>
+              <p className="eyebrow">Personal contribution</p>
+              <h2>My role and implementation</h2>
               <p>{project.roleLine}.</p>
               <ul className="contribution-list">
                 {project.contribution?.map((p) => (
@@ -84,8 +101,8 @@ export default function CaseStudy({ slug }) {
               </ul>
             </section>
             <section className="case-block" id="engineering">
-              <p className="eyebrow">03 / Systems & constraints</p>
-              <h2>Inside the engineering.</h2>
+              <p className="eyebrow">Systems & constraints</p>
+              <h2>Engineering decisions</h2>
               {project.howItWorks?.map((p) => (
                 <p key={p}>{p}</p>
               ))}
@@ -98,8 +115,8 @@ export default function CaseStudy({ slug }) {
               <p className="stack-line">{project.tech.join(" / ")}</p>
             </section>
             <section className="case-block" id="outcome">
-              <p className="eyebrow">04 / Outcome</p>
-              <h2>What came out of it.</h2>
+              <p className="eyebrow">Outcome</p>
+              <h2>Results and current scope</h2>
               {project.outcome?.map((p) => (
                 <p key={p}>{p}</p>
               ))}

@@ -7,12 +7,8 @@ export default function SiteFooter() {
       <div className="stage">
         <div className="footer-main">
           <div>
-            <p className="eyebrow">Have something in mind?</p>
-            <h2>
-              Let’s make
-              <br />
-              it work<span className="accent">.</span>
-            </h2>
+            <p className="eyebrow">Contact</p>
+            <h2>Let’s talk about<br />your team.</h2>
           </div>
           <div className="footer-contact">
             <p>Open to software, XR, games, and applied AI opportunities.</p>
@@ -47,7 +43,7 @@ export default function SiteFooter() {
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Vishnu Sai Bodapati</p>
-          <p>Built with care. Made to be explored.</p>
+          <p>Software engineering · XR · Games · Applied AI</p>
           <a href="#main" className="text-link">
             Back to top ↑
           </a>

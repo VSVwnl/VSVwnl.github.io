@@ -8,16 +8,12 @@ export default function WorkPage() {
     <Page current="work">
       <div className="stage work-page">
         <header className="page-intro">
-          <p className="eyebrow">Selected work / Project index</p>
-          <h1>
-            Systems you
-            <br />
-            can interact with.
-          </h1>
+          <p className="eyebrow">Project portfolio</p>
+          <h1>Projects & engineering work.</h1>
           <p>
-            Spatial tools, research software, games, and web applications. Four
-            case studies first; a wider collection of experiments and
-            engineering work below.
+            Software I have built across XR, research, games, and AI web
+            applications. Each case study identifies my contribution, the
+            engineering decisions, and the project’s results.
           </p>
         </header>
         <div className="featured-grid">
@@ -32,12 +28,12 @@ export default function WorkPage() {
         >
           <div className="section-heading compact">
             <div>
-              <p className="eyebrow">The wider collection</p>
-              <h2 id="archive-heading">Games, tools & experiments.</h2>
+              <p className="eyebrow">Additional projects</p>
+              <h2 id="archive-heading">Games, tools & experiments</h2>
             </div>
             <p className="section-aside">
-              Smaller projects, with the specific systems
-              <br />I contributed to each.
+              More projects with a concise account of my work and links to
+              available evidence.
             </p>
           </div>
           <ProjectArchive />

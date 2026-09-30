@@ -34,10 +34,8 @@ export default function SiteHeader({ current }) {
     <header ref={header} className="site-header">
       <div className="stage header-inner">
         <a className="wordmark" href="/" aria-label="Vishnu Sai Bodapati — home">
-          <span className="monogram" aria-hidden="true">
-            vb.
-          </span>
-          <span>Vishnu Sai Bodapati</span>
+          <span className="monogram" aria-hidden="true">VS</span>
+          <span className="wordmark-name">Vishnu Sai Bodapati<span>Software Engineer</span></span>
         </a>
         <button
           ref={toggle}
@@ -63,6 +61,7 @@ export default function SiteHeader({ current }) {
                 current && item.href === `/${current}/` ? "page" : undefined
               }
               download={item.download || undefined}
+              className={item.download ? "nav-resume" : undefined}
               onClick={() => setOpen(false)}
             >
               {item.label}

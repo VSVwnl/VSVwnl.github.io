@@ -3,7 +3,7 @@
 export const profile = {
   name: "Vishnu Sai Bodapati",
   shortName: "Vishnu Sai Bodapati",
-  role: "Software engineer & creative developer",
+  role: "Software Engineer",
   headline: "Real-time systems, spatial tools, and games.",
   intro:
     "I build the systems people use to explore, create, and play in real time — from clinical VR interaction at Duke to spatial camera tools, AI web products, and small games built end to end.",

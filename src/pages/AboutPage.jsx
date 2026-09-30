@@ -1,7 +1,7 @@
 import Page from "../components/Page.jsx";
 import { about, profile } from "../data/profile.js";
 import { experience, education } from "../data/experience.js";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, Mail } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -9,15 +9,23 @@ export default function AboutPage() {
       <div className="stage">
         <header className="about-intro">
           <div>
-            <p className="eyebrow">About / Vishnu Sai Bodapati</p>
-            <h1>
-              Thinking in systems.
-              <br />
-              Building for people.
-            </h1>
-            {about.story.map((p) => (
+            <p className="eyebrow">Vishnu Sai Bodapati</p>
+            <h1>About Vishnu</h1>
+            {about.story.slice(0, 2).map((p) => (
               <p key={p}>{p}</p>
             ))}
+            <div className="about-actions">
+              <a
+                className="button button-primary"
+                href={profile.resume.primary.href}
+                download
+              >
+                Resume <ArrowDown size={16} aria-hidden="true" />
+              </a>
+              <a className="button" href={`mailto:${profile.email}`}>
+                Email me <Mail size={16} aria-hidden="true" />
+              </a>
+            </div>
           </div>
           <img
             src="/Assets/profile/vishnu-headshot.jpg"
@@ -62,7 +70,7 @@ export default function AboutPage() {
             </div>
           </section>
           <section className="resume-section">
-            <h2>What I work on</h2>
+            <h2>Skills & specializations</h2>
             <div className="capability-list">
               <article>
                 <h3>Spatial interaction</h3>
@@ -92,8 +100,8 @@ export default function AboutPage() {
                   clear explanations of AI-generated recommendations.
                 </p>
               </article>
-              <a className="text-link" href="/#how-i-build">
-                Explore the skill map{" "}
+              <a className="text-link" href="/#skills">
+                Skills & project evidence{" "}
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
             </div>
@@ -103,7 +111,7 @@ export default function AboutPage() {
             <div>
               <p>{about.recognitionSummary}</p>
               <a href="/work/" className="text-link">
-                The projects behind the awards{" "}
+                View award-winning projects{" "}
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
             </div>

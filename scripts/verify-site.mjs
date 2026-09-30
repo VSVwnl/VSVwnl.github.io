@@ -4,7 +4,7 @@ import { resolve, join } from "node:path";
 import { gzipSync } from "node:zlib";
 import { projects, featured, bySlug } from "../src/data/projects.js";
 import { profile } from "../src/data/profile.js";
-import { branches } from "../src/data/skilltree.js";
+import { skillGroups, projectHighlights } from "../src/data/recruiter.js";
 
 const root = resolve("dist");
 const routes = [
@@ -83,12 +83,54 @@ for (const p of featured) {
   for (const key of ["problem", "contribution", "decisions", "outcome"])
     assert.ok(p[key].length, `${p.slug}: ${key}`);
 }
-for (const branch of branches)
-  for (const skill of branch.skills) {
-    assert.ok(skill.use && skill.projects.length);
-    for (const slug of skill.projects)
-      assert.ok(bySlug(slug), `Skill target ${slug}`);
+for (const group of skillGroups) {
+  assert.ok(group.title && group.tools && group.detail && group.links.length);
+  for (const link of group.links) {
+    assert.ok(link.label && link.href, `${group.title}: evidence link`);
+    const url = new URL(link.href, "https://vsvwnl.github.io");
+    const slug =
+      url.pathname === "/work/"
+        ? decodeURIComponent(url.hash.slice(1))
+        : url.pathname.match(/^\/work\/([^/]+)\/$/)?.[1];
+    assert.ok(bySlug(slug), `${group.title}: project evidence ${link.href}`);
   }
+}
+for (const [slug, highlight] of Object.entries(projectHighlights)) {
+  assert.ok(bySlug(slug), `Project highlight ${slug}`);
+  assert.ok(
+    highlight.oneLine && highlight.ownership && highlight.result && highlight.stack.length,
+    `${slug}: purpose, personal contribution, result and stack`,
+  );
+}
+const escapeHtml = (value) =>
+  value.replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#x27;",
+  })[character]);
+const home = pages.get("/");
+const previews = [...home.matchAll(/<article\b[^>]*class="([^"]*)"[^>]*>([\s\S]*?)<\/article>/g)]
+  .filter((match) => match[1].split(/\s+/).includes("project-feature"))
+  .map((match) => match[2]);
+assert.equal(previews.length, featured.length, "Home: four project previews");
+for (const project of featured) {
+  const preview = previews.find((html) => html.includes(`href="/work/${project.slug}/"`));
+  assert.ok(preview, `Home: ${project.title} preview`);
+  assert.ok(
+    preview.includes(escapeHtml(projectHighlights[project.slug].ownership)),
+    `Home: ${project.title} personal contribution is visible in prerendered HTML`,
+  );
+}
+for (const id of ["skills", "experience"])
+  assert.ok(home.includes(`id="${id}"`), `Home: ${id} section`);
+for (const project of featured) {
+  const html = pages.get(`/work/${project.slug}/`);
+  const summary = html.search(/class="[^"]*\bcase-summary\b[^"]*"/);
+  const cover = html.search(/class="[^"]*\bcase-cover\b[^"]*"/);
+  assert.ok(summary >= 0 && cover > summary, `${project.slug}: ownership summary before media`);
+}
 assert.equal(profile.resume.primary.href, "/Vishnu_Bodapati_SWE_Resume.pdf");
 for (const document of [profile.resume.primary, profile.resume.secondary]) {
   const bytes = await readFile(join(root, document.href));
@@ -101,21 +143,34 @@ const luminance = (hex) => {
     .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
   return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
 };
-for (const [fg, bg] of [
-  ["20241f", "f2f0e9"],
-  ["62655d", "f2f0e9"],
-  ["a83e22", "f2f0e9"],
-  ["f2f0e9", "20241f"],
-  ["b5b8aa", "20241f"],
-  ["f4956e", "20241f"],
-]) {
+const contrastPairs = [
+  ["14233b", "f6f8fc"],
+  ["14233b", "ffffff"],
+  ["5b677a", "f6f8fc"],
+  ["5b677a", "ffffff"],
+  ["3159d9", "f6f8fc"],
+  ["3159d9", "ffffff"],
+  ["ffffff", "3159d9"],
+  ["ffffff", "14233b"],
+  ["b8c6dd", "14233b"],
+  ["94b6ff", "14233b"],
+];
+const css = await readFile("src/index.css", "utf8");
+const cssColors = new Set(
+  [...css.matchAll(/#([a-f\d]{6}|[a-f\d]{3})\b/gi)].map((match) => {
+    const hex = match[1].toLowerCase();
+    return hex.length === 3 ? [...hex].map((channel) => channel.repeat(2)).join("") : hex;
+  }),
+);
+for (const color of new Set(contrastPairs.flat()))
+  assert.ok(cssColors.has(color), `Contrast palette is present in current CSS: #${color}`);
+for (const [fg, bg] of contrastPairs) {
   const values = [luminance(fg), luminance(bg)].sort((a, b) => b - a);
   assert.ok(
     (values[0] + 0.05) / (values[1] + 0.05) >= 4.5,
     `Text contrast ${fg}/${bg}`,
   );
 }
-const css = await readFile("src/index.css", "utf8");
 assert.match(css, /prefers-reduced-motion/);
 assert.match(css, /:focus-visible/);
 const homeAssets = [...new Set([...pages.get("/").matchAll(/(?:href|src)="(\/_app\/[^\"]+)"/g)].map(m => m[1]))];
@@ -128,7 +183,7 @@ assert.ok(compressed.js > 0 && compressed.js < 100 * 1024, "Home JS budget: 100 
 assert.ok(compressed.css > 0 && compressed.css < 10 * 1024, "Home CSS budget: 10 KiB gzip");
 console.log(`Home referenced JS: ${(compressed.js / 1024).toFixed(1)} KiB gzip; CSS: ${(compressed.css / 1024).toFixed(1)} KiB gzip (fonts, HTML and media separate).`);
 console.log(
-  `PASS: ${routes.length} prerendered routes, ${checkedLinks} local links/assets, project/skill data, resume PDFs, six text-contrast pairs, reduced motion and focus styles.`,
+  `PASS: ${routes.length} prerendered routes, ${checkedLinks} local links/assets, ${previews.length} project previews with personal contributions, recruiter evidence data, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
 );
 console.log(
   "Browser checks (responsive layout, keyboard and video) are separate; see docs/verification.md.",

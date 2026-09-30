@@ -1,12 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#f2f0e9"/>
-  <g fill="#20241f" font-family="Arial, sans-serif">
-    <text x="70" y="75" font-size="15" letter-spacing="2">SOFTWARE ENGINEER &amp; CREATIVE DEVELOPER</text>
-    <text x="65" y="254" font-size="146" font-weight="900" letter-spacing="-7">VISHNU SAI</text>
-    <text x="65" y="394" font-size="146" font-weight="900" letter-spacing="-7">BODAPATI<tspan fill="#a83e22">.</tspan></text>
-    <path d="M70 446H1130" stroke="#cecec3"/>
-    <text x="70" y="500" font-size="26">Interactive software. From human input to worlds in motion.</text>
-    <text x="70" y="560" font-size="17" fill="#62655d">REAL-TIME 3D / XR / GAMES / AI TOOLS</text>
-    <text x="1130" y="560" text-anchor="end" font-size="17" fill="#a83e22">vsvwnl.github.io</text>
+  <title>Vishnu Sai Bodapati — Software Engineer</title>
+  <rect width="1200" height="630" fill="#f6f8fc"/>
+  <rect x="40" y="40" width="1120" height="550" rx="28" fill="#fff" stroke="#dce3ee"/>
+  <rect x="88" y="92" width="8" height="28" rx="4" fill="#3159d9"/>
+  <g fill="#14233b" font-family="Arial, sans-serif">
+    <text x="112" y="115" font-size="26" font-weight="700" fill="#3159d9">Software Engineer</text>
+    <text x="84" y="242" font-size="88" font-weight="700" letter-spacing="-3">Vishnu Sai</text>
+    <text x="84" y="342" font-size="88" font-weight="700" letter-spacing="-3">Bodapati</text>
+    <text x="88" y="400" font-size="28" fill="#5b677a">XR, real-time 3D, games &amp; AI applications</text>
+    <path d="M88 445H1112" stroke="#dce3ee"/>
+    <text x="88" y="488" font-size="22">Research Assistant · Duke I³T Lab</text>
+    <text x="88" y="525" font-size="20" fill="#5b677a">M.Eng. · Expected May 2027</text>
+    <text x="1112" y="525" text-anchor="end" font-size="20" fill="#3159d9">vsvwnl.github.io</text>
   </g>
 </svg>

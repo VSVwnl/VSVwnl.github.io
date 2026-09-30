@@ -1,6 +1,6 @@
 # Vishnu Sai Bodapati — Portfolio
 
-All-purpose professional portfolio for interactive software, real-time 3D, XR, games and applied AI.
+Recruiter-first software engineering portfolio, with evidence across XR, real-time 3D, games and applied AI.
 
 Live: [vsvwnl.github.io](https://vsvwnl.github.io/)
 
@@ -16,16 +16,16 @@ npm test
 npm run preview
 ```
 
-`npm run build` generates seven static routes and prerenders their React content so the portfolio is readable before JavaScript loads. React hydrates the menu, skill map and click-to-play demo. No backend, secrets or client-side routing workaround.
+`npm run build` generates seven static routes and prerenders their React content so the portfolio is readable before JavaScript loads. React hydrates the mobile menu, click-to-play demo and restrained viewport motion. Skills and project evidence use ordinary links. No backend, secrets or client-side routing workaround.
 
 ## Content and structure
 
 - `src/data/projects.js`: four featured case studies plus the curated archive.
 - `src/data/profile.js`: identity, biography, contact links and resume destinations.
 - `src/data/experience.js`: experience and education.
-- `src/data/skilltree.js`: demonstrated skills with project evidence.
+- `src/data/recruiter.js`: concise project contributions, grouped skills with evidence links, and homepage experience.
 - `src/pages/`: Home, Work, About and reusable CaseStudy.
-- `src/components/`: shared page shell, project media, archive and skill map.
+- `src/components/`: shared page shell, contribution-first project cards, project media and archive.
 - `src/index.css`: responsive typography, layout, color tokens, focus and reduced motion.
 - `src/entries/` and matching root HTML documents: the seven route entry points.
 - `scripts/prerender.mjs`: build-time HTML rendering using the same React components.
@@ -45,7 +45,7 @@ The navigation downloads `public/Vishnu_Bodapati_SWE_Resume.pdf`, the supplied g
 
 See [content evidence](docs/content-evidence.md) for the combined-resume source policy, verified awards, external evidence and precise remaining asset gaps. See [verification](docs/verification.md) for testing coverage.
 
-The [September 28 recruiter and website audit](docs/audit-2026-09-28.md) separates tested behavior from editorial recommendations and unverified items.
+The [September 30 redesign notes](docs/recruiter-redesign-2026-09-30.md) describe the current visual direction and verification. The [September 28 audit](docs/audit-2026-09-28.md) is a historical record of the previous design.
 
 ## Deployment
 

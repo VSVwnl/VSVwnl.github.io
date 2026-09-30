@@ -1,7 +1,7 @@
 // Content is visible in the HTML/CSS before this enhancement runs. Animations
 // never change layout, hide a link, or become a prerequisite for reading a page.
 export const revealTargets =
-  ".section-heading, .project-copy, .archive-row, .case-block, .resume-section, .home-about > div";
+  ".section-heading, .project-feature, .archive-row, .case-block, .resume-section, .experience-card, .skill-group";
 
 export function setupPageMotion(root, environment = window) {
   if (!root || !environment.matchMedia || !environment.IntersectionObserver)

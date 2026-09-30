@@ -3,11 +3,11 @@
 ## Automated
 
 - `npm run build`: seven Vite entry points, followed by React static prerendering. Each route is a real directory suitable for GitHub Pages; no client-router fallback.
-- `npm test`: checks every built page for a single main heading, semantic main, nonempty prerendered content, unique IDs, canonical URLs, all internal links/fragments/assets, image dimensions/alternatives, skill-to-project links, four complete case studies, the correct resume target, valid PDFs, six AA text-color contrast pairs, and focus/reduced-motion styles.
-- `npm audit`: compatible dependency updates applied; zero reported vulnerabilities after the update.
+- `npm test`: checks every built page for a single main heading, semantic main, nonempty prerendered content, unique IDs, canonical URLs, all internal links/fragments/assets, image dimensions/alternatives, skill-to-project links, four complete case studies, the correct resume target, valid PDFs, ten current AA text-color contrast pairs, and focus/reduced-motion styles. It also checks contribution-first homepage cards and case-study summary placement.
+- `npm audit`: zero reported vulnerabilities in both full and production-only checks on September 30, 2026.
 - General resume and extended CV hashes were checked against the exact files inside the supplied archive. The general resume was rendered and visually inspected.
 
-## Browser QA
+## Initial September 27–28 browser QA (previous design)
 
 Production preview tested in Chromium through the in-app browser, not just the development server:
 
@@ -35,3 +35,14 @@ Reduced motion is implemented through the OS preference; there are no continuous
 The browser tooling does not expose reduced-motion emulation, so OS-preference behavior was verified through unit tests and stylesheet inspection rather than a claimed manual OS-toggle test. Safari, Firefox, assistive-technology testing, throttled Lighthouse and real-user performance remain outside this pass.
 
 External evidence and unresolved links are recorded in `content-evidence.md`. Deployment is handled by the existing main-branch Pages workflow, now with the static verification step before upload.
+
+## September 30 recruiter-first redesign
+
+- Rebuilt the homepage, shared styling, project cards, Work, About and case-study openings. Replaced the interactive skill map with four readable, evidence-linked skill groups.
+- All seven routes checked at 320, 390, 768, 1024 and 1440 CSS pixels in the production preview: no horizontal overflow or failed completed images observed, and one H1 each. Final mobile shortcut/source-link refinements were rechecked at 320 px; the navigation reset was rechecked at 1024 px.
+- Keyboard checks: skip link, mobile-menu Enter/Escape/outside click, wide-screen menu reset, project-demo navigation and native video focus/playback. Case-study contribution and demo links were inspected for sticky-header spacing.
+- No warnings, hydration errors or other browser errors observed in the checked local routes and interactions.
+- Build and tests pass: seven prerendered routes, 195 local references, four homepage project contributions, both supplied PDFs, ten text-contrast pairs and seven motion regression tests. Homepage referenced JavaScript is 75.5 KiB gzip and CSS is 7.2 KiB gzip; these figures exclude fonts and media and are not measured page-load timings.
+- Rechecked 14 external destinations: 12 returned HTTP 200 with expected titles. LinkedIn blocks automated access (999); Canva resolves to the real deck but serves an unsupported-client response. The old Draft USA endpoint still returns 500; source and recorded demo remain the current inspection paths.
+
+See [redesign notes](recruiter-redesign-2026-09-30.md) for the current editorial and visual decisions. The earlier skill-map checks above describe a removed component, not the current interaction design. The same browser/assistive-technology and performance-measurement limits still apply.
