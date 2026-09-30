@@ -3,7 +3,7 @@
 ## Automated
 
 - `npm run build`: seven Vite entry points, followed by React static prerendering. Each route is a real directory suitable for GitHub Pages; no client-router fallback.
-- `npm test`: checks every built page for a single main heading, semantic main, nonempty prerendered content, unique IDs, canonical URLs, all internal links/fragments/assets, image dimensions/alternatives, skill-to-project links, four complete case studies, the correct resume target, valid PDFs, ten current AA text-color contrast pairs, and focus/reduced-motion styles. It also checks contribution-first homepage cards and case-study summary placement.
+- `npm test`: checks every built page for a single main heading, semantic main, nonempty prerendered content, unique IDs, canonical URLs, all internal links/fragments/assets, image dimensions/alternatives, skill-to-project links, four complete case studies, the correct resume target, valid PDFs, eighteen current AA text-color contrast pairs, and focus/reduced-motion styles. It also checks contribution-first homepage cards, case-study summary placement and dark document/browser theme declarations.
 - `npm audit`: zero reported vulnerabilities in both full and production-only checks on September 30, 2026.
 - General resume and extended CV hashes were checked against the exact files inside the supplied archive. The general resume was rendered and visually inspected.
 
@@ -46,3 +46,10 @@ External evidence and unresolved links are recorded in `content-evidence.md`. De
 - Rechecked 14 external destinations: 12 returned HTTP 200 with expected titles. LinkedIn blocks automated access (999); Canva resolves to the real deck but serves an unsupported-client response. The old Draft USA endpoint still returns 500; source and recorded demo remain the current inspection paths.
 
 See [redesign notes](recruiter-redesign-2026-09-30.md) for the current editorial and visual decisions. The earlier skill-map checks above describe a removed component, not the current interaction design. The same browser/assistive-technology and performance-measurement limits still apply.
+
+## September 30 dark-palette follow-up
+
+- Replaced the initial bright palette with charcoal backgrounds, warm off-white text and muted steel-blue accents. Dark surfaces cover headers, menus, cards, diagrams, summaries and controls; social assets also match. Genuine media files were not edited; CSS presentation softens portrait/title-card brightness.
+- All seven production-preview routes rechecked at 390 and 1440 CSS pixels, plus homepage at 320 and Lumi at 768: no horizontal overflow, failed completed images or leftover bright interface panels observed.
+- Checked mobile-menu keyboard opening, Escape dismissal, returned focus and visible focus treatment; visually inspected full homepage and case-study surfaces. No browser warnings or errors observed in these checks.
+- Production build and tests pass, including eighteen text-contrast pairs (lowest 4.61:1), all seven dark document/browser themes, 195 local references and seven motion regression tests. Homepage referenced JavaScript: 75.4 KiB gzip; CSS: 7.1 KiB gzip, excluding fonts and media.

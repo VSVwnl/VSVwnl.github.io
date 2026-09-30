@@ -42,6 +42,16 @@ for (const [route, html] of pages) {
   assert.ok(
     html.includes(`rel="canonical" href="https://vsvwnl.github.io${route}"`),
   );
+  assert.match(
+    html,
+    /<meta\b(?=[^>]*\bname=["']color-scheme["'])[^>]*\bcontent=["']dark["'][^>]*>/i,
+    `${route}: document declares a dark color scheme`,
+  );
+  assert.match(
+    html,
+    /<meta\b(?=[^>]*\bname=["']theme-color["'])[^>]*\bcontent=["']#141719["'][^>]*>/i,
+    `${route}: browser theme matches the dark page background`,
+  );
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
   assert.equal(new Set(ids).size, ids.length, `${route}: IDs must be unique`);
   for (const [, reference] of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)) {
@@ -143,17 +153,14 @@ const luminance = (hex) => {
     .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
   return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
 };
+// Foreground, secondary copy and links are used on each of these surfaces.
+const textColors = ["e5e3dd", "a4adb5", "8daece"];
+const surfaces = ["141719", "1c2023", "171b1e", "202a34", "101315"];
 const contrastPairs = [
-  ["14233b", "f6f8fc"],
-  ["14233b", "ffffff"],
-  ["5b677a", "f6f8fc"],
-  ["5b677a", "ffffff"],
-  ["3159d9", "f6f8fc"],
-  ["3159d9", "ffffff"],
-  ["ffffff", "3159d9"],
-  ["ffffff", "14233b"],
-  ["b8c6dd", "14233b"],
-  ["94b6ff", "14233b"],
+  ...surfaces.flatMap((background) => textColors.map((foreground) => [foreground, background])),
+  ["e5e3dd", "252c31"],
+  ["e5e3dd", "365773"],
+  ["e5e3dd", "426885"],
 ];
 const css = await readFile("src/index.css", "utf8");
 const cssColors = new Set(
@@ -173,6 +180,8 @@ for (const [fg, bg] of contrastPairs) {
 }
 assert.match(css, /prefers-reduced-motion/);
 assert.match(css, /:focus-visible/);
+assert.match(css, /\bcolor-scheme\s*:\s*dark\b/);
+assert.doesNotMatch(css, /\bcolor-scheme\s*:\s*light\b/);
 const homeAssets = [...new Set([...pages.get("/").matchAll(/(?:href|src)="(\/_app\/[^\"]+)"/g)].map(m => m[1]))];
 const compressed = { js: 0, css: 0 };
 for (const asset of homeAssets) {
@@ -183,7 +192,7 @@ assert.ok(compressed.js > 0 && compressed.js < 100 * 1024, "Home JS budget: 100 
 assert.ok(compressed.css > 0 && compressed.css < 10 * 1024, "Home CSS budget: 10 KiB gzip");
 console.log(`Home referenced JS: ${(compressed.js / 1024).toFixed(1)} KiB gzip; CSS: ${(compressed.css / 1024).toFixed(1)} KiB gzip (fonts, HTML and media separate).`);
 console.log(
-  `PASS: ${routes.length} prerendered routes, ${checkedLinks} local links/assets, ${previews.length} project previews with personal contributions, recruiter evidence data, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
+  `PASS: ${routes.length} prerendered routes with dark document/browser themes, ${checkedLinks} local links/assets, ${previews.length} project previews with personal contributions, recruiter evidence data, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
 );
 console.log(
   "Browser checks (responsive layout, keyboard and video) are separate; see docs/verification.md.",

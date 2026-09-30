@@ -2,7 +2,7 @@
 
 ## Direction
 
-A bright, calm interface with navy type, blue actions, Manrope headings and Inter body text. The homepage presents the candidate's role, Duke research experience, expected May 2027 graduation, resume, email and all four featured project links in the opening section. The exact display name is **Vishnu Sai Bodapati**.
+A soft charcoal interface with warm off-white type, muted steel-blue accents, Manrope headings and Inter body text. The initial light palette was replaced after the user's brightness feedback. Headers, cards, diagrams, controls, menus and social assets now share the dark palette, including dark browser/document theme declarations. The homepage presents the candidate's role, Duke research experience, expected May 2027 graduation, resume, email and all four featured project links in the opening section. The exact display name is **Vishnu Sai Bodapati**.
 
 The homepage sequence is introduction → selected work → experience and education → technical skills → additional work → contact. Desktop uses two-column project cards; phones stack them. The portrait is a secondary desktop element and remains on About, rather than delaying project information on phones.
 
@@ -24,11 +24,11 @@ Approved Lumi media, sharp MR in-headset images and actual Draft USA dashboard c
 ## Verification
 
 - Production build and static checks: seven prerendered routes, 195 local references, four homepage project contributions and both PDFs pass.
-- Ten current text-contrast pairs meet the 4.5:1 check; source-color presence is also asserted.
+- Eighteen current text-contrast pairs meet the 4.5:1 check, covering all five dark surfaces plus primary and hover controls; source-color presence is also asserted.
 - Seven motion tests pass, including reduced motion, focus cancellation, once-only reveals and fallbacks.
-- All seven routes checked in Chromium at 320, 390, 768, 1024 and 1440 CSS pixels with no horizontal overflow or failed completed images observed.
+- The initial layout was checked in Chromium at 320, 390, 768, 1024 and 1440 CSS pixels. After the dark-palette change, all seven routes were rechecked at 390 and 1440, plus the homepage at 320 and Lumi at 768. No horizontal overflow, failed completed images or leftover light interface panels were observed.
 - Keyboard navigation, disclosure menu dismissal/reset, case-study anchors and native video focus/playback checked. No browser warnings or errors observed in the checked local routes/interactions.
-- Referenced homepage JavaScript: 75.5 KiB gzip; CSS: 7.2 KiB gzip. Fonts and media excluded. No Lighthouse or real-user performance score is claimed.
+- Referenced homepage JavaScript: 75.4 KiB gzip; CSS: 7.1 KiB gzip. Fonts and media excluded. No Lighthouse or real-user performance score is claimed.
 - Full and production-only dependency audits: zero reported vulnerabilities.
 - Fourteen unique external destinations checked: twelve HTTP 200 with expected titles; LinkedIn blocks automated inspection and Canva restricts the automated client. Source/recording links remain available for Draft USA.
 

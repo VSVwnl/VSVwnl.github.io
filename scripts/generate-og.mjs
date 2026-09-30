@@ -5,18 +5,18 @@ import { fileURLToPath } from "node:url";
 const publicFile = (name) => new URL(`../public/${name}`, import.meta.url);
 const card = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <title>Vishnu Sai Bodapati — Software Engineer</title>
-  <rect width="1200" height="630" fill="#f6f8fc"/>
-  <rect x="40" y="40" width="1120" height="550" rx="28" fill="#fff" stroke="#dce3ee"/>
-  <rect x="88" y="92" width="8" height="28" rx="4" fill="#3159d9"/>
-  <g fill="#14233b" font-family="Arial, sans-serif">
-    <text x="112" y="115" font-size="26" font-weight="700" fill="#3159d9">Software Engineer</text>
+  <rect width="1200" height="630" fill="#141719"/>
+  <rect x="40" y="40" width="1120" height="550" rx="28" fill="#1c2023" stroke="#343b41"/>
+  <rect x="88" y="92" width="8" height="28" rx="4" fill="#8daece"/>
+  <g fill="#e5e3dd" font-family="Arial, sans-serif">
+    <text x="112" y="115" font-size="26" font-weight="700" fill="#8daece">Software Engineer</text>
     <text x="84" y="242" font-size="88" font-weight="700" letter-spacing="-3">Vishnu Sai</text>
     <text x="84" y="342" font-size="88" font-weight="700" letter-spacing="-3">Bodapati</text>
-    <text x="88" y="400" font-size="28" fill="#5b677a">XR, real-time 3D, games &amp; AI applications</text>
-    <path d="M88 445H1112" stroke="#dce3ee"/>
+    <text x="88" y="400" font-size="28" fill="#a4adb5">XR, real-time 3D, games &amp; AI applications</text>
+    <path d="M88 445H1112" stroke="#343b41"/>
     <text x="88" y="488" font-size="22">Research Assistant · Duke I³T Lab</text>
-    <text x="88" y="525" font-size="20" fill="#5b677a">M.Eng. · Expected May 2027</text>
-    <text x="1112" y="525" text-anchor="end" font-size="20" fill="#3159d9">vsvwnl.github.io</text>
+    <text x="88" y="525" font-size="20" fill="#a4adb5">M.Eng. · Expected May 2027</text>
+    <text x="1112" y="525" text-anchor="end" font-size="20" fill="#8daece">vsvwnl.github.io</text>
   </g>
 </svg>`;
 await writeFile(publicFile("og.svg"), card);
