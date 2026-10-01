@@ -6,47 +6,18 @@ export default function SiteFooter() {
     <footer id="contact" className="site-footer theme-dark">
       <div className="stage">
         <div className="footer-main">
-          <div>
-            <p className="eyebrow">Contact</p>
-            <h2>Let’s talk about<br />your team.</h2>
-          </div>
           <div className="footer-contact">
-            <p>Open to software, XR, games, and applied AI opportunities.</p>
-            <a className="contact-email" href={`mailto:${profile.email}`}>
-              {profile.email}
-              <ArrowUpRight size={23} aria-hidden="true" />
-            </a>
-            <div className="footer-links">
-              {socials
-                .filter((s) => s.label !== "Email")
-                .map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-link"
-                  >
-                    {s.label}
-                    <ArrowUpRight size={15} aria-hidden="true" />
-                  </a>
-                ))}
-              <a
-                href={profile.resume.primary.href}
-                download
-                className="text-link"
-              >
-                Resume ↓
-              </a>
-            </div>
+            <p>Have an opportunity in mind?</p>
+            <a className="contact-email" href={`mailto:${profile.email}`}>{profile.email}<ArrowUpRight size={19} aria-hidden="true" /></a>
+          </div>
+          <div className="footer-links">
+            {socials.filter(s => s.label !== "Email").map(s => <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="text-link">{s.label}<ArrowUpRight size={14} aria-hidden="true" /></a>)}
+            <a href={profile.resume.primary.href} download className="text-link">Resume ↓</a>
           </div>
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} Vishnu Sai Bodapati</p>
-          <p>Software engineering · XR · Games · Applied AI</p>
-          <a href="#main" className="text-link">
-            Back to top ↑
-          </a>
+          <a href="#main" className="text-link">Back to top ↑</a>
         </div>
       </div>
     </footer>

@@ -34,8 +34,7 @@ export default function SiteHeader({ current }) {
     <header ref={header} className="site-header">
       <div className="stage header-inner">
         <a className="wordmark" href="/" aria-label="Vishnu Sai Bodapati — home">
-          <span className="monogram" aria-hidden="true">VS</span>
-          <span className="wordmark-name">Vishnu Sai Bodapati<span>Software Engineer</span></span>
+          <span className="wordmark-name">Vishnu Sai Bodapati</span>
         </a>
         <button
           ref={toggle}

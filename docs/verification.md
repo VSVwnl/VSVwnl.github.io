@@ -3,7 +3,7 @@
 ## Automated
 
 - `npm run build`: seven Vite entry points, followed by React static prerendering. Each route is a real directory suitable for GitHub Pages; no client-router fallback.
-- `npm test`: checks every built page for a single main heading, semantic main, nonempty prerendered content, unique IDs, canonical URLs, all internal links/fragments/assets, image dimensions/alternatives, skill-to-project links, four complete case studies, the correct resume target, valid PDFs, eighteen current AA text-color contrast pairs, and focus/reduced-motion styles. It also checks contribution-first homepage cards, case-study summary placement and dark document/browser theme declarations.
+- `npm test`: checks every built page for a single main heading, semantic main, nonempty prerendered content, unique IDs, canonical URLs, all internal links/fragments/assets, image dimensions/alternatives, skill-to-project links, four complete case studies, the correct resume target, valid PDFs, nineteen current AA text-color contrast pairs, and focus/reduced-motion styles. It also checks media-first homepage gallery captions and honest media, About skill evidence, case-study ownership and dark document/browser theme declarations.
 - `npm audit`: zero reported vulnerabilities in both full and production-only checks on September 30, 2026.
 - General resume and extended CV hashes were checked against the exact files inside the supplied archive. The general resume was rendered and visually inspected.
 
@@ -53,3 +53,13 @@ See [redesign notes](recruiter-redesign-2026-09-30.md) for the current editorial
 - All seven production-preview routes rechecked at 390 and 1440 CSS pixels, plus homepage at 320 and Lumi at 768: no horizontal overflow, failed completed images or leftover bright interface panels observed.
 - Checked mobile-menu keyboard opening, Escape dismissal, returned focus and visible focus treatment; visually inspected full homepage and case-study surfaces. No browser warnings or errors observed in these checks.
 - Production build and tests pass, including eighteen text-contrast pairs (lowest 4.61:1), all seven dark document/browser themes, 195 local references and seven motion regression tests. Homepage referenced JavaScript: 75.4 KiB gzip; CSS: 7.1 KiB gzip, excluding fonts and media.
+
+## September 30 reference-inspired gallery follow-up (current design)
+
+- Replaced dense homepage panels with a short introduction, four media-first gallery entries and a small About teaser. Skills/experience moved to About; full additional-work archive remains on Projects. Case pages use media, narrative and an information sidebar; source/demo links come before the narrative on phones and in DOM order.
+- All seven production-preview routes checked at 320, 390, 768, 1024 and 1440 viewport pixels: no horizontal overflow or failed completed images observed, one H1 each. Saved desktop/phone screenshots were inspected for composition and legibility.
+- Verified keyboard skip-to-main, menu opening/Escape/returned focus, outside dismissal, wide-screen reset, project entry and section-anchor spacing. Native CinemaScout controls receive focus; playback reached its full 79.6-second duration with readyState 4 and no video error. No warnings or errors were observed in the checked preview routes/interactions.
+- Build and tests pass: seven prerendered routes, 184 local references, four gallery captions/roles with honest media, complete personal contributions and outcomes on cases, About evidence links, both PDFs, nineteen text-contrast pairs and seven motion tests. Homepage referenced JavaScript: 72.4 KiB gzip; CSS: 6.0 KiB gzip, excluding fonts/media/HTML.
+- Same browser, assistive-technology, reduced-motion and performance-measurement limits listed above apply. No new outgoing evidence URLs or dependencies were introduced.
+
+See [current design notes](reference-inspired-redesign-2026-09-30.md). Earlier sections describe historical layouts and removed components.

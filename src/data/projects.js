@@ -231,7 +231,7 @@ export const projects = [
 
     howItWorks: [
       "The Unity application runs on Meta Quest 3. My interaction work starts from seated or fixed-position use and constrained movement, with attention to clear feedback and patient comfort.",
-      "Tutorial and calibration flows, testing, and repeated-session reliability are part of the research workflow. The diagram illustrates those design priorities without showing a patient, a clinical interface, or study data.",
+      "Tutorial and calibration flows, testing, and repeated-session reliability are part of the research workflow. This public overview describes those design priorities without showing a patient, a clinical interface, or study data.",
     ],
 
     decisions: [
@@ -545,7 +545,7 @@ export const hasCaseStudy = (p) => Boolean(p.featured);
  * than getting quietly invented. Surfaced in the handoff, not on the site.
  */
 export const gaps = [
-  "Lumi VR needs lab-approved media before real clinical imagery can be published. A public-safe explanatory diagram is used instead; generated scenes remain exploratory.",
+  "Lumi VR needs lab-approved media before real clinical imagery can be published. A typographic research cover is used instead; generated scenes remain exploratory.",
   "MR Blueprint's only image is a 333x222 title card, not a screenshot of the tool in use. The demo video is linked instead.",
   "Draft USA's local image is a 333x222 title card, not an application screenshot. A sharp dashboard capture would strengthen the case study.",
   "Most archive projects have no approved media; they intentionally stay text-led rather than being illustrated with invented screenshots.",

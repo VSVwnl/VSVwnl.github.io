@@ -1,6 +1,6 @@
 # Vishnu Sai Bodapati — Portfolio
 
-Recruiter-first software engineering portfolio, with evidence across XR, real-time 3D, games and applied AI.
+Software engineering portfolio, with selected work across XR, games and applied AI.
 
 Live: [vsvwnl.github.io](https://vsvwnl.github.io/)
 
@@ -23,9 +23,9 @@ npm run preview
 - `src/data/projects.js`: four featured case studies plus the curated archive.
 - `src/data/profile.js`: identity, biography, contact links and resume destinations.
 - `src/data/experience.js`: experience and education.
-- `src/data/recruiter.js`: concise project contributions, grouped skills with evidence links, and homepage experience.
-- `src/pages/`: Home, Work, About and reusable CaseStudy.
-- `src/components/`: shared page shell, contribution-first project cards, project media and archive.
+- `src/data/recruiter.js`: short gallery descriptions and role labels, contribution summaries, and grouped skills with evidence links.
+- `src/pages/`: a short Home gallery, full Work archive, About background and skills, and reusable CaseStudy.
+- `src/components/`: shared page shell, visual project gallery entries, project media and archive.
 - `src/index.css`: responsive typography, layout, color tokens, focus and reduced motion.
 - `src/entries/` and matching root HTML documents: the seven route entry points.
 - `scripts/prerender.mjs`: build-time HTML rendering using the same React components.
@@ -37,6 +37,8 @@ npm run preview
 
 The stack remains React, Vite, Tailwind CSS and Lucide. Sharp is development-only, used for social assets. Compiled assets use `_app/` to avoid a case-only collision with the existing `public/Assets/` directory on Windows.
 
+The visual direction is a sparse charcoal gallery with warm text and a muted sage accent. Home introduces Vishnu and four selected projects through visual previews, short purpose descriptions and personal-role captions. Each case study opens with project media, then pairs the contribution narrative with a compact information sidebar. Experience, education and skills live on About; the complete project archive lives on Work.
+
 ## Editing work and documents
 
 Personal contributions and team results are separate fields. Keep both grounded in supplied material or public evidence. New case studies also need an HTML entry, a React entry, a Vite input and a prerender route. Ordinary archive entries need only project data; skill links may point directly to their archive anchors.
@@ -45,7 +47,7 @@ The navigation downloads `public/Vishnu_Bodapati_SWE_Resume.pdf`, the supplied g
 
 See [content evidence](docs/content-evidence.md) for the combined-resume source policy, verified awards, external evidence and precise remaining asset gaps. See [verification](docs/verification.md) for testing coverage.
 
-The [September 30 redesign notes](docs/recruiter-redesign-2026-09-30.md) describe the current visual direction and verification. The [September 28 audit](docs/audit-2026-09-28.md) is a historical record of the previous design.
+The [September 30 reference-inspired redesign notes](docs/reference-inspired-redesign-2026-09-30.md) describe the current visual direction and verification. The [earlier September 30 redesign](docs/recruiter-redesign-2026-09-30.md) and [September 28 audit](docs/audit-2026-09-28.md) are historical records of previous designs.
 
 ## Deployment
 

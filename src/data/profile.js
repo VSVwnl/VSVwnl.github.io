@@ -28,7 +28,7 @@ export const profile = {
 };
 
 export const nav = [
-  { label: "Work", href: "/work/" },
+  { label: "Projects", href: "/work/" },
   { label: "About", href: "/about/" },
   { label: "Resume", href: profile.resume.primary.href, download: true },
   { label: "Contact", href: "#contact" },
@@ -58,9 +58,9 @@ export const homeIntro =
 
 export const about = {
   story: [
-    "I build interactive software: mixed reality tools, VR rehabilitation systems, AI-assisted web products, and complete small games. The thread through all of it is interaction — turning a complex system into something a person can understand and control.",
+    "I'm a software engineer working on XR tools, games, and AI-assisted web applications. My projects range from camera planning in VR to a mixed reality physics sandbox and a game built for Playdate.",
     "I'm pursuing an M.Eng in Game Design, Development and Innovation at Duke, with expected graduation in May 2027. At the Duke I³T Lab, I build VR gameplay for ICU rehabilitation research. Before that I studied Computer Science with a focus on game and mobile development at the University of Wollongong.",
-    "The constraints I find most interesting are the unglamorous ones — what someone can physically reach from a hospital bed, whether a frame drop breaks the illusion, whether a scene can be reproduced exactly on a second run. Those tend to decide whether spatial software is usable at all.",
+    "At the lab, I focus on seated interactions, calibration, and reliable session flows. In my other projects, I've worked on virtual cameras, physics editing tools, gameplay systems, and server-side AI integrations.",
   ],
 
   // Grouped capabilities, drawn from the CV. Plain text, no bars or scores.

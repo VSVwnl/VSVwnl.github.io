@@ -1,7 +1,8 @@
 import Page from "../components/Page.jsx";
 import { about, profile } from "../data/profile.js";
 import { experience, education } from "../data/experience.js";
-import { ArrowDown, ArrowRight, Mail } from "lucide-react";
+import { skillGroups } from "../data/recruiter.js";
+import { ArrowDown, ArrowRight, ArrowUpRight, Mail } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -36,7 +37,7 @@ export default function AboutPage() {
           />
         </header>
         <div className="resume-sections">
-          <section className="resume-section">
+          <section className="resume-section" id="experience">
             <h2>Experience</h2>
             <div>
               {experience.map((e) => (
@@ -69,41 +70,23 @@ export default function AboutPage() {
               ))}
             </div>
           </section>
-          <section className="resume-section">
-            <h2>Skills & specializations</h2>
-            <div className="capability-list">
-              <article>
-                <h3>Spatial interaction</h3>
-                <p>
-                  Unity / C# interaction systems on Meta Quest, including
-                  world-space UI, calibration, and input feedback.
-                </p>
-              </article>
-              <article>
-                <h3>Real-time tools</h3>
-                <p>
-                  Virtual cameras, spline paths, Gaussian Splat scenes, physics
-                  inspection, and state restoration.
-                </p>
-              </article>
-              <article>
-                <h3>Gameplay & input</h3>
-                <p>
-                  Lua / Playdate systems, Unreal UI and audio, packaged-build
-                  debugging, and Python-based gesture input.
-                </p>
-              </article>
-              <article>
-                <h3>Web & AI</h3>
-                <p>
-                  Next.js / TypeScript dashboards, server-side model APIs, and
-                  clear explanations of AI-generated recommendations.
-                </p>
-              </article>
-              <a className="text-link" href="/#skills">
-                Skills & project evidence{" "}
-                <ArrowRight size={16} aria-hidden="true" />
-              </a>
+          <section className="resume-section" id="skills">
+            <h2>Skills</h2>
+            <div className="skills-grid">
+              {skillGroups.map((group) => (
+                <article className="skill-group" key={group.title}>
+                  <h3>{group.title}</h3>
+                  <p className="skill-tools">{group.tools}</p>
+                  <p>{group.detail}</p>
+                  <div className="skill-project-links">
+                    {group.links.map((link) => (
+                      <a href={link.href} key={link.href}>
+                        {link.label} <ArrowUpRight size={13} aria-hidden="true" />
+                      </a>
+                    ))}
+                  </div>
+                </article>
+              ))}
             </div>
           </section>
           <section className="resume-section">

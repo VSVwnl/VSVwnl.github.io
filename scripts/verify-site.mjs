@@ -108,8 +108,9 @@ for (const group of skillGroups) {
 for (const [slug, highlight] of Object.entries(projectHighlights)) {
   assert.ok(bySlug(slug), `Project highlight ${slug}`);
   assert.ok(
-    highlight.oneLine && highlight.ownership && highlight.result && highlight.stack.length,
-    `${slug}: purpose, personal contribution, result and stack`,
+    highlight.galleryDescription && highlight.galleryRole && highlight.oneLine &&
+      highlight.ownership && highlight.result && highlight.stack.length,
+    `${slug}: gallery purpose and role, personal contribution, result and stack`,
   );
 }
 const escapeHtml = (value) =>
@@ -120,26 +121,99 @@ const escapeHtml = (value) =>
     '"': "&quot;",
     "'": "&#x27;",
   })[character]);
+const divWithClass = (html, className) => {
+  const opening = [...html.matchAll(/<div\b[^>]*\bclass="([^"]*)"[^>]*>/g)]
+    .find((match) => match[1].split(/\s+/).includes(className));
+  if (!opening) return null;
+  const contentStart = opening.index + opening[0].length;
+  const tags = /<\/?div\b[^>]*>/g;
+  tags.lastIndex = contentStart;
+  let depth = 1;
+  for (let tag; (tag = tags.exec(html));) {
+    depth += tag[0].startsWith("</") ? -1 : 1;
+    if (depth === 0)
+      return { opening: opening[0], index: opening.index, content: html.slice(contentStart, tag.index) };
+  }
+  return null;
+};
+const textOnly = (html) => html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 const home = pages.get("/");
+const introLinks = divWithClass(home, "intro-links");
+assert.ok(introLinks, "Home: recruiter actions appear in the introduction");
+assert.doesNotMatch(introLinks.opening, /\bhidden(?:\s|=|>)|\baria-hidden="true"/i);
+const introActions = [...introLinks.content.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+for (const action of [
+  { label: "Resume", href: profile.resume.primary.href, download: true },
+  { label: "Email", href: `mailto:${profile.email}` },
+  { label: "GitHub", href: "https://github.com/VSVwnl" },
+]) {
+  const link = introActions.find((match) => match[1].includes(`href="${escapeHtml(action.href)}"`));
+  assert.ok(link, `Home introduction: native ${action.label} destination`);
+  assert.ok(textOnly(link[2]).includes(action.label), `Home introduction: visible ${action.label} label`);
+  assert.doesNotMatch(link[1], /\bhidden(?:\s|=|$)|\baria-hidden="true"/i);
+  if (action.download)
+    assert.match(link[1], /\bdownload(?:\s|=|$)/, "Home introduction: primary resume download");
+}
 const previews = [...home.matchAll(/<article\b[^>]*class="([^"]*)"[^>]*>([\s\S]*?)<\/article>/g)]
   .filter((match) => match[1].split(/\s+/).includes("project-feature"))
   .map((match) => match[2]);
-assert.equal(previews.length, featured.length, "Home: four project previews");
+assert.equal(previews.length, featured.length, "Home: four featured gallery projects");
 for (const project of featured) {
   const preview = previews.find((html) => html.includes(`href="/work/${project.slug}/"`));
   assert.ok(preview, `Home: ${project.title} preview`);
-  assert.ok(
-    preview.includes(escapeHtml(projectHighlights[project.slug].ownership)),
-    `Home: ${project.title} personal contribution is visible in prerendered HTML`,
-  );
+  const caption = divWithClass(preview, "project-copy");
+  assert.ok(caption, `Home: ${project.title} gallery caption`);
+  for (const [field, className] of [["galleryDescription", "project-summary"], ["galleryRole", "project-role"]]) {
+    const paragraph = [...caption.content.matchAll(/<p\b[^>]*\bclass="([^"]*)"[^>]*>([\s\S]*?)<\/p>/g)]
+      .find((match) => match[1].split(/\s+/).includes(className));
+    assert.ok(
+      paragraph && textOnly(paragraph[2]) === escapeHtml(projectHighlights[project.slug][field]),
+      `Home: ${project.title} ${field} is rendered as readable caption text`,
+    );
+  }
+  const media = preview.search(/class="[^"]*\bproject-preview\b[^"]*"/);
+  assert.ok(media >= 0 && caption.index > media, `Home: ${project.title} media precedes its caption`);
+  if (project.slug === "lumi-vr") {
+    assert.match(preview, /Research overview/i, "Lumi gallery cover is labeled as an overview");
+    assert.doesNotMatch(preview, /<img\b/i, "Lumi gallery does not imply approved clinical imagery");
+  } else {
+    const expectedImage = project.media.poster || project.media.src;
+    assert.ok(preview.includes(`src="${expectedImage}"`), `Home: ${project.title} uses the genuine supplied image`);
+    assert.match(
+      preview,
+      project.slug === "cinemascout" ? /In-headset capture/i : /Original project artwork/i,
+      `Home: ${project.title} media is accurately identified`,
+    );
+  }
 }
+const about = pages.get("/about/");
 for (const id of ["skills", "experience"])
-  assert.ok(home.includes(`id="${id}"`), `Home: ${id} section`);
+  assert.ok(about.includes(`id="${id}"`), `About: ${id} section`);
+for (const group of skillGroups) {
+  for (const field of ["title", "tools", "detail"])
+    assert.ok(about.includes(escapeHtml(group[field])), `About: ${group.title} ${field} is readable`);
+  for (const link of group.links)
+    assert.ok(
+      about.includes(`href="${escapeHtml(link.href)}"`),
+      `About: ${group.title} has its ${link.label} evidence link`,
+    );
+}
 for (const project of featured) {
   const html = pages.get(`/work/${project.slug}/`);
   const summary = html.search(/class="[^"]*\bcase-summary\b[^"]*"/);
   const cover = html.search(/class="[^"]*\bcase-cover\b[^"]*"/);
-  assert.ok(summary >= 0 && cover > summary, `${project.slug}: ownership summary before media`);
+  const body = html.search(/class="[^"]*\bcase-body\b[^"]*"/);
+  const sidebar = html.search(/class="[^"]*\bcase-sidebar\b[^"]*"/);
+  const content = html.search(/class="[^"]*\bcase-content\b[^"]*"/);
+  assert.ok(summary >= 0 && cover >= 0, `${project.slug}: media and personal ownership summary`);
+  assert.ok(body > cover, `${project.slug}: media precedes the case narrative`);
+  assert.ok(sidebar > body && content > sidebar, `${project.slug}: project information precedes narrative in reading and keyboard order`);
+  assert.ok(html.includes(escapeHtml(project.focus)), `${project.slug}: specific personal ownership is readable`);
+  for (const field of ["contribution", "outcome"])
+    for (const text of project[field])
+      assert.ok(html.includes(escapeHtml(text)), `${project.slug}: substantive ${field} remains readable`);
+  if (project.statusNote)
+    assert.ok(html.includes(escapeHtml(project.statusNote)), `${project.slug}: current availability is disclosed`);
 }
 assert.equal(profile.resume.primary.href, "/Vishnu_Bodapati_SWE_Resume.pdf");
 for (const document of [profile.resume.primary, profile.resume.secondary]) {
@@ -154,13 +228,14 @@ const luminance = (hex) => {
   return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
 };
 // Foreground, secondary copy and links are used on each of these surfaces.
-const textColors = ["e5e3dd", "a4adb5", "8daece"];
+const textColors = ["e5e3dd", "a4adb5", "b9c4ad"];
 const surfaces = ["141719", "1c2023", "171b1e", "202a34", "101315"];
 const contrastPairs = [
   ...surfaces.flatMap((background) => textColors.map((foreground) => [foreground, background])),
   ["e5e3dd", "252c31"],
   ["e5e3dd", "365773"],
   ["e5e3dd", "426885"],
+  ["d4dacd", "242e2a"],
 ];
 const css = await readFile("src/index.css", "utf8");
 const cssColors = new Set(
@@ -192,7 +267,7 @@ assert.ok(compressed.js > 0 && compressed.js < 100 * 1024, "Home JS budget: 100 
 assert.ok(compressed.css > 0 && compressed.css < 10 * 1024, "Home CSS budget: 10 KiB gzip");
 console.log(`Home referenced JS: ${(compressed.js / 1024).toFixed(1)} KiB gzip; CSS: ${(compressed.css / 1024).toFixed(1)} KiB gzip (fonts, HTML and media separate).`);
 console.log(
-  `PASS: ${routes.length} prerendered routes with dark document/browser themes, ${checkedLinks} local links/assets, ${previews.length} project previews with personal contributions, recruiter evidence data, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
+  `PASS: ${routes.length} prerendered routes with dark document/browser themes, ${checkedLinks} local links/assets, visible intro recruiter actions, ${previews.length} gallery projects with readable roles and honest media, About skill evidence, case-study reading order and personal contributions/results, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
 );
 console.log(
   "Browser checks (responsive layout, keyboard and video) are separate; see docs/verification.md.",

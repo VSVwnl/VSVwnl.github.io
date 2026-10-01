@@ -8,13 +8,8 @@ export default function WorkPage() {
     <Page current="work">
       <div className="stage work-page">
         <header className="page-intro">
-          <p className="eyebrow">Project portfolio</p>
-          <h1>Projects & engineering work.</h1>
-          <p>
-            Software I have built across XR, research, games, and AI web
-            applications. Each case study identifies my contribution, the
-            engineering decisions, and the project’s results.
-          </p>
+          <h1>Projects</h1>
+          <p>Selected work in XR, research, games, and AI web applications.</p>
         </header>
         <div className="featured-grid">
           {featured.map((p, i) => (
@@ -27,14 +22,7 @@ export default function WorkPage() {
           aria-labelledby="archive-heading"
         >
           <div className="section-heading compact">
-            <div>
-              <p className="eyebrow">Additional projects</p>
-              <h2 id="archive-heading">Games, tools & experiments</h2>
-            </div>
-            <p className="section-aside">
-              More projects with a concise account of my work and links to
-              available evidence.
-            </p>
+            <h2 id="archive-heading">More projects</h2>
           </div>
           <ProjectArchive />
         </section>

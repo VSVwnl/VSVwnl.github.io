@@ -2,6 +2,8 @@
 // combined resume evidence. Team recognition is separate from personal work.
 export const projectHighlights = {
   cinemascout: {
+    galleryRole: "Unity / XR developer",
+    galleryDescription: "VR camera planning in reconstructed locations.",
     oneLine:
       "Plan camera shots inside reconstructed real locations, before visiting the physical site.",
     ownership:
@@ -11,6 +13,8 @@ export const projectHighlights = {
     stack: ["Unity", "C#", "OpenXR", "Gaussian Splatting"],
   },
   "lumi-vr": {
+    galleryRole: "Research assistant · Unity / C#",
+    galleryDescription: "Seated VR rehabilitation at Duke I³T Lab.",
     oneLine:
       "Seated VR rehabilitation gameplay designed around the movement constraints of ICU patients.",
     ownership:
@@ -19,6 +23,8 @@ export const projectHighlights = {
     stack: ["Unity", "C#", "Meta Quest 3", "XR Interaction Toolkit"],
   },
   "mr-blueprint": {
+    galleryRole: "Unity / XR developer",
+    galleryDescription: "A mixed reality physics sandbox.",
     oneLine:
       "Build and test physics scenes at real-world scale in mixed reality.",
     ownership:
@@ -27,6 +33,8 @@ export const projectHighlights = {
     stack: ["Unity", "C#", "Meta XR SDK", "Logitech MX Ink SDK"],
   },
   "draft-usa": {
+    galleryRole: "Full-stack contributor",
+    galleryDescription: "AI-assisted Team USA roster drafting.",
     oneLine:
       "Build Team USA rosters with AI-assisted analysis and explanations for each recommendation.",
     ownership:
