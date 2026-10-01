@@ -26,6 +26,9 @@ export default function AboutPage() {
               <a className="button" href={`mailto:${profile.email}`}>
                 Email me <Mail size={16} aria-hidden="true" />
               </a>
+              <a className="button" href={profile.devpost} target="_blank" rel="noopener noreferrer">
+                Devpost <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
             </div>
           </div>
           <img

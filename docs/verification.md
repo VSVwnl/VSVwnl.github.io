@@ -63,3 +63,9 @@ See [redesign notes](recruiter-redesign-2026-09-30.md) for the current editorial
 - Same browser, assistive-technology, reduced-motion and performance-measurement limits listed above apply. No new outgoing evidence URLs or dependencies were introduced.
 
 See [current design notes](reference-inspired-redesign-2026-09-30.md). Earlier sections describe historical layouts and removed components.
+
+## Devpost profile links — September 30
+
+- Added the exact supplied profile URL, `https://devpost.com/VSVwnl`, to the shared navigation/footer on all seven pages, plus Home and About introductions. Project-specific Devpost evidence links remain unchanged.
+- Static checks require all 16 profile placements, native links, readable labels, new-tab behavior and `noopener noreferrer`. Production build and all site/motion tests pass.
+- Checked all seven routes at 320, 768 and 1440 viewport pixels: correct profile link counts and no horizontal overflow observed. Visually inspected desktop links, phone navigation and wrapped footer; menu Enter/Escape works. The public profile opened successfully in the browser.

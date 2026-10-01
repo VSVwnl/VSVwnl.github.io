@@ -60,11 +60,13 @@ export default function SiteHeader({ current }) {
                 current && item.href === `/${current}/` ? "page" : undefined
               }
               download={item.download || undefined}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
               className={item.download ? "nav-resume" : undefined}
               onClick={() => setOpen(false)}
             >
               {item.label}
-              {item.download && <ArrowUpRight size={14} aria-hidden="true" />}
+              {(item.download || item.external) && <ArrowUpRight size={14} aria-hidden="true" />}
             </a>
           ))}
         </nav>

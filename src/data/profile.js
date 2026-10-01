@@ -10,6 +10,7 @@ export const profile = {
   affiliation:
     "Duke M.Eng., expected May 2027 · Research assistant at the Duke I³T Lab",
   email: "vishnusai.usa@gmail.com",
+  devpost: "https://devpost.com/VSVwnl",
 
   // The general-purpose SWE resume is primary; the older extended CV is secondary.
   // Preserve the supplied documents rather than silently rewriting either.
@@ -31,12 +32,14 @@ export const nav = [
   { label: "Projects", href: "/work/" },
   { label: "About", href: "/about/" },
   { label: "Resume", href: profile.resume.primary.href, download: true },
+  { label: "Devpost", href: profile.devpost, external: true },
   { label: "Contact", href: "#contact" },
 ];
 
 export const socials = [
   { label: "Email", href: `mailto:${profile.email}`, handle: profile.email },
   { label: "GitHub", href: "https://github.com/VSVwnl", handle: "@VSVwnl" },
+  { label: "Devpost", href: profile.devpost, handle: "@VSVwnl" },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/vishnu-sai-vardhan-bodapati/",

@@ -16,6 +16,7 @@ export default function HomePage() {
             <a href={profile.resume.primary.href} download>Resume ↓</a>
             <a href={`mailto:${profile.email}`}>Email</a>
             <a href="https://github.com/VSVwnl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a href={profile.devpost} target="_blank" rel="noopener noreferrer">Devpost ↗</a>
           </div>
         </header>
         <section id="work" className="work-section" aria-labelledby="work-title">

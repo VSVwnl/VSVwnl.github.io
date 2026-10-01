@@ -137,6 +137,34 @@ const divWithClass = (html, className) => {
   return null;
 };
 const textOnly = (html) => html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+const attributes = (html) => Object.fromEntries(
+  [...html.matchAll(/(?:^|\s)([\w:-]+)=(?:"([^"]*)"|'([^']*)')/g)]
+    .map((match) => [match[1], match[2] ?? match[3]]),
+);
+assert.equal(profile.devpost, "https://devpost.com/VSVwnl", "Exact requested Devpost profile URL");
+let devpostPlacements = 0;
+const assertDevpostLink = (html, context) => {
+  const links = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)]
+    .filter((match) => attributes(match[1]).href === profile.devpost);
+  assert.equal(links.length, 1, `${context}: one native Devpost profile link`);
+  const link = links[0];
+  const props = attributes(link[1]);
+  assert.equal(props.target, "_blank", `${context}: Devpost opens in a new tab`);
+  const rel = new Set((props.rel || "").split(/\s+/));
+  for (const token of ["noopener", "noreferrer"])
+    assert.ok(rel.has(token), `${context}: Devpost rel includes ${token}`);
+  assert.ok(textOnly(link[2]).includes("Devpost"), `${context}: readable Devpost label`);
+  assert.doesNotMatch(link[1], /(?:^|\s)hidden(?:\s|=|$)|\baria-hidden="true"/i);
+  devpostPlacements++;
+};
+for (const [route, html] of pages) {
+  const primaryNav = [...html.matchAll(/<nav\b([^>]*)>([\s\S]*?)<\/nav>/g)]
+    .find((match) => attributes(match[1]).id === "primary-nav");
+  const footer = html.match(/<footer\b[^>]*>([\s\S]*?)<\/footer>/);
+  assert.ok(primaryNav && footer, `${route}: shared primary navigation and footer`);
+  assertDevpostLink(primaryNav[2], `${route} primary navigation`);
+  assertDevpostLink(footer[1], `${route} footer`);
+}
 const home = pages.get("/");
 const introLinks = divWithClass(home, "intro-links");
 assert.ok(introLinks, "Home: recruiter actions appear in the introduction");
@@ -146,14 +174,16 @@ for (const action of [
   { label: "Resume", href: profile.resume.primary.href, download: true },
   { label: "Email", href: `mailto:${profile.email}` },
   { label: "GitHub", href: "https://github.com/VSVwnl" },
+  { label: "Devpost", href: profile.devpost },
 ]) {
-  const link = introActions.find((match) => match[1].includes(`href="${escapeHtml(action.href)}"`));
+  const link = introActions.find((match) => attributes(match[1]).href === action.href);
   assert.ok(link, `Home introduction: native ${action.label} destination`);
   assert.ok(textOnly(link[2]).includes(action.label), `Home introduction: visible ${action.label} label`);
   assert.doesNotMatch(link[1], /\bhidden(?:\s|=|$)|\baria-hidden="true"/i);
   if (action.download)
     assert.match(link[1], /\bdownload(?:\s|=|$)/, "Home introduction: primary resume download");
 }
+assertDevpostLink(introLinks.content, "Home introduction");
 const previews = [...home.matchAll(/<article\b[^>]*class="([^"]*)"[^>]*>([\s\S]*?)<\/article>/g)]
   .filter((match) => match[1].split(/\s+/).includes("project-feature"))
   .map((match) => match[2]);
@@ -187,6 +217,9 @@ for (const project of featured) {
   }
 }
 const about = pages.get("/about/");
+const aboutActions = divWithClass(about, "about-actions");
+assert.ok(aboutActions, "About: introduction actions");
+assertDevpostLink(aboutActions.content, "About introduction");
 for (const id of ["skills", "experience"])
   assert.ok(about.includes(`id="${id}"`), `About: ${id} section`);
 for (const group of skillGroups) {
@@ -267,7 +300,7 @@ assert.ok(compressed.js > 0 && compressed.js < 100 * 1024, "Home JS budget: 100 
 assert.ok(compressed.css > 0 && compressed.css < 10 * 1024, "Home CSS budget: 10 KiB gzip");
 console.log(`Home referenced JS: ${(compressed.js / 1024).toFixed(1)} KiB gzip; CSS: ${(compressed.css / 1024).toFixed(1)} KiB gzip (fonts, HTML and media separate).`);
 console.log(
-  `PASS: ${routes.length} prerendered routes with dark document/browser themes, ${checkedLinks} local links/assets, visible intro recruiter actions, ${previews.length} gallery projects with readable roles and honest media, About skill evidence, case-study reading order and personal contributions/results, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
+  `PASS: ${routes.length} prerendered routes with dark document/browser themes, ${checkedLinks} local links/assets, ${devpostPlacements} exact Devpost profile placements with external-link attributes, visible intro recruiter actions, ${previews.length} gallery projects with readable roles and honest media, About skill evidence, case-study reading order and personal contributions/results, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
 );
 console.log(
   "Browser checks (responsive layout, keyboard and video) are separate; see docs/verification.md.",
