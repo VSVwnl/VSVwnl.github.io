@@ -9,23 +9,36 @@ export default function HomePage() {
     <Page>
       <div className="stage">
         <header className="home-intro" aria-labelledby="intro-title">
-          <h1 id="intro-title">Vishnu Sai Bodapati</h1>
-          <p className="intro-role">Software engineer · XR, games & applied AI</p>
-          <p className="intro-context">Duke M.Eng. · Expected May 2027</p>
+          <div className="intro-main">
+          <p className="eyebrow">Software engineer / Portfolio</p>
+          <p className="intro-name">Vishnu Sai Bodapati</p>
+          <h1 id="intro-title">Camera tools, VR gameplay, and web apps.</h1>
+          <p className="intro-description">I build with Unity, C#, TypeScript, and Next.js. My work includes planning camera shots inside reconstructed locations, building seated VR interactions for rehabilitation research, and connecting roster analysis to a web app. At Duke’s I³T Lab, I work on gameplay, calibration, and reliable research sessions.</p>
           <div className="intro-links">
-            <a href={profile.resume.primary.href} download>Resume ↓</a>
+            <a className="intro-primary" href={profile.resume.primary.href} download>Resume ↓</a>
             <a href={`mailto:${profile.email}`}>Email</a>
             <a href="https://github.com/VSVwnl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
             <a href={profile.devpost} target="_blank" rel="noopener noreferrer">Devpost ↗</a>
           </div>
+          </div>
+          <aside className="intro-panel" aria-label="Current work and education">
+            <p className="eyebrow">Currently / 01</p>
+            <h2>Duke I³T Lab</h2>
+            <p>Research assistant<br />VR gameplay & rehabilitation</p>
+            <dl className="intro-facts">
+              <div><dt>Working with</dt><dd>Unity / C# / Meta Quest</dd></div>
+              <div><dt>Education</dt><dd>Duke M.Eng.<br />Expected May 2027</dd></div>
+            </dl>
+            <a className="text-link" href="/work/lumi-vr/">View research work <ArrowRight size={16} aria-hidden="true" /></a>
+          </aside>
         </header>
         <section id="work" className="work-section" aria-labelledby="work-title">
           <div className="section-heading">
-            <h2 id="work-title">Selected projects</h2>
+            <h2 id="work-title"><span className="section-number" aria-hidden="true">01 /</span> Selected projects</h2>
             <a href="/work/" className="text-link">All projects <ArrowRight size={16} aria-hidden="true" /></a>
           </div>
           <div className="featured-grid">
-            {featured.map(project => <ProjectFeature key={project.slug} project={project} />)}
+            {featured.map((project, index) => <ProjectFeature key={project.slug} project={project} index={index} />)}
           </div>
         </section>
         <section className="home-about" aria-labelledby="about-title">

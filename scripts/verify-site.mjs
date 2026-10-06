@@ -49,7 +49,7 @@ for (const [route, html] of pages) {
   );
   assert.match(
     html,
-    /<meta\b(?=[^>]*\bname=["']theme-color["'])[^>]*\bcontent=["']#141719["'][^>]*>/i,
+    /<meta\b(?=[^>]*\bname=["']theme-color["'])[^>]*\bcontent=["']#0b0f19["'][^>]*>/i,
     `${route}: browser theme matches the dark page background`,
   );
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
@@ -90,7 +90,7 @@ assert.deepEqual(
   ["cinemascout", "lumi-vr", "mr-blueprint", "draft-usa"],
 );
 for (const p of featured) {
-  for (const key of ["problem", "contribution", "decisions", "outcome"])
+  for (const key of (p.buildSteps ? ["buildSteps", "result", "statusNote"] : ["problem", "contribution", "decisions", "outcome"]))
     assert.ok(p[key].length, `${p.slug}: ${key}`);
 }
 for (const group of skillGroups) {
@@ -238,13 +238,22 @@ for (const project of featured) {
   const body = html.search(/class="[^"]*\bcase-body\b[^"]*"/);
   const sidebar = html.search(/class="[^"]*\bcase-sidebar\b[^"]*"/);
   const content = html.search(/class="[^"]*\bcase-content\b[^"]*"/);
-  assert.ok(summary >= 0 && cover >= 0, `${project.slug}: media and personal ownership summary`);
-  assert.ok(body > cover, `${project.slug}: media precedes the case narrative`);
-  assert.ok(sidebar > body && content > sidebar, `${project.slug}: project information precedes narrative in reading and keyboard order`);
-  assert.ok(html.includes(escapeHtml(project.focus)), `${project.slug}: specific personal ownership is readable`);
-  for (const field of ["contribution", "outcome"])
-    for (const text of project[field])
-      assert.ok(html.includes(escapeHtml(text)), `${project.slug}: substantive ${field} remains readable`);
+  assert.ok(cover >= 0 && body > cover, `${project.slug}: media precedes narrative`);
+  if (project.buildSteps) {
+    assert.ok(content > body && sidebar > content, `${project.slug}: build sequence precedes project information`);
+    assert.match(html, /<ol class="build-steps">/, `${project.slug}: semantic build sequence`);
+    for (const text of [...project.buildSteps, project.result])
+      assert.ok(html.includes(escapeHtml(text)), `${project.slug}: build steps and result rendered`);
+    for (const id of ["problem", "contribution", "engineering", "outcome"])
+      assert.ok(html.includes(`id="${id}"`), `${project.slug}: section anchors preserved`);
+    assert.equal(summary, -1, `${project.slug}: no duplicate ownership summary`);
+  } else {
+    assert.ok(summary >= 0 && sidebar > body && content > sidebar, `${project.slug}: original research layout retained`);
+    assert.ok(html.includes(escapeHtml(project.focus)), `${project.slug}: personal ownership readable`);
+    for (const field of ["contribution", "outcome"])
+      for (const text of project[field])
+        assert.ok(html.includes(escapeHtml(text)), `${project.slug}: substantive ${field} readable`);
+  }
   if (project.statusNote)
     assert.ok(html.includes(escapeHtml(project.statusNote)), `${project.slug}: current availability is disclosed`);
 }
@@ -261,14 +270,12 @@ const luminance = (hex) => {
   return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
 };
 // Foreground, secondary copy and links are used on each of these surfaces.
-const textColors = ["e5e3dd", "a4adb5", "b9c4ad"];
-const surfaces = ["141719", "1c2023", "171b1e", "202a34", "101315"];
+const textColors = ["f5f7fa", "a2adbd", "669fff"];
+const surfaces = ["0b0f19", "101622", "171f2e"];
 const contrastPairs = [
   ...surfaces.flatMap((background) => textColors.map((foreground) => [foreground, background])),
-  ["e5e3dd", "252c31"],
-  ["e5e3dd", "365773"],
-  ["e5e3dd", "426885"],
-  ["d4dacd", "242e2a"],
+  ["f5f7fa", "245bd7"],
+  ["f5f7fa", "1d4fbd"],
 ];
 const css = await readFile("src/index.css", "utf8");
 const cssColors = new Set(

@@ -1,9 +1,11 @@
+import { bySlug } from "./projects.js";
+
 // Concise homepage content, grounded in projects.js, experience.js and the
 // combined resume evidence. Team recognition is separate from personal work.
 export const projectHighlights = {
   cinemascout: {
-    galleryRole: "Unity / XR developer",
-    galleryDescription: "VR camera planning in reconstructed locations.",
+    galleryRole: bySlug("cinemascout").galleryRole,
+    galleryDescription: bySlug("cinemascout").galleryDescription,
     oneLine:
       "Plan camera shots inside reconstructed real locations, before visiting the physical site.",
     ownership:
@@ -23,8 +25,8 @@ export const projectHighlights = {
     stack: ["Unity", "C#", "Meta Quest 3", "XR Interaction Toolkit"],
   },
   "mr-blueprint": {
-    galleryRole: "Unity / XR developer",
-    galleryDescription: "A mixed reality physics sandbox.",
+    galleryRole: bySlug("mr-blueprint").galleryRole,
+    galleryDescription: bySlug("mr-blueprint").galleryDescription,
     oneLine:
       "Build and test physics scenes at real-world scale in mixed reality.",
     ownership:
@@ -33,8 +35,8 @@ export const projectHighlights = {
     stack: ["Unity", "C#", "Meta XR SDK", "Logitech MX Ink SDK"],
   },
   "draft-usa": {
-    galleryRole: "Full-stack contributor",
-    galleryDescription: "AI-assisted Team USA roster drafting.",
+    galleryRole: bySlug("draft-usa").galleryRole,
+    galleryDescription: bySlug("draft-usa").galleryDescription,
     oneLine:
       "Build Team USA rosters with AI-assisted analysis and explanations for each recommendation.",
     ownership:

@@ -25,8 +25,9 @@ export const projects = [
       "Team result: two first-place awards + one runner-up · Worlds in Action Hack [02-LA]",
     category: "Spatial tools · VR",
     featured: true,
-    summary:
-      "A VR cinematography tool for walking through reconstructed real locations, setting up virtual cameras, and previewing shots before anyone travels to the physical site.",
+    summary: "A VR tool for exploring a captured location, setting up cameras, and previewing a tracking shot.",
+    galleryDescription: "Plan camera shots inside reconstructed locations.",
+    galleryRole: "Unity / XR developer · Team of three",
     roleLine: "Unity and XR development on a three-person hackathon team",
     recognition:
       "Two first-place category awards and one runner-up at Worlds in Action Hack [02-LA]",
@@ -42,7 +43,7 @@ export const projects = [
     },
 
     facts: [
-      { label: "Role", value: "Unity / XR developer" },
+      { label: "Role", value: "Unity / XR developer · Team of three" },
       {
         label: "Context",
         value: "Team of three, Worlds in Action Hack [02-LA]",
@@ -51,46 +52,17 @@ export const projects = [
       { label: "Platform", value: "PICO · Unity · WebSpatial" },
     ],
 
-    problem: [
-      "Scouting a location means going there. A director wants to know how a room reads at a given focal length, where a camera can physically sit, and how a move plays out — and answering any of it usually costs a trip.",
-      "CinemaScout puts that decision earlier. A real place is captured as a 3D Gaussian Splat reconstruction, and the shot is planned inside it at real-world scale, in a headset, before production commits to the site.",
+    buildSteps: [
+      "A reconstructed room needed camera tools before it could support shot planning.",
+      "Built the Unity application for exploring Gaussian Splat reconstructions at real-world scale.",
+      "Added virtual camera controls for focal length, field of view, aspect ratio, height, and clipping.",
+      "Turned saved camera positions into spline-based tracking shots with adjustable duration and easing.",
+      "Added an in-headset preview so users could inspect the framing as the camera moved.",
+      "Contributed to AI shot recommendations and the WebSpatial dashboard for comparing viewpoints."
     ],
-
-    contribution: [
-      "Built the Unity application that lets filmmakers explore 3D Gaussian Splat reconstructions of real locations and plan camera shots at real-world scale.",
-      "Implemented the virtual cinema camera system — focal length, field of view, aspect ratio, camera height and clipping — with spline-based tracking-shot playback previewable in-headset.",
-      "Contributed to an AI-assisted shot recommendation feature, and to a WebSpatial “Mission Control” dashboard for organising, comparing and reviewing candidate viewpoints.",
-    ],
-
-    howItWorks: [
-      "A captured location loads as a Gaussian Splat reconstruction that can be walked through in the headset at real-world scale. Virtual cameras are placed inside it and configured the way a physical camera would be: focal length, field of view, aspect ratio, height, and near and far clipping.",
-      "Camera positions are saved as knots on a path, and the path plays back as a spline-based tracking shot with adjustable duration and easing. A preview monitor shows the framing live while the move runs, so a shot can be judged from inside the space rather than from a plan.",
-    ],
-
-    decisions: [
-      {
-        title: "Real-world scale as the whole point",
-        text: "Camera controls expose familiar filmmaking parameters: focal length, field of view, aspect ratio, height and clipping. The engineering challenge was making those controls and spline playback work inside the same reconstructed scene and headset workflow.",
-      },
-      {
-        title: "Connecting the headset and the planning surface",
-        text: "The team paired Unity's immersive workspace with a WebSpatial Mission Control interface for reviewing and organizing viewpoints. I contributed to this companion workflow; the virtual camera and spline playback were my main engineering work.",
-      },
-    ],
-
-    outcome: [
-      "Built during Worlds in Action Hack [02-LA], with PICO SDK integration and emulator testing. The team took first place for Best Spatial Reconstruction Project (XGRIDS) and Best App Running on Emulator (PICO), and runner-up for Best Interactive World Experience (World Labs).",
-      "It is a hackathon prototype rather than a shipped product, and the scope is what the demo shows: reconstruction walkthrough, virtual camera setup, path-based shot preview, and the companion dashboard.",
-    ],
-
-    tech: [
-      "Unity",
-      "C#",
-      "3D Gaussian Splatting",
-      "OpenXR",
-      "PICO Unity Integration SDK",
-      "WebSpatial",
-    ],
+    result: "The prototype supports location walkthroughs, camera setup, and shot playback. Our team won first place in the XGRIDS and PICO categories and runner-up in the World Labs category at Worlds in Action Hack [02-LA].",
+    statusNote: "Hackathon prototype.",
+    tech: ["Unity", "C#", "Gaussian Splatting", "OpenXR", "PICO", "WebSpatial"],
     links: [
       {
         label: "View on Devpost",
@@ -108,8 +80,9 @@ export const projects = [
     proof: "Team result: 1st place / Grand Winner · DesignXR Hackathon 2026",
     category: "Mixed reality · Interaction",
     featured: true,
-    summary:
-      "A mixed reality physics sandbox for spawning, editing, drawing and simulating interactive 3D scenes in the space around you, on Meta Quest.",
+    summary: "A Quest physics sandbox for arranging objects, changing their properties, and testing what happens in the room around you.",
+    galleryDescription: "Build a physics scene, run it, and reset it in mixed reality.",
+    galleryRole: "Unity / XR developer · Core interaction systems",
     roleLine: "Unity and XR development — core interaction systems",
     recognition: "1st place at DesignXR Hackathon 2026",
 
@@ -126,55 +99,23 @@ export const projects = [
     },
 
     facts: [
-      { label: "Role", value: "Unity / XR developer" },
+      { label: "Role", value: "Unity / XR developer · Core interaction systems" },
       { label: "Context", value: "Team project, DesignXR Hackathon 2026" },
       { label: "Date", value: "January — April 2026" },
       { label: "Platform", value: "Meta Quest 3 / 3S · Unity" },
     ],
 
-    problem: [
-      "Building and testing a physics scene normally means sitting at a desk, editing it on a flat screen, then imagining how it behaves at real size. The edit and the result live in different places.",
-      "MR Blueprint collapses that. Objects are spawned, arranged and configured in the room in front of you, and the same space runs the simulation.",
+    buildSteps: [
+      "The sandbox needed a way to build scenes before users could experiment with physics.",
+      "Built object spawning, selection, and move, rotate, and scale controls in C#.",
+      "Added world-space inspector panels for editing object and physics properties.",
+      "Built separate Edit and Simulate workflows for setting up scenes and running them.",
+      "Contributed to PhysicsLens graphing and snapshot-and-restore tools for repeating a simulation from the same starting state.",
+      "Contributed pressure-sensitive spatial drawing with the Logitech MX Ink stylus."
     ],
-
-    contribution: [
-      "Implemented core C# systems for object spawning, selection and transform manipulation, plus world-space XR UI and inspector panels.",
-      "Built the Edit and Simulate mode workflows, including the physics configuration exposed for experimentation.",
-      "Contributed the Logitech MX Ink Draw Mode — spatial drawing with pressure-sensitive strokes.",
-      "Contributed to PhysicsLens: live graphing, physics visualisation, and snapshot and restore workflows.",
-    ],
-
-    howItWorks: [
-      "The sandbox runs on Meta Quest 3 and 3S in mixed reality, so scenes sit in the user's actual room. Edit mode is for authoring — spawn an object, select it, move, rotate and scale it, and adjust its physics properties through world-space inspector panels.",
-      "Simulate mode runs what was built. PhysicsLens visualises what the simulation is doing and graphs it live, and snapshot and restore make it possible to re-run a scenario from the same starting state instead of rebuilding it by hand.",
-      "With a Logitech MX Ink stylus, Draw Mode adds pressure-sensitive spatial drawing to the same workspace.",
-    ],
-
-    decisions: [
-      {
-        title: "Two explicit modes instead of one blended one",
-        text: "Separating Edit from Simulate gives scene authoring and physics testing distinct controls and expectations. The tradeoff is an explicit mode switch, but it makes the build–test loop easier to follow.",
-      },
-      {
-        title: "Snapshot and restore over manual rebuilding",
-        text: "Physics experimentation is only useful if a scenario can be repeated, so capturing and restoring scene state was worth building rather than leaving users to reconstruct setups.",
-      },
-    ],
-
-    outcome: [
-      "MR Blueprint won 1st place as Grand Winner of DesignXR Hackathon 2026, and reached the Top 50 semifinalist stage of DevStudio 2026 by Logitech.",
-      "It is a hackathon and course-scale prototype. The working capabilities are the ones described above: spawning and manipulation, world-space UI, Edit and Simulate modes, stylus drawing, and the PhysicsLens tooling.",
-    ],
-
-    tech: [
-      "Unity",
-      "C#",
-      "Meta Quest 3 / 3S",
-      "OpenXR",
-      "XR Interaction Toolkit",
-      "Meta XR SDK",
-      "Logitech MX Ink SDK",
-    ],
+    result: "The prototype brings scene editing, simulation, drawing, and physics visualization into one mixed reality workspace. Our team won Grand Winner at DesignXR Hackathon 2026.",
+    statusNote: "Hackathon and course prototype.",
+    tech: ["Unity", "C#", "Meta Quest", "OpenXR", "XR Interaction Toolkit", "MX Ink"],
     links: [
       {
         label: "Watch the demo",
@@ -266,12 +207,11 @@ export const projects = [
     focus:
       "Server-side Gemini integration, roster dashboards and recommendation explanations, with responsible language constraints.",
     proof: "Team result: honorable mention · Team USA × Google Cloud Hackathon",
-    statusNote:
-      "The hosted demo is currently unavailable. The recorded demo and public repository are linked below.",
     category: "AI web platform",
     featured: true,
-    summary:
-      "An AI-assisted Team USA drafting platform where fans build rosters and get Gemini-powered analysis, momentum scoring and next-pick suggestions.",
+    summary: "A roster-building web app that helps fans discover Team USA athletes and understand each recommendation.",
+    galleryDescription: "Build a Team USA roster with explained next-pick suggestions.",
+    galleryRole: "Full-stack / product contributor",
     roleLine: "Full-stack and product contributor on a hackathon team",
     recognition:
       "Winner — Honorable Mention, Team USA × Google Cloud Hackathon",
@@ -288,39 +228,16 @@ export const projects = [
       { label: "Date", value: "May 2026" },
       { label: "Platform", value: "Web · Gemini · Google Cloud Run" },
     ],
-    problem: [
-      "Team USA sport discovery can be hard to make legible beyond the most visible events. Draft USA turns that into a fan-facing draft experience, with clear explanations for the signals behind each suggestion.",
+    buildSteps: [
+      "Roster suggestions needed context and explanations that fans could follow.",
+      "Built server-side Gemini integrations for roster analysis, scout recommendations, and next-pick guidance.",
+      "Added explanation flows to show the reasoning behind suggestions.",
+      "Contributed to draft-room dashboards, roster views, hometown hubs, and Momentum Score breakdowns.",
+      "Helped keep scores and recommendations focused on athlete discovery, without presenting them as medal predictions or betting advice."
     ],
-    contribution: [
-      "Built server-side Gemini API integrations for roster analysis, scout recommendations, next-pick guidance and explanation flows.",
-      "Contributed to dashboard experiences for the draft room, roster views, hometown hubs and Momentum Score breakdowns.",
-      "Helped frame the product's scoring and language as discovery signals rather than athlete rankings, betting advice or medal predictions.",
-    ],
-    howItWorks: [
-      "A player builds a Team USA roster while the app surfaces contextual analysis and suggestions through server-side routes. The dashboard shows the roster, score explanations and discovery-oriented league storytelling in one place.",
-    ],
-    decisions: [
-      {
-        title:
-          "Explain recommendations instead of treating the model as an oracle",
-        text: "The product exposes its Momentum Score and recommendation context so people can understand the signal behind a suggestion instead of being asked to accept an opaque output.",
-      },
-      {
-        title: "Responsible framing is part of the product",
-        text: "The language deliberately keeps the experience in fan discovery: it does not present scoring as a prediction, an athlete ranking or a betting signal.",
-      },
-    ],
-    outcome: [
-      "The team received an honorable mention at the Team USA × Google Cloud Hackathon. The application was containerized and deployed on Google Cloud Run; the hosted endpoint currently returns a server error, so the recorded demo and source repository are the reliable ways to inspect it.",
-    ],
-    tech: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Gemini API",
-      "Docker",
-      "Google Cloud Run",
-    ],
+    result: "The team containerized the app and deployed it on Google Cloud Run. We received an honorable mention at the Team USA × Google Cloud Hackathon.",
+    statusNote: "The hosted demo is unavailable; the recording and public repository are available.",
+    tech: ["Next.js", "TypeScript", "Gemini API", "Tailwind CSS", "Docker", "Cloud Run"],
     links: [
       {
         label: "Watch the demo",

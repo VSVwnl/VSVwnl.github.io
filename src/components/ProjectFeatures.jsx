@@ -22,16 +22,18 @@ export function ProjectCover({ project, priority = false }) {
   );
 }
 
-export default function ProjectFeature({ project }) {
+export default function ProjectFeature({ project, index = 0 }) {
   const highlight = projectHighlights[project.slug];
   return (
     <article className={`project-feature project-feature--${project.slug}`}>
       <a className="project-card-link" href={`/work/${project.slug}/`} aria-label={`${project.title} — ${highlight.galleryDescription} Read project`}>
-        <ProjectCover project={project} />
+        <div className="project-index"><span>{String(index + 1).padStart(2, "0")}</span><span>{project.category}</span><ArrowUpRight size={16} aria-hidden="true" /></div>
+        <ProjectCover project={project} priority={index === 0} />
         <div className="project-copy">
           <div className="project-caption"><h3>{project.title}</h3><ArrowUpRight size={20} aria-hidden="true" /></div>
           <p className="project-summary">{highlight.galleryDescription}</p>
           <p className="project-role">{highlight.galleryRole}</p>
+          <div className="project-stack" aria-label="Technologies">{highlight.stack.map(tool => <span key={tool}>{tool}</span>)}</div>
         </div>
       </a>
     </article>

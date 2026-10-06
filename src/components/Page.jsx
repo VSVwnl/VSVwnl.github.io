@@ -6,7 +6,7 @@ export default function Page({ current, children }) {
   const main = useRef(null);
   useEffect(() => setupPageMotion(main.current), []);
   return (
-    <>
+    <div className="site-shell">
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -15,6 +15,6 @@ export default function Page({ current, children }) {
         {children}
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }
