@@ -12,7 +12,7 @@ export default function HomePage() {
           <div className="intro-main">
           <p className="eyebrow">Software engineer / Portfolio</p>
           <p className="intro-name">Vishnu Sai Bodapati</p>
-          <h1 id="intro-title">Camera tools, VR gameplay, and web apps.</h1>
+          <h1 id="intro-title">XR tools, VR gameplay, and web apps.</h1>
           <p className="intro-description">I build with Unity, C#, TypeScript, and Next.js. My work includes planning camera shots inside reconstructed locations, building seated VR interactions for rehabilitation research, and connecting roster analysis to a web app. At Duke’s I³T Lab, I work on gameplay, calibration, and reliable research sessions.</p>
           <div className="intro-links">
             <a className="intro-primary" href={profile.resume.primary.href} download>Resume ↓</a>
