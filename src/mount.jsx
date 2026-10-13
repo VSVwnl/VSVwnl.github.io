@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
-import "./index.css";
+import "./styles/site.css";
 
 /** Every page entry funnels through here so the shell stays identical. */
 export default function mount(element) {

@@ -1,7 +1,6 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
 
 // User-site repo (VSVwnl.github.io) is served from the domain root.
 //
@@ -12,7 +11,7 @@ import tailwindcss from "@tailwindcss/vite";
 // homepage first.
 export default defineConfig({
   base: "/",
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
   build: {
     // Avoid a case-only collision with public/Assets on Windows.
     assetsDir: "_app",
@@ -29,7 +28,7 @@ export default defineConfig({
       output: {
         // React is shared by every page, so it caches once across the site.
         manualChunks: {
-          react: ["react", "react-dom"],
+          react: ["react", "react-dom", "react-dom/client"],
         },
       },
     },

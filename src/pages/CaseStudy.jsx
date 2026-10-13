@@ -1,153 +1,149 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
-import Page from "../components/Page.jsx";
-import ProjectVisual from "../components/ProjectVisual.jsx";
+import Layout from "../components/Layout.jsx";
+import ProjectMedia from "../components/ProjectMedia.jsx";
 import { featured, bySlug } from "../data/projects.js";
 
+// Two story shapes share one layout: the hackathon projects tell a short build
+// sequence (buildSteps + result); Lumi, an ongoing research project, keeps its
+// longer problem / contribution / how-it-works / outcome structure.
 export default function CaseStudy({ slug }) {
   const project = bySlug(slug);
   if (!project) return null;
-  const isTeamResult = project.proof?.startsWith("Team result:");
-  const resultSummary = project.proof?.replace(/^Team result:\s*/, "");
-  const next =
-    featured[
-      (featured.findIndex((p) => p.slug === slug) + 1) % featured.length
-    ];
-  const projectInfo = (
-    <aside className="case-sidebar" aria-label="Project information">
-      <h2>Project info</h2>
-      <dl className="case-facts">
-        {project.facts.map((f) => (
-          <div key={f.label}>
-            <dt>{f.label}</dt>
-            <dd>{f.value}</dd>
-          </div>
-        ))}
-      </dl>
-      <div className="case-stack">
-        <h3>Tools</h3>
-        <p>{project.tech.join(" · ")}</p>
-      </div>
-      {project.statusNote && <p className="case-status">{project.statusNote}</p>}
-      {project.links.length > 0 && (
-        <div className="case-actions">
-          {project.media.kind === "video" && <a className="text-link" href="#demo">Watch the demo</a>}
-          {project.links.map((link) => (
-            <a
-              className="text-link"
-              href={link.url}
-              key={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {link.label} <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
-          ))}
-        </div>
-      )}
-      <nav className="case-nav" aria-label="Case study sections">
-        {project.buildSteps ? <>
-          <a href="#contribution">What I built</a>
-          <a href="#outcome">Result</a>
-        </> : <>
-        <a href="#problem">About</a>
-        <a href="#contribution">My contribution</a>
-        <a href="#engineering">How it works</a>
-        <a href="#outcome">Outcome</a>
-        </>}
-      </nav>
-    </aside>
-  );
-  return (
-    <Page current="work">
-      <article>
-        <header className="stage case-intro">
-          <a href="/work/" className="text-link">
-            <ArrowLeft size={15} aria-hidden="true" />
-            All projects
-          </a>
-          <p className="eyebrow">{project.category}</p>
-          <div className="case-title">
-            <h1>{project.title}</h1>
-            <p>{project.summary}</p>
-          </div>
-        </header>
-        <div className="stage case-cover" id="demo">
-          <ProjectVisual project={project} priority />
-        </div>
-        <div className={`stage case-body${project.buildSteps ? " case-body-concise" : ""}`}>
-          {!project.buildSteps && projectInfo}
+  const at = featured.findIndex((p) => p.slug === slug);
+  const next = featured[(at + 1) % featured.length];
 
-          <div className="case-content">
-            {project.buildSteps ? <>
-              <section className="case-block" id="contribution">
-                <span id="problem" className="legacy-anchor" />
-                <span id="engineering" className="legacy-anchor" />
-                <h2>What I built</h2>
-                <ol className="build-steps">
-                  {project.buildSteps.map(step => <li key={step}>{step}</li>)}
-                </ol>
-              </section>
-              <section className="case-block case-result" id="outcome">
-                <h2>Result</h2>
-                <p>{project.result}</p>
-              </section>
-            </> : <>
-            <div className="case-summary">
-              <p><strong>My role.</strong> {project.focus}</p>
-              {resultSummary && (
-                <p>
-                  <strong>{isTeamResult ? "Team result." : "Project status."}</strong>{" "}
-                  {resultSummary}
-                </p>
-              )}
-            </div>
-            <section className="case-block" id="problem">
-              <h2>About</h2>
-              {project.problem?.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </section>
-            <section className="case-block" id="contribution">
-              <h2>My contribution</h2>
-              <p>{project.roleLine}.</p>
-              <ul className="contribution-list">
-                {project.contribution?.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            </section>
-            <section className="case-block" id="engineering">
-              <h2>How it works</h2>
-              {project.howItWorks?.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-              {project.decisions?.map((d) => (
-                <div className="decision" key={d.title}>
-                  <h3>{d.title}</h3>
-                  <p>{d.text}</p>
-                </div>
-              ))}
-            </section>
-            <section className="case-block" id="outcome">
-              <h2>Outcome</h2>
-              {project.outcome?.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </section>
-            </>}
-          </div>
-          {project.buildSteps && projectInfo}
+  return (
+    <Layout current="work">
+      <article className="case">
+        <header className="wrap case-head">
+          <a className="case-back" href="/work/">
+            All work
+          </a>
+          <h1 className="case-title">{project.title}</h1>
+          <p className="case-pitch">{project.feature.pitch}</p>
+          <dl className="case-facts">
+            {project.facts.map((f) => (
+              <div key={f.label}>
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </header>
+
+        <div className="wrap case-media" id="demo">
+          <ProjectMedia project={project} />
         </div>
-        <nav className="stage" aria-label="Next project">
-          <a className="next-project" href={`/work/${next.slug}/`}>
-            <span>
-              <span className="eyebrow">Next project</span>
-              <span className="next-title">{next.title}</span>
-            </span>
-            <ArrowRight size={28} aria-hidden="true" />
+
+        <div className="wrap case-body">
+          <div className="case-story">
+            {project.buildSteps ? (
+              <>
+                <section id="contribution">
+                  {/* Anchors kept from earlier versions of these pages. */}
+                  <span id="problem" className="anchor" />
+                  <span id="engineering" className="anchor" />
+                  <h2>What I built</h2>
+                  <p className="case-lede">{project.feature.what}</p>
+                  <ol className="build-steps">
+                    {project.buildSteps.map((step) => (
+                      <li key={step}>{step}</li>
+                    ))}
+                  </ol>
+                </section>
+                <section>
+                  <h2>The hard part</h2>
+                  <p>{project.feature.challenge}</p>
+                </section>
+                <section id="outcome">
+                  <h2>Result</h2>
+                  <p>{project.result}</p>
+                </section>
+              </>
+            ) : (
+              <>
+                <section id="problem">
+                  <h2>The problem</h2>
+                  {project.problem.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </section>
+                <section id="contribution">
+                  <h2>My contribution</h2>
+                  <p>{project.roleLine}.</p>
+                  <ul className="contribution-list">
+                    {project.contribution.map((p) => (
+                      <li key={p}>{p}</li>
+                    ))}
+                  </ul>
+                </section>
+                <section id="engineering">
+                  <h2>How it works</h2>
+                  {project.howItWorks.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                  {project.decisions.map((d) => (
+                    <div className="decision" key={d.title}>
+                      <h3>{d.title}</h3>
+                      <p>{d.text}</p>
+                    </div>
+                  ))}
+                </section>
+                <section id="outcome">
+                  <h2>Outcome</h2>
+                  {project.outcome.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </section>
+              </>
+            )}
+          </div>
+
+          <aside className="case-aside" aria-label="Project details">
+            {project.feature.evidence.length > 0 && (
+              <section>
+                <h2>{project.feature.evidenceLabel ?? "Recognition"}</h2>
+                <p>{project.feature.evidenceIntro}</p>
+                <ul className="evidence-list">
+                  {project.feature.evidence.map((e) => (
+                    <li key={e}>{e}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
+            {project.links.length > 0 && (
+              <section>
+                <h2>Links</h2>
+                <ul className="aside-links">
+                  {project.links.map((l) => (
+                    <li key={l.url}>
+                      <a href={l.url} target="_blank" rel="noopener noreferrer">
+                        {l.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+            <section>
+              <h2>Tools</h2>
+              <p>{project.tech.join(", ")}</p>
+            </section>
+            {project.statusNote && (
+              <section>
+                <h2>Status</h2>
+                <p>{project.statusNote}</p>
+              </section>
+            )}
+          </aside>
+        </div>
+
+        <nav className="wrap case-next" aria-label="Next project">
+          <a href={`/work/${next.slug}/`}>
+            <span className="case-next-label">Next project</span>
+            <span className="case-next-title">{next.title}</span>
           </a>
         </nav>
       </article>
-    </Page>
+    </Layout>
   );
 }

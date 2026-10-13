@@ -1,314 +1,188 @@
+// Static checks on the built site (dist/). Run after `npm run build`.
+// Covers routes, prerendered content, links/assets, honest media, project
+// facts, resume files, palette contrast and accessibility basics. Visual and
+// interaction checks happen in a browser; see docs/verification.md.
 import assert from "node:assert/strict";
 import { readFile, stat } from "node:fs/promises";
-import { resolve, join } from "node:path";
+import { join, resolve } from "node:path";
 import { gzipSync } from "node:zlib";
-import { projects, featured, bySlug } from "../src/data/projects.js";
+import { projects, featured, other, bySlug } from "../src/data/projects.js";
 import { profile } from "../src/data/profile.js";
-import { skillGroups, projectHighlights } from "../src/data/recruiter.js";
+import { skillGroups } from "../src/data/skills.js";
 
 const root = resolve("dist");
-const routes = [
-  "/",
-  "/work/",
-  "/about/",
-  ...featured.map((p) => `/work/${p.slug}/`),
-];
+const routes = ["/", "/work/", "/about/", ...featured.map((p) => `/work/${p.slug}/`)];
 const pages = new Map(
   await Promise.all(
-    routes.map(async (route) => [
-      route,
-      await readFile(join(root, route, "index.html"), "utf8"),
-    ]),
+    routes.map(async (r) => [r, await readFile(join(root, r, "index.html"), "utf8")]),
   ),
 );
-let checkedLinks = 0;
+
+const escapeHtml = (v) =>
+  v.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[c]);
+const has = (html, text) => html.includes(escapeHtml(text));
+const between = (html, open, close) => {
+  const i = html.indexOf(open);
+  return i < 0 ? null : html.slice(i, html.indexOf(close, i));
+};
+
+// ─── Every route ─────────────────────────────────────────────────────────
+let checkedRefs = 0;
 for (const [route, html] of pages) {
-  assert.ok(html.includes(profile.shortName), `${route}: current display name`);
-  assert.equal(
-    (html.match(/<h1[ >]/g) || []).length,
-    1,
-    `${route}: exactly one h1`,
-  );
-  assert.match(
-    html,
-    /<main id="main"/,
-    `${route}: semantic main and skip target`,
-  );
-  assert.match(
-    html,
-    /<div id="root">.+<main id="main"/,
-    `${route}: content prerendered`,
-  );
-  assert.ok(
-    html.includes(`rel="canonical" href="https://vsvwnl.github.io${route}"`),
-  );
-  assert.match(
-    html,
-    /<meta\b(?=[^>]*\bname=["']color-scheme["'])[^>]*\bcontent=["']dark["'][^>]*>/i,
-    `${route}: document declares a dark color scheme`,
-  );
-  assert.match(
-    html,
-    /<meta\b(?=[^>]*\bname=["']theme-color["'])[^>]*\bcontent=["']#0b0f19["'][^>]*>/i,
-    `${route}: browser theme matches the dark page background`,
-  );
+  assert.ok(html.includes(profile.name), `${route}: full name`);
+  assert.equal((html.match(/<h1[ >]/g) || []).length, 1, `${route}: exactly one h1`);
+  assert.match(html, /<div id="root">.+<main id="main"/s, `${route}: content prerendered into main`);
+  assert.match(html, /class="skip-link" href="#main"/, `${route}: skip link`);
+  assert.ok(html.includes(`rel="canonical" href="https://vsvwnl.github.io${route}"`), `${route}: canonical`);
+  assert.match(html, /<meta name="color-scheme" content="light"/, `${route}: light color scheme`);
+  assert.match(html, /<meta name="theme-color" content="#f3f3f1"/, `${route}: theme color matches page`);
+  assert.match(html, /family=Archivo/, `${route}: Archivo loaded`);
+
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
-  assert.equal(new Set(ids).size, ids.length, `${route}: IDs must be unique`);
-  for (const [, reference] of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)) {
-    if (/^(https?:|mailto:|data:)/.test(reference)) continue;
-    const url = new URL(
-      reference.replaceAll("&amp;", "&"),
-      `https://vsvwnl.github.io${route}`,
-    );
-    const file = join(
-      root,
-      decodeURIComponent(url.pathname),
-      url.pathname.endsWith("/") ? "index.html" : "",
-    );
-    assert.ok(
-      (await stat(file)).isFile(),
-      `${route}: local target ${reference}`,
-    );
-    if (url.hash) {
-      const target = pages.get(url.pathname) || (await readFile(file, "utf8"));
-      assert.ok(
-        target.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`),
-        `${route}: fragment ${reference}`,
-      );
+  assert.equal(new Set(ids).size, ids.length, `${route}: unique IDs`);
+
+  // Primary navigation: four destinations, resume downloads the primary PDF.
+  const nav = between(html, '<nav id="primary-nav"', "</nav>");
+  assert.ok(nav, `${route}: primary navigation`);
+  for (const href of ["/work/", "/about/", profile.resume.primary.href, "#contact"])
+    assert.ok(nav.includes(`href="${href}"`), `${route}: nav links ${href}`);
+
+  // Footer contact block with email and external profiles.
+  const footer = between(html, '<footer id="contact"', "</footer>");
+  assert.ok(footer && footer.includes(`mailto:${profile.email}`), `${route}: footer email`);
+  for (const s of ["https://github.com/VSVwnl", profile.devpost]) assert.ok(footer.includes(`href="${s}"`), `${route}: footer ${s}`);
+
+  // External links open safely.
+  for (const [a] of html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g))
+    assert.match(a, /rel="noopener noreferrer"/, `${route}: rel on ${a}`);
+
+  // Local references resolve, including fragments.
+  for (const [, ref] of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)) {
+    if (/^(https?:|mailto:|data:)/.test(ref)) continue;
+    const url = new URL(ref.replaceAll("&amp;", "&"), `https://vsvwnl.github.io${route}`);
+    const file = join(root, decodeURIComponent(url.pathname), url.pathname.endsWith("/") ? "index.html" : "");
+    assert.ok((await stat(file)).isFile(), `${route}: local target ${ref}`);
+    if (url.hash.length > 1) {
+      const target = pages.get(url.pathname) ?? (await readFile(file, "utf8"));
+      assert.ok(target.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`), `${route}: fragment ${ref}`);
     }
-    checkedLinks++;
+    checkedRefs++;
   }
-  for (const img of html.matchAll(/<img\b[^>]*>/g)) {
-    assert.match(img[0], /\salt="[^"]*"/, `${route}: image alternative`);
-    assert.match(img[0], /\swidth="\d+"/, `${route}: image width`);
-    assert.match(img[0], /\sheight="\d+"/, `${route}: image height`);
+  for (const [, set] of html.matchAll(/srcset="([^"]+)"/gi))
+    for (const part of set.split(",")) {
+      const src = part.trim().split(/\s+/)[0];
+      assert.ok((await stat(join(root, src))).isFile(), `${route}: srcset ${src}`);
+      checkedRefs++;
+    }
+  for (const [img] of html.matchAll(/<img\b[^>]*>/g)) {
+    assert.match(img, /\salt="[^"]*"/, `${route}: image alt`);
+    assert.match(img, /\swidth="\d+"/, `${route}: image width`);
+    assert.match(img, /\sheight="\d+"/, `${route}: image height`);
   }
+  // No video is fetched before someone presses play.
+  assert.doesNotMatch(html, /<video\b/, `${route}: no video element before interaction`);
 }
-assert.equal(projects.length, new Set(projects.map((p) => p.slug)).size);
-assert.deepEqual(
-  featured.map((p) => p.slug),
-  ["cinemascout", "lumi-vr", "mr-blueprint", "draft-usa"],
-);
+
+// ─── Data ────────────────────────────────────────────────────────────────
+assert.equal(projects.length, new Set(projects.map((p) => p.slug)).size, "unique slugs");
+assert.deepEqual(featured.map((p) => p.slug), ["cinemascout", "lumi-vr", "mr-blueprint", "draft-usa"]);
+assert.equal(other[0].slug, "oculo", "Oculo leads the archive");
 for (const p of featured) {
-  for (const key of (p.buildSteps ? ["buildSteps", "result", "statusNote"] : ["problem", "contribution", "decisions", "outcome"]))
-    assert.ok(p[key].length, `${p.slug}: ${key}`);
+  for (const key of ["pitch", "what", "role", "challenge", "evidenceIntro"]) assert.ok(p.feature?.[key], `${p.slug}: feature.${key}`);
+  if (p.buildSteps) for (const key of ["result", "statusNote"]) assert.ok(p[key], `${p.slug}: ${key}`);
+  else for (const key of ["problem", "contribution", "howItWorks", "decisions", "outcome"]) assert.ok(p[key]?.length, `${p.slug}: ${key}`);
 }
 for (const group of skillGroups) {
-  assert.ok(group.title && group.tools && group.detail && group.links.length);
+  assert.ok(group.title && group.tools && group.detail && group.links.length, `${group.title}: complete`);
   for (const link of group.links) {
-    assert.ok(link.label && link.href, `${group.title}: evidence link`);
     const url = new URL(link.href, "https://vsvwnl.github.io");
-    const slug =
-      url.pathname === "/work/"
-        ? decodeURIComponent(url.hash.slice(1))
-        : url.pathname.match(/^\/work\/([^/]+)\/$/)?.[1];
-    assert.ok(bySlug(slug), `${group.title}: project evidence ${link.href}`);
+    const slug = url.pathname === "/work/" ? url.hash.slice(1) : url.pathname.match(/^\/work\/([^/]+)\/$/)?.[1];
+    assert.ok(bySlug(slug), `${group.title}: evidence ${link.href}`);
   }
 }
-for (const [slug, highlight] of Object.entries(projectHighlights)) {
-  assert.ok(bySlug(slug), `Project highlight ${slug}`);
-  assert.ok(
-    highlight.galleryDescription && highlight.galleryRole && highlight.oneLine &&
-      highlight.ownership && highlight.result && highlight.stack.length,
-    `${slug}: gallery purpose and role, personal contribution, result and stack`,
-  );
-}
-const escapeHtml = (value) =>
-  value.replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#x27;",
-  })[character]);
-const divWithClass = (html, className) => {
-  const opening = [...html.matchAll(/<div\b[^>]*\bclass="([^"]*)"[^>]*>/g)]
-    .find((match) => match[1].split(/\s+/).includes(className));
-  if (!opening) return null;
-  const contentStart = opening.index + opening[0].length;
-  const tags = /<\/?div\b[^>]*>/g;
-  tags.lastIndex = contentStart;
-  let depth = 1;
-  for (let tag; (tag = tags.exec(html));) {
-    depth += tag[0].startsWith("</") ? -1 : 1;
-    if (depth === 0)
-      return { opening: opening[0], index: opening.index, content: html.slice(contentStart, tag.index) };
-  }
-  return null;
-};
-const textOnly = (html) => html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
-const attributes = (html) => Object.fromEntries(
-  [...html.matchAll(/(?:^|\s)([\w:-]+)=(?:"([^"]*)"|'([^']*)')/g)]
-    .map((match) => [match[1], match[2] ?? match[3]]),
-);
-assert.equal(profile.devpost, "https://devpost.com/VSVwnl", "Exact requested Devpost profile URL");
-let devpostPlacements = 0;
-const assertDevpostLink = (html, context) => {
-  const links = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)]
-    .filter((match) => attributes(match[1]).href === profile.devpost);
-  assert.equal(links.length, 1, `${context}: one native Devpost profile link`);
-  const link = links[0];
-  const props = attributes(link[1]);
-  assert.equal(props.target, "_blank", `${context}: Devpost opens in a new tab`);
-  const rel = new Set((props.rel || "").split(/\s+/));
-  for (const token of ["noopener", "noreferrer"])
-    assert.ok(rel.has(token), `${context}: Devpost rel includes ${token}`);
-  assert.ok(textOnly(link[2]).includes("Devpost"), `${context}: readable Devpost label`);
-  assert.doesNotMatch(link[1], /(?:^|\s)hidden(?:\s|=|$)|\baria-hidden="true"/i);
-  devpostPlacements++;
-};
-for (const [route, html] of pages) {
-  const primaryNav = [...html.matchAll(/<nav\b([^>]*)>([\s\S]*?)<\/nav>/g)]
-    .find((match) => attributes(match[1]).id === "primary-nav");
-  const footer = html.match(/<footer\b[^>]*>([\s\S]*?)<\/footer>/);
-  assert.ok(primaryNav && footer, `${route}: shared primary navigation and footer`);
-  assertDevpostLink(primaryNav[2], `${route} primary navigation`);
-  assertDevpostLink(footer[1], `${route} footer`);
-}
+
+// ─── Home ────────────────────────────────────────────────────────────────
 const home = pages.get("/");
-const introLinks = divWithClass(home, "intro-links");
-assert.ok(introLinks, "Home: recruiter actions appear in the introduction");
-assert.doesNotMatch(introLinks.opening, /\bhidden(?:\s|=|>)|\baria-hidden="true"/i);
-const introActions = [...introLinks.content.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
-for (const action of [
-  { label: "Resume", href: profile.resume.primary.href, download: true },
-  { label: "Email", href: `mailto:${profile.email}` },
-  { label: "GitHub", href: "https://github.com/VSVwnl" },
-  { label: "Devpost", href: profile.devpost },
-]) {
-  const link = introActions.find((match) => attributes(match[1]).href === action.href);
-  assert.ok(link, `Home introduction: native ${action.label} destination`);
-  assert.ok(textOnly(link[2]).includes(action.label), `Home introduction: visible ${action.label} label`);
-  assert.doesNotMatch(link[1], /\bhidden(?:\s|=|$)|\baria-hidden="true"/i);
-  if (action.download)
-    assert.match(link[1], /\bdownload(?:\s|=|$)/, "Home introduction: primary resume download");
+const intro = between(home, '<header class="wrap hero"', "</header>");
+for (const href of [profile.resume.primary.href, "https://github.com/VSVwnl", profile.devpost, `mailto:${profile.email}`])
+  assert.ok(intro?.includes(`href="${href}"`), `Home intro: ${href}`);
+assert.ok(intro.includes("hero-kicker\">Vishnu Sai Bodapati"), "Home intro names the owner above the headline");
+// Selected work is a project index: every row's title, pitch and role are
+// plain visible text, in order, and each row links to its case study.
+const index = between(home, '<ol class="wi-list"', "</ol>");
+let order = -1;
+for (const p of featured) {
+  const at = index.indexOf(`href="/work/${p.slug}/"`);
+  assert.ok(at > order, `Home: ${p.title} row in order with a case-study link`);
+  order = at;
+  for (const key of ["pitch", "byline"]) assert.ok(has(index, p.feature[key]), `Home: ${p.title} ${key} visible`);
 }
-assertDevpostLink(introLinks.content, "Home introduction");
-const previews = [...home.matchAll(/<article\b[^>]*class="([^"]*)"[^>]*>([\s\S]*?)<\/article>/g)]
-  .filter((match) => match[1].split(/\s+/).includes("project-feature"))
-  .map((match) => match[2]);
-assert.equal(previews.length, featured.length, "Home: four featured gallery projects");
-for (const project of featured) {
-  const preview = previews.find((html) => html.includes(`href="/work/${project.slug}/"`));
-  assert.ok(preview, `Home: ${project.title} preview`);
-  const caption = divWithClass(preview, "project-copy");
-  assert.ok(caption, `Home: ${project.title} gallery caption`);
-  for (const [field, className] of [["galleryDescription", "project-summary"], ["galleryRole", "project-role"]]) {
-    const paragraph = [...caption.content.matchAll(/<p\b[^>]*\bclass="([^"]*)"[^>]*>([\s\S]*?)<\/p>/g)]
-      .find((match) => match[1].split(/\s+/).includes(className));
-    assert.ok(
-      paragraph && textOnly(paragraph[2]) === escapeHtml(projectHighlights[project.slug][field]),
-      `Home: ${project.title} ${field} is rendered as readable caption text`,
-    );
-  }
-  const media = preview.search(/class="[^"]*\bproject-preview\b[^"]*"/);
-  assert.ok(media >= 0 && caption.index > media, `Home: ${project.title} media precedes its caption`);
-  if (project.slug === "lumi-vr") {
-    assert.match(preview, /Research overview/i, "Lumi gallery cover is labeled as an overview");
-    assert.doesNotMatch(preview, /<img\b/i, "Lumi gallery does not imply approved clinical imagery");
-  } else {
-    const expectedImage = project.media.poster || project.media.src;
-    assert.ok(preview.includes(`src="${expectedImage}"`), `Home: ${project.title} uses the genuine supplied image`);
-    assert.match(
-      preview,
-      project.slug === "cinemascout" ? /In-headset capture/i : /Original project artwork/i,
-      `Home: ${project.title} media is accurately identified`,
-    );
-  }
+// The cursor-following frame duplicates row media and is hidden from assistive tech.
+assert.match(home, /<div class="wi-frame" aria-hidden="true"/, "Preview frame is decorative");
+assert.doesNotMatch(between(home, 'class="wi-frame"', 'class="selected-foot"') ?? "", /<a\b/, "No links inside the preview frame");
+// The lab paper is linked from the case study and never presented as the owner's authorship.
+const lumiPage = pages.get("/work/lumi-vr/");
+assert.ok(lumiPage.includes('href="https://doi.org/10.1109/TVCG.2026.3680730"'), "Lumi links the paper DOI");
+assert.match(lumiPage, /not (among the authors|an author)/, "Lumi paper attributed to the lab team");
+assert.match(lumiPage, /Diagram, not a screenshot/, "Lumi level diagram is labelled as a diagram");
+assert.doesNotMatch(between(lumiPage, 'class="wrap case-media"', "</figure>"), /<img\b/, "Lumi case media shows no image");
+
+// ─── Work ────────────────────────────────────────────────────────────────
+const work = pages.get("/work/");
+for (const p of other) {
+  assert.ok(work.includes(`id="${p.slug}"`), `Work: archive anchor ${p.slug}`);
+  assert.ok(has(work, p.summary), `Work: ${p.title} summary`);
+  for (const l of p.links) assert.ok(work.includes(`href="${escapeHtml(l.url)}"`), `Work: ${p.title} ${l.label}`);
 }
+assert.ok(has(work, bySlug("oculo").media.credit), "Work: Oculo scene credit");
+
+// ─── About ───────────────────────────────────────────────────────────────
 const about = pages.get("/about/");
-const aboutActions = divWithClass(about, "about-actions");
-assert.ok(aboutActions, "About: introduction actions");
-assertDevpostLink(aboutActions.content, "About introduction");
-for (const id of ["skills", "experience"])
-  assert.ok(about.includes(`id="${id}"`), `About: ${id} section`);
-for (const group of skillGroups) {
-  for (const field of ["title", "tools", "detail"])
-    assert.ok(about.includes(escapeHtml(group[field])), `About: ${group.title} ${field} is readable`);
-  for (const link of group.links)
-    assert.ok(
-      about.includes(`href="${escapeHtml(link.href)}"`),
-      `About: ${group.title} has its ${link.label} evidence link`,
-    );
+for (const id of ["experience", "education", "skills", "recognition", "documents"]) assert.ok(about.includes(`id="${id}"`), `About: ${id}`);
+for (const g of skillGroups) for (const l of g.links) assert.ok(about.includes(`href="${escapeHtml(l.href)}"`), `About: ${g.title} → ${l.label}`);
+for (const d of [profile.resume.primary, profile.resume.secondary]) {
+  assert.ok(about.includes(`href="${d.href}"`), `About: ${d.label}`);
+  assert.equal((await readFile(join(root, d.href))).subarray(0, 5).toString(), "%PDF-", `${d.href} is a PDF`);
 }
-for (const project of featured) {
-  const html = pages.get(`/work/${project.slug}/`);
-  const summary = html.search(/class="[^"]*\bcase-summary\b[^"]*"/);
-  const cover = html.search(/class="[^"]*\bcase-cover\b[^"]*"/);
-  const body = html.search(/class="[^"]*\bcase-body\b[^"]*"/);
-  const sidebar = html.search(/class="[^"]*\bcase-sidebar\b[^"]*"/);
-  const content = html.search(/class="[^"]*\bcase-content\b[^"]*"/);
-  assert.ok(cover >= 0 && body > cover, `${project.slug}: media precedes narrative`);
-  if (project.buildSteps) {
-    assert.ok(content > body && sidebar > content, `${project.slug}: build sequence precedes project information`);
-    assert.match(html, /<ol class="build-steps">/, `${project.slug}: semantic build sequence`);
-    for (const text of [...project.buildSteps, project.result])
-      assert.ok(html.includes(escapeHtml(text)), `${project.slug}: build steps and result rendered`);
-    for (const id of ["problem", "contribution", "engineering", "outcome"])
-      assert.ok(html.includes(`id="${id}"`), `${project.slug}: section anchors preserved`);
-    assert.equal(summary, -1, `${project.slug}: no duplicate ownership summary`);
-  } else {
-    assert.ok(summary >= 0 && sidebar > body && content > sidebar, `${project.slug}: original research layout retained`);
-    assert.ok(html.includes(escapeHtml(project.focus)), `${project.slug}: personal ownership readable`);
-    for (const field of ["contribution", "outcome"])
-      for (const text of project[field])
-        assert.ok(html.includes(escapeHtml(text)), `${project.slug}: substantive ${field} readable`);
-  }
-  if (project.statusNote)
-    assert.ok(html.includes(escapeHtml(project.statusNote)), `${project.slug}: current availability is disclosed`);
+
+// ─── Case studies ────────────────────────────────────────────────────────
+for (const p of featured) {
+  const html = pages.get(`/work/${p.slug}/`);
+  const media = html.indexOf('class="wrap case-media"');
+  const story = html.indexOf('class="case-story"');
+  assert.ok(media > 0 && story > media, `${p.slug}: media precedes story`);
+  for (const id of ["problem", "contribution", "engineering", "outcome", "demo"]) assert.ok(html.includes(`id="${id}"`), `${p.slug}: anchor #${id}`);
+  const texts = p.buildSteps ? [...p.buildSteps, p.result, p.statusNote] : [...p.contribution, ...p.outcome];
+  for (const t of texts) assert.ok(has(html, t), `${p.slug}: "${t.slice(0, 40)}…"`);
+  for (const f of p.facts) assert.ok(has(html, f.value), `${p.slug}: fact ${f.label}`);
+  for (const l of p.links) assert.ok(html.includes(`href="${escapeHtml(l.url)}"`), `${p.slug}: ${l.label}`);
 }
-assert.equal(profile.resume.primary.href, "/Vishnu_Bodapati_SWE_Resume.pdf");
-for (const document of [profile.resume.primary, profile.resume.secondary]) {
-  const bytes = await readFile(join(root, document.href));
-  assert.equal(bytes.subarray(0, 5).toString(), "%PDF-");
-}
-const luminance = (hex) => {
-  const channels = hex
-    .match(/[a-f\d]{2}/gi)
-    .map((h) => parseInt(h, 16) / 255)
-    .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
-  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+
+// ─── Styles: palette contrast, focus, reduced motion ────────────────────
+const css = await readFile("src/styles/site.css", "utf8");
+const token = (name) => css.match(new RegExp(`--${name}:\\s*#([0-9a-f]{6})`, "i"))?.[1];
+const lum = (hex) => {
+  const [r, g, b] = hex.match(/../g).map((h) => parseInt(h, 16) / 255).map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
-// Foreground, secondary copy and links are used on each of these surfaces.
-const textColors = ["f5f7fa", "a2adbd", "669fff"];
-const surfaces = ["0b0f19", "101622", "171f2e"];
-const contrastPairs = [
-  ...surfaces.flatMap((background) => textColors.map((foreground) => [foreground, background])),
-  ["f5f7fa", "245bd7"],
-  ["f5f7fa", "1d4fbd"],
-];
-const css = await readFile("src/index.css", "utf8");
-const cssColors = new Set(
-  [...css.matchAll(/#([a-f\d]{6}|[a-f\d]{3})\b/gi)].map((match) => {
-    const hex = match[1].toLowerCase();
-    return hex.length === 3 ? [...hex].map((channel) => channel.repeat(2)).join("") : hex;
-  }),
-);
-for (const color of new Set(contrastPairs.flat()))
-  assert.ok(cssColors.has(color), `Contrast palette is present in current CSS: #${color}`);
-for (const [fg, bg] of contrastPairs) {
-  const values = [luminance(fg), luminance(bg)].sort((a, b) => b - a);
-  assert.ok(
-    (values[0] + 0.05) / (values[1] + 0.05) >= 4.5,
-    `Text contrast ${fg}/${bg}`,
-  );
+const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+const pairs = [["ink", "wall"], ["graphite", "wall"], ["ink", "accent"], ["wall", "ink"], ["on-ink-muted", "ink"], ["lamp", "ink"]];
+for (const [fg, bg] of pairs) {
+  assert.ok(token(fg) && token(bg), `token --${fg} / --${bg}`);
+  assert.ok(ratio(token(fg), token(bg)) >= 4.5, `contrast --${fg} on --${bg}: ${ratio(token(fg), token(bg)).toFixed(2)}`);
 }
-assert.match(css, /prefers-reduced-motion/);
+assert.match(css, /prefers-reduced-motion: reduce/);
 assert.match(css, /:focus-visible/);
-assert.match(css, /\bcolor-scheme\s*:\s*dark\b/);
-assert.doesNotMatch(css, /\bcolor-scheme\s*:\s*light\b/);
-const homeAssets = [...new Set([...pages.get("/").matchAll(/(?:href|src)="(\/_app\/[^\"]+)"/g)].map(m => m[1]))];
-const compressed = { js: 0, css: 0 };
-for (const asset of homeAssets) {
-  const type = asset.endsWith(".js") ? "js" : asset.endsWith(".css") ? "css" : null;
-  if (type) compressed[type] += gzipSync(await readFile(join(root, asset))).length;
+
+// ─── Weight of the homepage ──────────────────────────────────────────────
+const assets = [...new Set([...home.matchAll(/(?:href|src)="(\/_app\/[^"]+)"/g)].map((m) => m[1]))];
+const size = { js: 0, css: 0 };
+for (const a of assets) {
+  const type = a.endsWith(".js") ? "js" : a.endsWith(".css") ? "css" : null;
+  if (type) size[type] += gzipSync(await readFile(join(root, a))).length;
 }
-assert.ok(compressed.js > 0 && compressed.js < 100 * 1024, "Home JS budget: 100 KiB gzip");
-assert.ok(compressed.css > 0 && compressed.css < 10 * 1024, "Home CSS budget: 10 KiB gzip");
-console.log(`Home referenced JS: ${(compressed.js / 1024).toFixed(1)} KiB gzip; CSS: ${(compressed.css / 1024).toFixed(1)} KiB gzip (fonts, HTML and media separate).`);
-console.log(
-  `PASS: ${routes.length} prerendered routes with dark document/browser themes, ${checkedLinks} local links/assets, ${devpostPlacements} exact Devpost profile placements with external-link attributes, visible intro recruiter actions, ${previews.length} gallery projects with readable roles and honest media, About skill evidence, case-study reading order and personal contributions/results, resume PDFs, ${contrastPairs.length} text-contrast pairs, reduced motion and focus styles.`,
-);
-console.log(
-  "Browser checks (responsive layout, keyboard and video) are separate; see docs/verification.md.",
-);
+assert.ok(size.js > 0 && size.js < 80 * 1024, "Home JS under 80 KiB gzip");
+assert.ok(size.css > 0 && size.css < 10 * 1024, "Home CSS under 10 KiB gzip");
+
+console.log(`Home JS ${(size.js / 1024).toFixed(1)} KiB, CSS ${(size.css / 1024).toFixed(1)} KiB (gzip).`);
+console.log(`PASS: ${routes.length} routes, ${checkedRefs} local references, ${featured.length} features, ${other.length} archive entries, ${pairs.length} contrast pairs.`);

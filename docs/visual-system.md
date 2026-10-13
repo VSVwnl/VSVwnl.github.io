@@ -1,30 +1,27 @@
 # Portfolio visual system
 
-Implemented October 6, 2026. The existing React/Vite routes and project evidence are retained.
+Implemented October 13, 2026 on the `portfolio-redesign` branch. It replaces the October 6 dark grid system. The principles are summarised in `CLAUDE.md`, and this file records the reasoning.
 
-## Structure
+## Diagnosis of the previous design
 
-- `src/components/Page.jsx`: shared site shell, header, accessible main and footer.
-- `src/pages/HomePage.jsx`: asymmetric introduction and current-work panel; indexed project grid.
-- `src/components/ProjectFeatures.jsx`: project index/category, genuine media, role, purpose and compact technology row.
-- `src/index.css`: replacement token-based visual system covering home, work, about, case studies and navigation.
+- The headline was a list of categories ("XR tools, VR gameplay, and web apps.") and competed with a numbered "Currently / 01" panel of equal weight.
+- Four projects sat in identical bordered cells. The only real footage (CinemaScout) was shrunk to about 470px, while two 333px title cards floated in empty dark boxes.
+- Everything was set in Inter at similar weights. Labels were 11px uppercase monospace, and section headings (25px) were barely larger than project titles (22px).
+- A generic SaaS blue accent clashed with the warm project footage, and every block slid up 12px on scroll.
 
-## Design rules
+## Direction
 
-- Near-black `#0b0f19`, white `#f5f7fa`, secondary `#a2adbd`, blue accent `#669fff`.
-- Blue CTA fills use darker shades for readable white text.
-- Inter headings/body; system monospace for labels and project metadata.
-- Square corners, one-pixel borders, no gradients or drop shadows.
-- Existing project artwork retains its original colors; it is not part of the UI accent palette.
-- Mobile collapses the grids; concise case narratives precede their information panels.
-- Native links, visible focus, reduced-motion support and the existing Escape-to-close menu remain intact.
+The page is a light wall and the work is the screen. Project media sits in ink bands, like a monitor in a studio, so it reads as the main thing on the page. The palette is taken from the assets themselves: the plaster of the reconstructed house and the studio wall in the portrait, plus the olive of the portrait's knit.
 
-## Verification
+Archivo's width axis supplies the voice. Condensed for display, it echoes film title cards (one of the projects is a cinematography tool). At normal width it's used for reading. There are no eyebrows, mono labels, gradients, glows, glass panels or identical cards.
 
-- Production build and site verification passed; all seven motion tests passed.
-- All seven routes checked at 375, 768 and 1440 CSS pixels: no horizontal overflow, one H1 per page.
-- Mobile menu opens and closes; Escape restores focus to the toggle.
-- Browser console inspection returned no errors during the route review.
-- Static verification covers local links/assets, resume PDFs, 16 Devpost placements and 11 text-contrast combinations.
+The signature interaction is CinemaScout's Scene/Shot toggle. Both views come from a single 2042×1080 frame of the source recording at 1:16, extracted with ffmpeg and encoded to WebP (960/1440/2042) and JPEG (1440) with sharp. Scene annotates the virtual camera rig. Shot scales the frame 1.95× about the monitor, darkens the rest with an SVG matte, and adds frame-line corner marks. The caption states exactly what each view shows. Geometry constants live at the top of `src/components/ShotFrame.jsx`. If the still is replaced, re-measure them.
 
-Changes are local. No publication or deployment was performed for this revamp.
+## References consulted
+
+- rauno.me: the identity sentence as composed typography. Inspected visually.
+- emilkowal.ski and "You don't need animations": direct copy, and animating only purposeful, user-triggered changes. Inspected visually and read.
+- brittanychiang.com: readable experience and project information. Text and structure only; the page rendered blank in the capture tool.
+- lusion.co: the work as the visual. Text and structure only; its WebGL canvas didn't render in the capture tool.
+
+These are principles only. No layout was copied.

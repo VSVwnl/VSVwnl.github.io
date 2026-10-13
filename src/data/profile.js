@@ -1,8 +1,8 @@
 // ─── Identity and site-wide content ──────────────────────────────────────────
 
 export const profile = {
-  name: "Vishnu Sai Bodapati",
-  shortName: "Vishnu Sai Bodapati",
+  name: "Vishnu Sai Vardhan Bodapati",
+  shortName: "Vishnu Sai Vardhan Bodapati",
   role: "Software Engineer",
   headline: "Real-time systems, spatial tools, and games.",
   intro:
@@ -28,14 +28,6 @@ export const profile = {
   },
 };
 
-export const nav = [
-  { label: "Projects", href: "/work/" },
-  { label: "About", href: "/about/" },
-  { label: "Resume", href: profile.resume.primary.href, download: true },
-  { label: "Devpost", href: profile.devpost, external: true },
-  { label: "Contact", href: "#contact" },
-];
-
 export const socials = [
   { label: "Email", href: `mailto:${profile.email}`, handle: profile.email },
   { label: "GitHub", href: "https://github.com/VSVwnl", handle: "@VSVwnl" },
@@ -52,17 +44,12 @@ export const socials = [
   },
 ];
 
-// ─── Home: brief personal introduction (40-70 words) ─────────────────────────
-
-export const homeIntro =
-  "Most of my work sits between a technical system and a person who has to use it in the air in front of them. That means building the interaction, then spending just as long on whether it feels legible, comfortable and steady enough to trust — in a hospital room, a headset, or a hackathon demo.";
-
 // ─── About ───────────────────────────────────────────────────────────────────
 
 export const about = {
   story: [
-    "I'm a software engineer working on XR tools, games, and AI-assisted web applications. My projects range from camera planning in VR to a mixed reality physics sandbox and a game built for Playdate.",
-    "I'm pursuing an M.Eng in Game Design, Development and Innovation at Duke, with expected graduation in May 2027. At the Duke I³T Lab, I build VR gameplay for ICU rehabilitation research. Before that I studied Computer Science with a focus on game and mobile development at the University of Wollongong.",
+    "I'm a software engineer working on spatial computing, games, and AI-assisted web applications. On hackathon teams I've helped build shot planning inside 3D scans of real places, a mixed reality physics sandbox, and an AI web app for Team USA fans. On my own, I made a game for Playdate.",
+    "I'm an M.Eng student in Game Design, Development and Innovation at the Pratt School of Engineering at Duke University, with expected graduation in May 2027. At the Duke I³T Lab, I build seated VR gameplay for ICU rehabilitation research. Before that I studied Computer Science with a focus on game and mobile development at the University of Wollongong.",
     "At the lab, I focus on seated interactions, calibration, and reliable session flows. In my other projects, I've worked on virtual cameras, physics editing tools, gameplay systems, and server-side AI integrations.",
   ],
 

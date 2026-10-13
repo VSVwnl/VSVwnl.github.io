@@ -32,6 +32,25 @@ export const projects = [
     recognition:
       "Two first-place category awards and one runner-up at Worlds in Action Hack [02-LA]",
 
+    // Homepage feature. Role wording keeps personal work (camera system, shot
+    // playback) separate from contributions to team features (AI, WebSpatial).
+    feature: {
+      pitch:
+        "A VR tool for planning film shots inside a 3D scan of a real location.",
+      byline: "Unity / XR developer on a team of three",
+      highlight: "Two first-place category awards and one runner-up at Worlds in Action Hack [02-LA]",
+      what: "Scouting a location usually means travelling to it. CinemaScout loads a Gaussian Splat reconstruction of the place at real-world scale, so filmmakers can walk it in a headset, set up virtual cameras and preview a tracking shot before anyone visits.",
+      role: "Unity / XR developer on a team of three. I built the virtual camera system (focal length, field of view, aspect ratio, height and clipping) and the spline-based shot playback, and contributed to the AI shot recommendations and the WebSpatial planning dashboard.",
+      challenge:
+        "Keeping everything at true scale. An 85 mm framing in the headset is only useful if it matches an 85 mm lens on location, so the reconstruction and the virtual camera both work at real-world scale rather than as a loose previz.",
+      evidenceIntro: "Team awards at Worlds in Action Hack [02-LA], July 2026:",
+      evidence: [
+        "First place, Best Spatial Reconstruction Project (XGRIDS)",
+        "First place, Best App Running on Emulator (PICO)",
+        "Runner-up, Best Interactive World Experience (World Labs)",
+      ],
+    },
+
     media: {
       kind: "video",
       poster: "/Assets/profile/cinemascout.jpg",
@@ -53,7 +72,6 @@ export const projects = [
     ],
 
     buildSteps: [
-      "A reconstructed room needed camera tools before it could support shot planning.",
       "Built the Unity application for exploring Gaussian Splat reconstructions at real-world scale.",
       "Added virtual camera controls for focal length, field of view, aspect ratio, height, and clipping.",
       "Turned saved camera positions into spline-based tracking shots with adjustable duration and easing.",
@@ -86,6 +104,19 @@ export const projects = [
     roleLine: "Unity and XR development — core interaction systems",
     recognition: "1st place at DesignXR Hackathon 2026",
 
+    feature: {
+      pitch:
+        "A mixed reality physics sandbox for Meta Quest: build a scene in your room, then run it.",
+      byline: "Unity / XR developer on core interaction systems",
+      highlight: "1st place, Grand Winner, DesignXR Hackathon 2026",
+      what: "Physics scenes are usually built on a flat screen and imagined at full size. MR Blueprint puts the editor in the room: spawn and arrange objects, set their physics properties, then switch to Simulate and watch the same space run.",
+      role: "Unity / XR developer on core interaction systems. I built object spawning, selection and move, rotate and scale controls, the world-space inspector panels, and the Edit and Simulate workflows, and contributed to MX Ink Draw Mode and PhysicsLens.",
+      challenge:
+        "Keeping editing predictable. An object being dragged should never also be falling, so Edit and Simulate are separate, explicit modes, at the cost of one extra switch.",
+      evidenceIntro: "Team result:",
+      evidence: ["1st place, Grand Winner, DesignXR Hackathon 2026"],
+    },
+
     // Only a title-card graphic exists for this project, at 333x222. It is not
     // a screenshot of the tool. Flagged in `gaps`; the demo video is linked so a
     // reader can still see the thing working.
@@ -106,7 +137,6 @@ export const projects = [
     ],
 
     buildSteps: [
-      "The sandbox needed a way to build scenes before users could experiment with physics.",
       "Built object spawning, selection, and move, rotate, and scale controls in C#.",
       "Added world-space inspector panels for editing object and physics properties.",
       "Built separate Edit and Simulate workflows for setting up scenes and running them.",
@@ -140,8 +170,33 @@ export const projects = [
     roleLine: "Research assistant at the Duke I³T Lab, working on VR gameplay",
     recognition: null,
 
-    // No approved gameplay, environment or interaction asset exists in this
-    // repository. Rendering a neutral panel rather than inventing a screenshot.
+    feature: {
+      pitch:
+        "A seated VR rhythm game for upper-body rehabilitation in the ICU, built at the Duke I³T Lab.",
+      byline: "Research assistant at the Duke I³T Lab",
+      highlightLabel: "Status",
+      highlight: "In active development; the lab’s study is published in IEEE TVCG",
+      what: "Patients in intensive care need to keep moving but are often confined to bed. In Lumi they move their hands in time with music to catch lines flying towards them, across four levels that progress from wrist turns to overhead reaches, guided by a character called Lumi.",
+      role: "Research assistant since October 2025, working with researchers and developers. I implement Unity / C# gameplay mechanics, tutorial and calibration flows and interaction feedback, and work on frame-rate stability and repeated-session reliability.",
+      challenge:
+        "Every patient can move differently on a given day. A calibration step sets each patient’s own movement boundaries before play, and the game has to behave the same way session after session so it can be used for research.",
+      evidenceLabel: "Publication",
+      evidenceIntro: "Published by the lab team (I’m not among the authors):",
+      evidence: [
+        "Eom et al., “Rhythms of Recovery: Patient-Centered Virtual Reality Exergame for Physical Rehabilitation in the Intensive Care Unit,” IEEE TVCG, May 2026",
+      ],
+      // Level design as published in the paper's Table 1. Drawn as a diagram
+      // on the site; the paper's own figures are IEEE-copyrighted.
+      levels: [
+        { movement: "Wrist", bpm: 77, hold: "4–6" },
+        { movement: "Lateral", bpm: 105, hold: "6–8" },
+        { movement: "Bilateral", bpm: 112, hold: "8–10" },
+        { movement: "Overhead", bpm: 140, hold: "10–12" },
+      ],
+    },
+
+    // No approved gameplay capture is cleared for this site; the level diagram
+    // stands in. Don't reuse the paper's figures (IEEE copyright).
     media: { kind: "none" },
 
     facts: [
@@ -155,6 +210,7 @@ export const projects = [
       },
       { label: "Status", value: "Oct 2025 — present, in active development" },
       { label: "Platform", value: "Meta Quest 3 · Unity" },
+      { label: "Publication", value: "IEEE TVCG, May 2026 (lab team)" },
     ],
 
     problem: [
@@ -171,8 +227,9 @@ export const projects = [
     ],
 
     howItWorks: [
-      "The Unity application runs on Meta Quest 3. My interaction work starts from seated or fixed-position use and constrained movement, with attention to clear feedback and patient comfort.",
-      "Tutorial and calibration flows, testing, and repeated-session reliability are part of the research workflow. This public overview describes those design priorities without showing a patient, a clinical interface, or study data.",
+      "Lumi is a seated rhythm game built in Unity for Meta Quest 3. The patient moves their hands in time with music to catch lines flying towards them on a calm beach. Quest 3 body tracking follows the hands, elbows and shoulders, so nothing has to be held, and clinicians watch the session on a cast screen.",
+      "A session starts with calibration: the patient rests their hands, then reaches up and out, which sets their personal movement boundaries. After a short tutorial they play four two-minute levels that progress from wrist movements to lateral, bilateral and overhead reaches, while Lumi, the guide character, gives instructions and encouragement.",
+      "This description follows the lab’s published paper (Eom et al., IEEE TVCG, 2026).",
     ],
 
     decisions: [
@@ -191,15 +248,56 @@ export const projects = [
     ],
 
     outcome: [
-      "Lumi is in active development at the Duke I³T Lab and is used as a research application. No clinical results, patient outcomes or validation are claimed here.",
+      "The lab team published a peer-reviewed study of the game in IEEE Transactions on Visualization and Computer Graphics (May 2026). It was evaluated first with healthy participants paired with healthcare professionals or students, then with 18 cardiothoracic ICU patients. The authors report high enjoyment without discomfort, and larger, faster upper-body movement as levels progressed, without excessive cardiovascular responses.",
+      "I’m not an author of that paper, and its results belong to the research team. My work is on the ongoing development of the application.",
       "Separately, integration paths for 3D Gaussian Splatting and AI-generated scenes are being evaluated as a way to build richer therapy environments. That work is exploratory and is not part of the baseline application.",
     ],
 
     tech: ["Unity", "C#", "Meta Quest 3", "XR Interaction Toolkit", "URP"],
-    links: [],
+    links: [
+      {
+        label: "Read the paper (IEEE TVCG)",
+        url: "https://doi.org/10.1109/TVCG.2026.3680730",
+      },
+    ],
   },
 
   /* ─── Remaining work ─────────────────────────────────────────────────── */
+
+  {
+    slug: "oculo",
+    title: "Oculo",
+    category: "Spatial cinematography · iPhone",
+    featured: false,
+    summary:
+      "An iPhone app for planning shots inside photorealistic 3D scenes: compose with real lens controls, save annotated shots, plan keyframed camera moves and export a printable shot plan.",
+    roleLine: "Co-developer with Skylar Knight",
+    recognition: null,
+    // Simulator capture from the public repository. The Pantheon scene is a
+    // third-party Gaussian Splat under CC BY 4.0, so its credit travels with it.
+    media: {
+      kind: "image",
+      src: "/Assets/profile/oculo-compose",
+      width: 1179,
+      height: 2556,
+      alt: "Oculo on iPhone: composing a 16:9 shot of the Pantheon interior at 35 mm, f/2.8, focus 3 m, with focal length and focus sliders below.",
+      credit: "Scene: The Pantheon Interior by artfletch, CC BY 4.0",
+    },
+    facts: [
+      { label: "Role", value: "Co-developer with Skylar Knight" },
+      { label: "Context", value: "RevenueCat Shipaton 2026 submission" },
+      { label: "Date", value: "September — October 2026" },
+      { label: "Platform", value: "iPhone · Capacitor · React · Three.js" },
+    ],
+    tech: ["TypeScript", "React", "Vite", "Capacitor", "Three.js", "Spark", "IndexedDB", "RevenueCat"],
+    links: [
+      { label: "View source", url: "https://github.com/skylarhknight/Oculo" },
+      {
+        label: "View on Devpost",
+        url: "https://devpost.com/software/oculo-mwnf3v",
+      },
+    ],
+  },
 
   {
     slug: "draft-usa",
@@ -215,6 +313,19 @@ export const projects = [
     roleLine: "Full-stack and product contributor on a hackathon team",
     recognition:
       "Winner — Honorable Mention, Team USA × Google Cloud Hackathon",
+
+    feature: {
+      pitch:
+        "A web app for building a Team USA roster, with AI suggestions that explain themselves.",
+      byline: "Full-stack and product contributor",
+      highlight: "Honorable Mention, Team USA × Google Cloud Hackathon",
+      what: "Fans build a Team USA roster and get Gemini-powered roster analysis and next-pick suggestions, each with an explanation, as a way to discover athletes.",
+      role: "Full-stack and product contributor on a hackathon team. I built the server-side Gemini integrations for roster analysis, scout recommendations and next-pick guidance, and contributed to the draft-room dashboards, roster views and explanation flows.",
+      challenge:
+        "Keeping the recommendations honest. Scores and suggestions are framed as athlete discovery, never as medal predictions or betting advice.",
+      evidenceIntro: "Team result:",
+      evidence: ["Winner — Honorable Mention, Team USA × Google Cloud Hackathon"],
+    },
     media: {
       kind: "image",
       src: "/Assets/profile/draftusa.png",
@@ -229,7 +340,6 @@ export const projects = [
       { label: "Platform", value: "Web · Gemini · Google Cloud Run" },
     ],
     buildSteps: [
-      "Roster suggestions needed context and explanations that fans could follow.",
       "Built server-side Gemini integrations for roster analysis, scout recommendations, and next-pick guidance.",
       "Added explanation flows to show the reasoning behind suggestions.",
       "Contributed to draft-room dashboards, roster views, hometown hubs, and Momentum Score breakdowns.",
@@ -446,11 +556,13 @@ export const featured = [
   "mr-blueprint",
   "draft-usa",
 ].map((slug) => projects.find((p) => p.slug === slug));
+// Archive order: spatial work first, then the remaining projects as listed.
+const archiveOrder = ["oculo", "hungry-owl"];
+const rank = (p) =>
+  archiveOrder.includes(p.slug) ? archiveOrder.indexOf(p.slug) : archiveOrder.length;
 export const other = projects
   .filter((p) => !p.featured)
-  .sort((a, b) =>
-    a.slug === "hungry-owl" ? -1 : b.slug === "hungry-owl" ? 1 : 0,
-  );
+  .sort((a, b) => rank(a) - rank(b));
 
 export const bySlug = (slug) => projects.find((p) => p.slug === slug);
 
@@ -462,7 +574,7 @@ export const hasCaseStudy = (p) => Boolean(p.featured);
  * than getting quietly invented. Surfaced in the handoff, not on the site.
  */
 export const gaps = [
-  "Lumi VR needs lab-approved media before real clinical imagery can be published. A typographic research cover is used instead; generated scenes remain exploratory.",
+  "Lumi VR has no capture cleared for this site. The published paper's figures are IEEE-copyrighted, so a level diagram drawn from its Table 1 is used instead. The paper's demo video link (tinyurl.com/yn76b4rb) is not linked pending the owner's OK.",
   "MR Blueprint's only image is a 333x222 title card, not a screenshot of the tool in use. The demo video is linked instead.",
   "Draft USA's local image is a 333x222 title card, not an application screenshot. A sharp dashboard capture would strengthen the case study.",
   "Most archive projects have no approved media; they intentionally stay text-led rather than being illustrated with invented screenshots.",
@@ -470,5 +582,6 @@ export const gaps = [
   "Draft USA's Cloud Run endpoint returns HTTP 500. The recorded demo and source repository are linked instead.",
   "DevStudio Top 50 is supported by the supplied resumes but has not been independently verified from a public result page. Inconsistent participant/team counts are omitted.",
   "Meteor Mayhem has no date in the CV, so none is shown.",
+  "Oculo is described as co-developed with Skylar Knight, without a per-feature split, at the owner's request.",
   "CinemaScout's Devpost URL contains profanity in its slug; it is linked because it is the verifiable award evidence.",
 ];

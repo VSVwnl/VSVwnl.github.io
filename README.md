@@ -1,6 +1,6 @@
-# Vishnu Sai Bodapati — Portfolio
+# Vishnu Sai Vardhan Bodapati — Portfolio
 
-Software engineering portfolio, with selected work across XR, games and applied AI.
+Spatial computing, VR research and games.
 
 Live: [vsvwnl.github.io](https://vsvwnl.github.io/)
 
@@ -10,50 +10,31 @@ Node 22 recommended.
 
 ```sh
 npm ci
-npm run dev
-npm run build
-npm test
-npm run preview
+npm run dev       # development server
+npm run build     # production build + prerender into dist/
+npm test          # static checks on dist/ (run after build)
+npm run og        # regenerate the social card and touch icon
 ```
 
-`npm run build` generates seven static routes and prerenders their React content so the portfolio is readable before JavaScript loads. React hydrates the mobile menu, click-to-play demo and restrained viewport motion. Skills and project evidence use ordinary links. No backend, secrets or client-side routing workaround.
+`npm run build` emits seven real routes (home, work, about and four case studies) and prerenders their React content, so every page is readable before JavaScript loads and direct links work on GitHub Pages. React then hydrates the one interactive piece: the CinemaScout scene/shot viewer and its click-to-play demo video.
 
-## Content and structure
+## Structure
 
-- `src/data/projects.js`: four featured case studies plus the curated archive.
-- `src/data/profile.js`: identity, biography, contact links and resume destinations.
-- `src/data/experience.js`: experience and education.
-- `src/data/recruiter.js`: short gallery descriptions and role labels, contribution summaries, and grouped skills with evidence links.
-- `src/pages/`: a short Home gallery, full Work archive, About background and skills, and reusable CaseStudy.
-- `src/components/`: shared page shell, visual project gallery entries, project media and archive.
-- `src/index.css`: responsive typography, layout, color tokens, focus and reduced motion.
-- `src/entries/` and matching root HTML documents: the seven route entry points.
-- `scripts/prerender.mjs`: build-time HTML rendering using the same React components.
-- `scripts/verify-site.mjs`: route, asset, data and accessibility invariants.
-- `src/lib/page-motion.js`: one-time, visible-by-default viewport motion with live reduced-motion and keyboard-focus handling.
-- `scripts/page-motion.test.mjs`: regression tests for motion, cleanup and fallback behavior.
-- `scripts/audit-links.mjs`: optional public-link availability check (`node scripts/audit-links.mjs` after building); not run in CI.
-- `scripts/generate-og.mjs`: regenerate social SVG/PNG and touch icon via `npm run og`.
+- `src/data/projects.js`: every project. Featured projects carry a `feature` block (pitch, what it does, my part, the hard part, evidence) used on Home and the case studies. `gaps` lists what is deliberately missing.
+- `src/data/profile.js`, `experience.js`, `skills.js`: identity, links, resumes, experience, education, and skill groups linked to project evidence.
+- `src/pages/`: Home, Work, About and the shared CaseStudy template.
+- `src/components/`: `Layout` (header, footer), `Feature`, `ProjectMedia` (scene/shot viewer, Lumi constraints panel, title cards) and `ShotFrame`.
+- `src/styles/site.css`: tokens, type and every layout.
+- `scripts/prerender.mjs`: build-time rendering of the same components.
+- `scripts/verify-site.mjs`: route, link, asset, content-honesty, contrast and weight checks.
+- `scripts/audit-links.mjs`: optional external-link check; not run in CI.
 
-The stack remains React, Vite, Tailwind CSS and Lucide. Sharp is development-only, used for social assets. Compiled assets use `_app/` to avoid a case-only collision with the existing `public/Assets/` directory on Windows.
+Design principles and editing rules are in [CLAUDE.md](CLAUDE.md). The design rationale is in [docs/visual-system.md](docs/visual-system.md), and evidence for each claim is in [docs/content-evidence.md](docs/content-evidence.md).
 
-The visual direction is a sparse charcoal gallery with warm text and a muted sage accent. Home introduces Vishnu and four selected projects through visual previews, short purpose descriptions and personal-role captions. Each case study opens with project media, then pairs the contribution narrative with a compact information sidebar. Experience, education and skills live on About; the complete project archive lives on Work.
+## Documents
 
-## Editing work and documents
-
-Personal contributions and team results are separate fields. Keep both grounded in supplied material or public evidence. New case studies also need an HTML entry, a React entry, a Vite input and a prerender route. Ordinary archive entries need only project data; skill links may point directly to their archive anchors.
-
-The navigation downloads `public/Vishnu_Bodapati_SWE_Resume.pdf`, the supplied general-purpose resume. About also offers the older extended CV at `public/Vishnu_Bodapati_CV.pdf`. Do not replace the primary download with a company-tailored file.
-
-See [content evidence](docs/content-evidence.md) for the combined-resume source policy, verified awards, external evidence and precise remaining asset gaps. See [verification](docs/verification.md) for testing coverage.
-
-The [September 30 reference-inspired redesign notes](docs/reference-inspired-redesign-2026-09-30.md) describe the current visual direction and verification. The [earlier September 30 redesign](docs/recruiter-redesign-2026-09-30.md) and [September 28 audit](docs/audit-2026-09-28.md) are historical records of previous designs.
+The navigation downloads `public/Vishnu_Bodapati_SWE_Resume.pdf`, the general-purpose resume. About also offers the older extended CV, `public/Vishnu_Bodapati_CV.pdf`. Both are the supplied files, unchanged.
 
 ## Deployment
 
-The existing `.github/workflows/deploy.yml` runs on pushes to `main`:
-install → production build/prerender → static checks → upload `dist/` → GitHub Pages.
-
-Each route has a real `index.html`, so direct navigation and refresh work on GitHub Pages. The user-site base is `/`.
-
-Private resume extraction and local screenshots live under ignored `verify-shots/`; they are not shipped. Preserve the user's separately supplied planning notes at the repository root.
+`.github/workflows/deploy.yml` runs on pushes to `main`: install → build/prerender → `npm test` → upload `dist/` → GitHub Pages. Each route has a real `index.html`, so direct navigation and refresh work. Source captures (`*.mov`) and local screenshots (`verify-shots/`) are gitignored and are not shipped.

@@ -1,55 +1,95 @@
-import { ArrowRight } from "lucide-react";
-import Page from "../components/Page.jsx";
-import ProjectFeature from "../components/ProjectFeatures.jsx";
-import { featured } from "../data/projects.js";
-import { profile } from "../data/profile.js";
+import Layout from "../components/Layout.jsx";
+import WorkIndex from "../components/WorkIndex.jsx";
+import { featured, other } from "../data/projects.js";
+import { profile, socials } from "../data/profile.js";
+
+const linkedin = socials.find((s) => s.label === "LinkedIn");
+
+function Intro() {
+  return (
+    <header className="wrap hero">
+      <div className="hero-head">
+        <p className="hero-kicker">Vishnu Sai Bodapati · Software Engineer</p>
+        <h1 className="hero-title">
+          <span className="hero-statement">
+            {/* Each line is masked for the load reveal; the text is one sentence. */}
+            <span className="hero-line"><span>Building experiences</span></span>{" "}
+            <span className="hero-line"><span>you can step into.</span></span>
+          </span>
+        </h1>
+      </div>
+      <div className="hero-side">
+        <p>
+          I’m Vishnu, a software engineer building spatial tools, games, and interactive
+          experiences. At Duke’s I³T Lab, I develop VR interactions for ICU
+          rehabilitation research.
+        </p>
+        <ul className="hero-links">
+          <li>
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          </li>
+          <li>
+            <a href="https://github.com/VSVwnl" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </li>
+          <li>
+            <a href={linkedin.href} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </li>
+          <li>
+            <a href={profile.devpost} target="_blank" rel="noopener noreferrer">Devpost</a>
+          </li>
+        </ul>
+      </div>
+      <div className="hero-photo">
+        <picture>
+          <source
+            type="image/webp"
+            srcSet="/Assets/profile/vishnu-duke-480.webp 480w, /Assets/profile/vishnu-duke-960.webp 960w"
+            sizes="(min-width: 900px) 22vw, 300px"
+          />
+          <img
+            src="/Assets/profile/vishnu-duke-960.jpg"
+            alt="Vishnu, arms crossed, on a terrace at Duke with the chapel tower behind him."
+            width={960}
+            height={1200}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
+        <a className="disc hero-disc" href={profile.resume.primary.href} download>
+          <span>
+            Resume
+            <small>PDF</small>
+          </span>
+        </a>
+      </div>
+    </header>
+  );
+}
 
 export default function HomePage() {
   return (
-    <Page>
-      <div className="stage">
-        <header className="home-intro" aria-labelledby="intro-title">
-          <div className="intro-main">
-          <p className="eyebrow">Software engineer / Portfolio</p>
-          <p className="intro-name">Vishnu Sai Bodapati</p>
-          <h1 id="intro-title">XR tools, VR gameplay, and web apps.</h1>
-          <p className="intro-description">I build with Unity, C#, TypeScript, and Next.js. My work includes planning camera shots inside reconstructed locations, building seated VR interactions for rehabilitation research, and connecting roster analysis to a web app. At Duke’s I³T Lab, I work on gameplay, calibration, and reliable research sessions.</p>
-          <div className="intro-links">
-            <a className="intro-primary" href={profile.resume.primary.href} download>Resume ↓</a>
-            <a href={`mailto:${profile.email}`}>Email</a>
-            <a href="https://github.com/VSVwnl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-            <a href={profile.devpost} target="_blank" rel="noopener noreferrer">Devpost ↗</a>
-          </div>
-          </div>
-          <aside className="intro-panel" aria-label="Current work and education">
-            <p className="eyebrow">Currently / 01</p>
-            <h2>Duke I³T Lab</h2>
-            <p>Research assistant<br />VR gameplay & rehabilitation</p>
-            <dl className="intro-facts">
-              <div><dt>Working with</dt><dd>Unity / C# / Meta Quest</dd></div>
-              <div><dt>Education</dt><dd>Duke M.Eng.<br />Expected May 2027</dd></div>
-            </dl>
-            <a className="text-link" href="/work/lumi-vr/">View research work <ArrowRight size={16} aria-hidden="true" /></a>
-          </aside>
-        </header>
-        <section id="work" className="work-section" aria-labelledby="work-title">
-          <div className="section-heading">
-            <h2 id="work-title"><span className="section-number" aria-hidden="true">01 /</span> Selected projects</h2>
-            <a href="/work/" className="text-link">All projects <ArrowRight size={16} aria-hidden="true" /></a>
-          </div>
-          <div className="featured-grid">
-            {featured.map((project, index) => <ProjectFeature key={project.slug} project={project} index={index} />)}
-          </div>
-        </section>
-        <section className="home-about" aria-labelledby="about-title">
-          <img src="/Assets/profile/vishnu-headshot.jpg" alt="Vishnu Sai Bodapati" width={1066} height={1600} loading="lazy" decoding="async" />
-          <div>
-            <h2 id="about-title">A little about me</h2>
-            <p>I’m pursuing an M.Eng. at Duke, where I also develop VR rehabilitation gameplay at the I³T Lab. Before Duke, I studied Computer Science at the University of Wollongong.</p>
-            <a href="/about/" className="text-link">More about me <ArrowRight size={16} aria-hidden="true" /></a>
-          </div>
-        </section>
-      </div>
-    </Page>
+    <Layout>
+      <Intro />
+      <section id="work" className="wrap selected" aria-labelledby="work-title">
+        <div className="selected-head">
+          <h2 id="work-title">Selected work</h2>
+        </div>
+        <WorkIndex projects={featured} />
+        <div className="selected-foot">
+          <p>
+            Also {other.slice(0, 3).map((p, i) => (
+              <span key={p.slug}>
+                {i > 0 && ", "}
+                <a href={`/work/#${p.slug}`}>{p.title}</a>
+              </span>
+            ))}
+            , and {other.length - 3} more games, prototypes and web projects.
+          </p>
+          <a className="disc disc-outline" href="/work/">
+            <span>All work</span>
+          </a>
+        </div>
+      </section>
+    </Layout>
   );
 }
