@@ -1,5 +1,22 @@
 # Verification
 
+## October 13, 2026 redesign (current)
+
+Automated:
+
+- `npm run build` then `npm test` pass. The rewritten `scripts/verify-site.mjs` checks 7 routes, 173 local references (links, fragments, src/srcset/poster), one h1 and a prerendered main on every page, canonical URLs, the light theme declarations, unique IDs, nav and footer destinations, `rel` on new-tab links, image alt and dimensions, and that no `<video>` is in the initial HTML. It also checks the featured order and exact award wording, that Lumi shows no image, the title-card labelling, archive anchors and links, the Oculo scene credit, About evidence links, both PDFs, case-study media-before-story and legacy anchors (#problem, #contribution, #engineering, #outcome, #demo), six palette contrast pairs (all ≥ 4.5:1), and the home weight budget (JS 70.8 KiB, CSS 4.0 KiB gzip).
+
+Browser (headless Edge 155 via CDP, and Brave for keyboard checks):
+
+- Production `dist/` was served by a GitHub-Pages-like static server: `/work` and `/work/cinemascout` 301 to their trailing-slash URLs, and a wrong-case asset path returns 404 while the correct case returns 200. All seven routes hydrate with no console errors and no failed images.
+- Every route at 320, 390 and 768 px has no horizontal overflow. Home, Work, About and all case studies were reviewed at 1440, plus home at 768 and 390 and case studies at 390.
+- Scene/Shot works by mouse and by real keyboard Enter, with `aria-pressed` updating. The focus ring is visible. With reduced motion the transition duration is 1 ms.
+- Demo video: no .mp4 request before interaction. After a trusted click it plays (readyState 4, currentTime advancing), focus moves into the native player, and choosing Scene removes the video.
+
+Not covered: a screen-reader pass, 200% zoom, physical devices, and Safari/Firefox.
+
+## Earlier designs
+
 ## Automated
 
 - `npm run build`: seven Vite entry points, followed by React static prerendering. Each route is a real directory suitable for GitHub Pages; no client-router fallback.

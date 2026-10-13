@@ -1,122 +1,130 @@
-import Page from "../components/Page.jsx";
+import Layout from "../components/Layout.jsx";
 import { about, profile } from "../data/profile.js";
 import { experience, education } from "../data/experience.js";
-import { skillGroups } from "../data/recruiter.js";
-import { ArrowDown, ArrowRight, ArrowUpRight, Mail } from "lucide-react";
+import { skillGroups } from "../data/skills.js";
 
 export default function AboutPage() {
   return (
-    <Page current="about">
-      <div className="stage">
-        <header className="about-intro">
-          <div>
-            <p className="eyebrow">Vishnu Sai Bodapati</p>
-            <h1>About Vishnu</h1>
-            {about.story.slice(0, 2).map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-            <div className="about-actions">
-              <a
-                className="button button-primary"
-                href={profile.resume.primary.href}
-                download
-              >
-                Resume <ArrowDown size={16} aria-hidden="true" />
+    <Layout current="about">
+      <header className="wrap about-head">
+        <h1 className="page-title">About</h1>
+        <figure className="portrait">
+          <picture>
+            <source type="image/webp" srcSet="/Assets/profile/vishnu-awe-2026-620.webp" />
+            <img
+              src="/Assets/profile/vishnu-awe-2026-620.jpg"
+              alt={`${profile.name} wearing an attendee badge, standing beside the “I, Spatial” display at AWE.`}
+              width={620}
+              height={830}
+              decoding="async"
+            />
+          </picture>
+          <figcaption>At AWE 2026.</figcaption>
+        </figure>
+        <div className="about-story">
+          {about.story.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+          <ul className="intro-links about-actions">
+            <li>
+              <a href={profile.resume.primary.href} download>
+                Resume (PDF)
               </a>
-              <a className="button" href={`mailto:${profile.email}`}>
-                Email me <Mail size={16} aria-hidden="true" />
+            </li>
+            <li>
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            </li>
+            <li>
+              <a href={profile.devpost} target="_blank" rel="noopener noreferrer">
+                Devpost
               </a>
-              <a className="button" href={profile.devpost} target="_blank" rel="noopener noreferrer">
-                Devpost <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-          <img
-            src="/Assets/profile/vishnu-headshot.jpg"
-            alt={profile.name}
-            width={1066}
-            height={1600}
-            decoding="async"
-          />
-        </header>
-        <div className="resume-sections">
-          <section className="resume-section" id="experience">
-            <h2>Experience</h2>
-            <div>
-              {experience.map((e) => (
-                <article key={e.id}>
-                  <p className="eyebrow">{e.period}</p>
-                  <h3>
-                    {e.role} · {e.org}
-                  </h3>
-                  <p>{e.subtitle}</p>
-                  <ul>
-                    {e.points.map((p) => (
-                      <li key={p}>{p}</li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </section>
-          <section className="resume-section">
-            <h2>Education</h2>
-            <div>
-              {education.map((e) => (
-                <article key={e.id}>
-                  <p className="eyebrow">{e.period}</p>
-                  <h3>{e.school}</h3>
-                  <p>
-                    {e.degree} · {e.program}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
-          <section className="resume-section" id="skills">
-            <h2>Skills</h2>
-            <div className="skills-grid">
-              {skillGroups.map((group) => (
-                <article className="skill-group" key={group.title}>
-                  <h3>{group.title}</h3>
-                  <p className="skill-tools">{group.tools}</p>
-                  <p>{group.detail}</p>
-                  <div className="skill-project-links">
-                    {group.links.map((link) => (
-                      <a href={link.href} key={link.href}>
-                        {link.label} <ArrowUpRight size={13} aria-hidden="true" />
-                      </a>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-          <section className="resume-section">
-            <h2>Recognition</h2>
-            <div>
-              <p>{about.recognitionSummary}</p>
-              <a href="/work/" className="text-link">
-                View award-winning projects{" "}
-                <ArrowRight size={16} aria-hidden="true" />
-              </a>
-            </div>
-          </section>
-          <section className="resume-section">
-            <h2>Resume & CV</h2>
-            <ul className="document-list">
-              {[profile.resume.primary, profile.resume.secondary].map((d) => (
-                <li key={d.href}>
-                  <a className="text-link" href={d.href} download>
-                    {d.label} <ArrowDown size={16} aria-hidden="true" />
-                  </a>
-                  <p>{d.note}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
+            </li>
+          </ul>
         </div>
-      </div>
-    </Page>
+      </header>
+
+      <section id="experience" className="wrap ledger" aria-labelledby="experience-title">
+        <h2 id="experience-title">Experience</h2>
+        <ul>
+          {experience.map((e) => (
+            <li key={e.id}>
+              <p className="ledger-when">{e.period}</p>
+              <div>
+                <h3>
+                  {e.role}, {e.org}
+                </h3>
+                <p className="ledger-sub">{e.subtitle}</p>
+                <ul className="ledger-points">
+                  {e.points.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="education" className="wrap ledger" aria-labelledby="education-title">
+        <h2 id="education-title">Education</h2>
+        <ul>
+          {education.map((e) => (
+            <li key={e.id}>
+              <p className="ledger-when">{e.period}</p>
+              <div>
+                <h3>{e.school}</h3>
+                <p className="ledger-sub">
+                  {e.degree}, {e.program}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="skills" className="wrap ledger" aria-labelledby="skills-title">
+        <h2 id="skills-title">Skills, with where I used them</h2>
+        <ul className="skills">
+          {skillGroups.map((g) => (
+            <li key={g.title}>
+              <h3>{g.title}</h3>
+              <p className="skills-tools">{g.tools}</p>
+              <p>{g.detail}</p>
+              <p className="skills-evidence">
+                Seen in{" "}
+                {g.links.map((l, i) => (
+                  <span key={l.href}>
+                    {i > 0 && (i === g.links.length - 1 ? " and " : ", ")}
+                    <a href={l.href}>{l.label}</a>
+                  </span>
+                ))}
+                .
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="recognition" className="wrap ledger" aria-labelledby="recognition-title">
+        <h2 id="recognition-title">Recognition</h2>
+        <p className="ledger-text">{about.recognitionSummary}</p>
+      </section>
+
+      <section id="documents" className="wrap ledger" aria-labelledby="documents-title">
+        <h2 id="documents-title">Resume and CV</h2>
+        <ul>
+          {[profile.resume.primary, profile.resume.secondary].map((d) => (
+            <li key={d.href}>
+              <p className="ledger-when">
+                <a href={d.href} download>
+                  {d.label} (PDF)
+                </a>
+              </p>
+              <p>{d.note}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Layout>
   );
 }
